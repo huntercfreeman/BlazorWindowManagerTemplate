@@ -15,6 +15,14 @@ public class GridModel
     public Guid GridModelId { get; }
     public Type RenderedContentType { get; }
     public List<List<GridModel>> GridModels { get; }
+    public int DragEventOffsetInPixels { get; set; }
+
+    public event EventHandler DragEventOffsetInPixelsChangedEventHandler;
+
+    public void DragEventOffsetInPixelsChangedEventHandlerInvoke(object sender, EventArgs e)
+    {
+        DragEventOffsetInPixelsChangedEventHandler?.Invoke(sender, e);
+    }
 
     public void AddGridModel((CardinalDirectionKind CardinalDirectionKind, int GridColumnIndex, int GridRowIndex) argumentTuple,
         GridModel gridModel)

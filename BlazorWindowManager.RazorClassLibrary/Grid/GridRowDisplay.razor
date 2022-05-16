@@ -2,7 +2,7 @@
 @using BlazorWindowManager.ClassLibrary.Store.Grid
 
 <div class="bwmt_grid-row-display"
-     style="@GetStyle">
+     style="@GetStyle()">
     @{
         GridModel? previousColumn = null;
 
@@ -15,7 +15,8 @@
             @if(previousColumn is not null)
             {
                 <GridColumnDividerDisplay LeftElementModel="previousColumn"
-                                          RightElementModel="currentColumn" />
+                                          RightElementModel="currentColumn"
+                                          OnMouseDownEventCallback="OnMouseDownEventCallback" />
             }
 
             <GridColumnDisplay GridColumnIndex="columnIndex"
