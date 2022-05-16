@@ -1,3 +1,4 @@
+using BlazorWindowManager.ClassLibrary.Theme;
 using BlazorWindowManager.RazorClassLibrary;
 using BlazorWindowManagerTemplate.Data;
 using Microsoft.AspNetCore.Components;
@@ -10,7 +11,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
-builder.Services.AddBlazorWindowManagerRazorClassLibraryServices();
+builder.Services.AddBlazorWindowManagerRazorClassLibraryServices(
+    BlazorWindowManagerThemeKind.LightTheme);
 
 var app = builder.Build();
 

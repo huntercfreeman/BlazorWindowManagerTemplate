@@ -1,0 +1,18 @@
+﻿.bwmt_window-manager-theme-light {
+    --bwmt_window-manager-dialog-display-background-color: #f9f2e8;
+    --bwmt_window-manager-dialog-display-box-shadow: 0 0 3px #333;
+}
+
+.bwmt_window-manager-theme-dark {
+    --bwmt_window-manager-dialog-display-background-color: #f9f2e8;
+    --bwmt_window-manager-dialog-display-box-shadow: 0 0 3px #333;
+}
+
+.bwmt_window-manager-dialog-display {
+    z-index: 50;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: var(--bwmt_window-manager-dialog-display-background-color);
+    box-shadow: var(--bwmt_window-manager-dialog-display-box-shadow);
+}

@@ -1,4 +1,8 @@
-﻿<div class="bwmt_window-manager-initializer-display">
+﻿@using Fluxor.Blazor.Web.Components
+
+@inherits FluxorComponent
+
+<div class="bwmt_window-manager-initializer-display @GetCssClasses()">
     <Fluxor.Blazor.Web.StoreInitializer />
 
     <BlazorWindowManager.RazorClassLibrary.WindowManagerDialog.WindowManagerDialogWrapperDisplay />

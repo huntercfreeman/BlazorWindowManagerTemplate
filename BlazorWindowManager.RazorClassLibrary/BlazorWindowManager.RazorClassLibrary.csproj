@@ -13,6 +13,10 @@
     <None Remove="Store\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Drag\DragEventProviderDisplay.razor" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
