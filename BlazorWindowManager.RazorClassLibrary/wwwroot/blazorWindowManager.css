@@ -1,4 +1,13 @@
-﻿.bwmt_window-manager-theme-light {
+﻿:root {
+    --hfd_grid-column-display-add-column-button-row-margin-top: 5px;
+    --hfd_grid-column-display-add-column-button-item-padding: 5px;
+    --hfd_grid-row-divider-display-height: 3px;
+    --hfd_grid-column-divider-display-width: 3px;
+    --hfd_dialog-task-bar-display-height: 4ch;
+    --hfd_dialog-display-title-height: 4ch;
+}
+
+.bwmt_window-manager-theme-light {
     --bwmt_window-manager-dialog-display-background-color: #f9f2e8;
     --bwmt_window-manager-dialog-display-box-shadow: 0 0 3px #333;
     --bwmt_primary-color: #679aff;
@@ -180,4 +189,54 @@
 
 .bwmt_transformative-resize-handle-north-west-display {
     cursor: nw-resize;
+}
+
+.bwmt_grid-display {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border: 2px solid blue;
+}
+
+.bwmt_grid-row-display {
+    display: flex;
+}
+
+.bwmt_grid-column-display {
+    display: inline-flex;
+    position: relative;
+}
+
+.bwmt_grid-column-display-add-column-buttons {
+    position: absolute;
+    left: calc(50% - 4em);
+    top: calc(50% - 9ch);
+    font-family: monospace;
+}
+
+.bwmt_grid-column-display-add-column-button-row {
+    margin-top: var(--bwmt_grid-column-display-add-column-button-row-margin-top);
+}
+
+.bwmt_grid-column-display-add-column-button-item {
+    cursor: pointer;
+    padding: var(--bwmt_grid-column-display-add-column-button-item-padding);
+}
+
+.bwmt_grid-column-display-add-column-button-item-diagonal {
+    visibility: hidden;
+}
+
+.bwmt_grid-column-display-add-column-button-item:hover {
+    background-color: var(--bwmt_primary-hover-background-color);
+}
+
+.bwmt_grid-row-divider-display {
+    height: var(--bwmt_grid-row-divider-display-height);
+    background-color: var(--bwmt_primary-border-color);
+}
+
+.bwmt_grid-column-divider-display {
+    width: var(--bwmt_grid-column-divider-display-width);
+    background-color: var(--bwmt_primary-border-color);
 }

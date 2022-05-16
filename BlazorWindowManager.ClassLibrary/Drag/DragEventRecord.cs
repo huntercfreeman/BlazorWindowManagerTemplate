@@ -5,6 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HunterFreemanDev.ClassLibrary.Drag;
+namespace BlazorWindowManager.ClassLibrary.Drag;
 
 public record DragEventRecord(MouseEventArgs MouseEventArgs);

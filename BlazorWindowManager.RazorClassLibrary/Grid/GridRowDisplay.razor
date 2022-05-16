@@ -1,0 +1,29 @@
+﻿@using BlazorWindowManager.ClassLibrary.Element
+@using BlazorWindowManager.ClassLibrary.Store.Grid
+
+<div class="bwmt_grid-row-display"
+     style="@GetStyle">
+    @{
+        GridModel? previousColumn = null;
+
+        for (int i = 0; i < GridRowElementReferences.Count; i++)
+        {
+            @* Storing a local copy of the for loop iteration variable is required in Blazor *@
+            var columnIndex = i;
+            var currentColumn = GridRowElementReferences[columnIndex];
+
+            @if(previousColumn is not null)
+            {
+                <GridColumnDividerDisplay LeftElementModel="previousColumn"
+                                          RightElementModel="currentColumn" />
+            }
+
+            <GridColumnDisplay GridColumnIndex="columnIndex"
+                               GridTotalColumnCount="GridRowElementReferences.Count"
+                               GridModel="currentColumn"
+                               AddWindowEventCallback="OnAddWindowEventCallback" />
+
+            previousColumn = currentColumn;
+        }
+    }
+</div>

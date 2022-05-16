@@ -16,6 +16,13 @@
   <ItemGroup>
     <None Include="Button\ButtonDisplay.razor" />
     <None Include="Drag\DragEventProviderDisplay.razor" />
+    <None Include="Grid\GridAddColumnButtons.razor" />
+    <None Include="Grid\GridColumnDisplay.razor" />
+    <None Include="Grid\GridColumnDividerDisplay.razor" />
+    <None Include="Grid\GridDisplay.razor" />
+    <None Include="Grid\GridIsEmptyDisplay.razor" />
+    <None Include="Grid\GridRowDisplay.razor" />
+    <None Include="Grid\GridRowDividerDisplay.razor" />
     <None Include="Icons\Codicon\IconArrowDown.razor" />
     <None Include="Icons\Codicon\IconArrowLeft.razor" />
     <None Include="Icons\Codicon\IconArrowRight.razor" />
