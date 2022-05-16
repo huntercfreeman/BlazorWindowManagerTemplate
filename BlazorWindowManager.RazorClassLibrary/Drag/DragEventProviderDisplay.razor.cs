@@ -23,7 +23,7 @@ public partial class DragEventProviderDisplay : FluxorComponent
 
     private SemaphoreSlim _dragStateChangedSemaphoreSlim = new(1, 1);
     private Stack<MouseEventArgs> _dragStateChangedStack = new();
-    private CancellationTokenSource _dragStateChangedCancellationTokenSource = new();
+    private CancellationTokenSource? _dragStateChangedCancellationTokenSource;
     private Task? _dragStateThrottlingTask;
 
     private async Task DispatchOnDragEventActionOnMouseMove(MouseEventArgs mouseEventArgs)
@@ -40,7 +40,12 @@ public partial class DragEventProviderDisplay : FluxorComponent
         }
 
         if (_dragStateThrottlingTask is not null)
-            await _dragStateThrottlingTask;
+        {
+            await _dragStateThrottlingTask.WaitAsync(_dragStateChangedCancellationTokenSource?.Token ?? default);
+
+            if (_dragStateThrottlingTask.IsCanceled)
+                return;
+        }
 
         try
         {
@@ -48,11 +53,16 @@ public partial class DragEventProviderDisplay : FluxorComponent
 
             if (_dragStateChangedStack.Any())
             {
+                var mostRecentMouseEventArgs = _dragStateChangedStack.Pop();
+
                 _dragStateChangedStack.Clear();
 
-                var action = new DragEventAction(mouseEventArgs);
+                var action = new DragEventAction(mostRecentMouseEventArgs);
 
                 Dispatcher.Dispatch(action);
+
+                _dragStateChangedCancellationTokenSource?.Cancel();
+                _dragStateChangedCancellationTokenSource = new();
 
                 _dragStateThrottlingTask = Task.Run(async () =>
                 {
@@ -68,6 +78,9 @@ public partial class DragEventProviderDisplay : FluxorComponent
     
     private void DispatchUnsubscribeActionOnMouseUp(MouseEventArgs mouseEventArgs)
     {
+        _dragStateChangedCancellationTokenSource?.Cancel();
+        _dragStateChangedCancellationTokenSource = null;
+
         var clearDragEventSubscriptionsAction = new ClearDragEventSubscriptionsAction();
 
         Dispatcher.Dispatch(clearDragEventSubscriptionsAction);
