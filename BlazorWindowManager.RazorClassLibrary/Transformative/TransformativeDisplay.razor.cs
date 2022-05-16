@@ -42,9 +42,16 @@ public partial class TransformativeDisplay : FluxorComponent
 
     private void DragState_StateChanged(object? sender, EventArgs e)
     {
-        if (_dragStateEventHandler is not null)
+        if(DragState.Value.MouseEventArgs is null)
         {
-            _dragStateEventHandler();
+            _dragStateEventHandler = null;
+        }
+        else
+        {
+            if (_dragStateEventHandler is not null)
+            {
+                _dragStateEventHandler();
+            }
         }
     }
 
