@@ -3,7 +3,8 @@
 @inherits FluxorComponent
 
 <div class="bwmt_window-manager-dialog-wrapper-display">
-    @foreach(var windowManagerDialogRecord in WindowManagerDialogState.Value.WindowManagerDialogRecordMap.Values)
+    @foreach(var windowManagerDialogRecord in WindowManagerDialogState.Value.WindowManagerDialogRecordMap.Values
+                .Where(x => !x.IsMinimized))
     {
         <WindowManagerDialogDisplay WindowManagerDialogRecord="windowManagerDialogRecord" />
     }

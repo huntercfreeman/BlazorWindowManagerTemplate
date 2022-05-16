@@ -1,0 +1,10 @@
+﻿@using Fluxor.Blazor.Web.Components
+
+@inherits FluxorComponent
+
+<div class="bwmt_window-manager-dialog-task-bar-display">
+    @foreach(var windowManagerDialogRecord in WindowManagerDialogWrapperState.Value.WindowManagerDialogRecordMap.Values)
+    {
+        <WindowManagerDialogTaskBarEntryDisplay WindowManagerDialogRecord="windowManagerDialogRecord" />
+    }
+</div>

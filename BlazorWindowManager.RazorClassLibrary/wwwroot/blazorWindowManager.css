@@ -72,7 +72,7 @@
     }
 
         .bwmt_window-manager-dialog-display-title-control-buttons .bwmt_window-manager-dialog-display-title-control-button-wrapper:hover {
-            background-color: var(--hfd_primary-hover-background-color);
+            background-color: var(--bwmt_primary-hover-background-color);
         }
 
 .bwmt_window-manager-dialog-task-bar-display {
@@ -90,7 +90,7 @@
 }
 
     .bwmt_window-manager-dialog-task-entry-display:hover {
-        background-color: var(--hfd_primary-hover-background-color);
+        background-color: var(--bwmt_primary-hover-background-color);
     }
 
 .bwmt_window-manager-dialog-task-entry-display-title {
@@ -109,5 +109,41 @@
 }
 
     .bwmt_window-manager-dialog-task-entry-display-close-button:hover {
-        background-color: var(--hfd_danger-color);
+        background-color: var(--bwmt_danger-color);
     }
+
+.bwmt_transformative-resize-handle-display {
+    position: absolute;
+}
+
+.bwmt_transformative-resize-handle-north-display {
+    cursor: n-resize;
+}
+
+.bwmt_transformative-resize-handle-east-display {
+    cursor: e-resize;
+}
+
+.bwmt_transformative-resize-handle-south-display {
+    cursor: s-resize;
+}
+
+.bwmt_transformative-resize-handle-west-display {
+    cursor: w-resize;
+}
+
+.bwmt_transformative-resize-handle-north-east-display {
+    cursor: ne-resize;
+}
+
+.bwmt_transformative-resize-handle-south-east-display {
+    cursor: se-resize;
+}
+
+.bwmt_transformative-resize-handle-south-west-display {
+    cursor: sw-resize;
+}
+
+.bwmt_transformative-resize-handle-north-west-display {
+    cursor: nw-resize;
+}
