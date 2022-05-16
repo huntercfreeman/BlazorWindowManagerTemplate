@@ -14,7 +14,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Button\ButtonDisplay.razor" />
     <None Include="Drag\DragEventProviderDisplay.razor" />
+    <None Include="Icons\Codicon\IconArrowDown.razor" />
+    <None Include="Icons\Codicon\IconArrowLeft.razor" />
+    <None Include="Icons\Codicon\IconArrowRight.razor" />
+    <None Include="Icons\Codicon\IconArrowUp.razor" />
+    <None Include="Icons\Codicon\IconBrowser.razor" />
+    <None Include="Icons\Codicon\IconChevronDown.razor" />
+    <None Include="Icons\Codicon\IconChevronRight.razor" />
+    <None Include="Icons\Codicon\IconChromeClose.razor" />
+    <None Include="Icons\Codicon\IconChromeMaximize.razor" />
+    <None Include="Icons\Codicon\IconChromeMinimize.razor" />
+    <None Include="Icons\Codicon\IconChromeRestore.razor" />
+    <None Include="Icons\Codicon\IconSettingsGear.razor" />
+    <None Include="Icons\Codicon\IconStarFull.razor" />
+    <None Include="Transformative\TransformativeDisplay.razor" />
   </ItemGroup>
 
 

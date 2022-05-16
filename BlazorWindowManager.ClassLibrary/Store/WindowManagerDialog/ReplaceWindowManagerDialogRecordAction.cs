@@ -1,0 +1,7 @@
+﻿using BlazorWindowManager.ClassLibrary.Dimension;
+using BlazorWindowManager.ClassLibrary.WindowManagerDialog;
+
+namespace BlazorWindowManager.ClassLibrary.Store.WindowManagerDialog;
+
+public record ReplaceWindowManagerDialogRecordAction(WindowManagerDialogRecord WindowManagerDialogRecord, 
+    DimensionsRecord ReplacementDimensionsRecord);

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace BlazorWindowManager.ClassLibrary.WindowManagerDialog;
 
 public record WindowManagerDialogRecord(Guid WindowManagerDialogRecordId,
+    string WindowManagerDialogRecordDisplayName,
     Type RenderedContentType,
     Dictionary<string, object>? RenderedContentParameters, 
     DimensionsRecord DimensionsRecord, 

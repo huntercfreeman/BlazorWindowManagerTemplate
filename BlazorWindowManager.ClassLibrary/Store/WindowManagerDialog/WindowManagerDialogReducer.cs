@@ -1,4 +1,5 @@
-﻿using Fluxor;
+﻿using BlazorWindowManager.ClassLibrary.WindowManagerDialog;
+using Fluxor;
 
 namespace BlazorWindowManager.ClassLibrary.Store.WindowManagerDialog;
 
@@ -31,7 +32,7 @@ public class WindowManagerDialogReducer
     
     [ReducerMethod]
     public WindowManagerDialogWrapperState ReduceClearWindowManagerDialogStateAction(WindowManagerDialogWrapperState previousWindowDialogManagerState,
-        RemoveWindowManagerDialogRecordAction removeWindowManagerDialogRecordAction)
+        ClearWindowManagerDialogStateAction clearWindowManagerDialogStateAction)
     {
         var nextWindowManagerDialogState = new WindowManagerDialogWrapperState();
 
@@ -48,11 +49,29 @@ public class WindowManagerDialogReducer
             .TryAdd(persistWindowManagerDialogRecordStateAction.WindowManagerDialogRecord.WindowManagerDialogRecordId,
                 persistWindowManagerDialogRecordStateAction.WindowManagerDialogRecord))
         {
-            nextWindowManagerDialogState.WindowManagerDialogRecordMap.Add(
-                persistWindowManagerDialogRecordStateAction.WindowManagerDialogRecord.WindowManagerDialogRecordId,
-                persistWindowManagerDialogRecordStateAction.WindowManagerDialogRecord);
+            nextWindowManagerDialogState.WindowManagerDialogRecordMap[persistWindowManagerDialogRecordStateAction.WindowManagerDialogRecord.WindowManagerDialogRecordId] = 
+                persistWindowManagerDialogRecordStateAction.WindowManagerDialogRecord;
         }
 
         return nextWindowManagerDialogState;
+    }
+
+    [ReducerMethod]
+    public static WindowManagerDialogWrapperState ReduceReplaceDialogDimensionsRecordAction(WindowManagerDialogWrapperState previousWindowManagerDialogWrapperState,
+        ReplaceWindowManagerDialogRecordAction replaceWindowManagerDialogRecordAction)
+    {
+        var nextWindowManagerDialogWrapperState = new WindowManagerDialogWrapperState(previousWindowManagerDialogWrapperState);
+
+        var nextWindowManagerDialogRecord = replaceWindowManagerDialogRecordAction.WindowManagerDialogRecord with
+        {
+            DimensionsRecord = replaceWindowManagerDialogRecordAction.ReplacementDimensionsRecord
+        };
+
+        nextWindowManagerDialogWrapperState.WindowManagerDialogRecordMap.Remove(replaceWindowManagerDialogRecordAction.WindowManagerDialogRecord.WindowManagerDialogRecordId);
+
+        nextWindowManagerDialogWrapperState.WindowManagerDialogRecordMap.Add(nextWindowManagerDialogRecord.WindowManagerDialogRecordId,
+            nextWindowManagerDialogRecord);
+
+        return nextWindowManagerDialogWrapperState;
     }
 }

@@ -24,6 +24,7 @@ Welcome to your new app.
         var initialDialogDimensionsRecord = await WindowManagerDialogRecord.ConstructDefaultDimensionsRecord(ViewportDimensionsService);
 
         var windowManagerDialogRecord = new WindowManagerDialogRecord(Guid.NewGuid(),
+            $"{nameof(Counter)} Dialog",
             typeof(Counter),
             null,
             initialDialogDimensionsRecord,

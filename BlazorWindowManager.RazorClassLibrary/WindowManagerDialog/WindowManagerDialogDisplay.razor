@@ -1,5 +1,35 @@
 ﻿<div class="bwmt_window-manager-dialog-display"
      style="@WindowManagerDialogRecord.DimensionsRecord.BuildCssStyleString()">
+
+     <div class="hfd_dialog-display-title"
+          @onmousedown="FireSubscribeToDragEventWithMoveHandle">
+          <div class="hfd_dialog-display-title-content">
+              Test Movement Handle by dragging this
+          </div>
+          
+          <div class="hfd_dialog-display-title-control-buttons">
+              <div class="hfd_dialog-display-title-control-button-wrapper"
+                   @onclick="MinimizeDialogOnClick"
+                   @onclick:stopPropagation="true"
+                   @onmousedown:stopPropagation="true">
+                  <IconChromeMinimize />
+              </div>
+              <div class="hfd_dialog-display-title-control-button-wrapper">
+                  <IconChromeMaximize />
+              </div>
+              <div class="hfd_dialog-display-title-control-button-wrapper"
+                   @onclick="CloseDialogOnClick"
+                   @onclick:stopPropagation="true"
+                   @onmousedown:stopPropagation="true">
+                  <IconChromeClose />
+              </div>
+          </div>
+     </div>
+
+     <BlazorWindowManager.RazorClassLibrary.Transformative.TransformativeDisplay DimensionsRecord="WindowManagerDialogRecord.DimensionsRecord"
+                                                                              OnDimensionsRecordChangedEventCallback="OnDimensionsRecordChangedEventCallback"
+                                                                              @ref="_transformativeDisplay" />
+
     <DynamicComponent Type="WindowManagerDialogRecord.RenderedContentType"
                        Parameters="WindowManagerDialogRecord.RenderedContentParameters" />
 </div>

@@ -1,0 +1,5 @@
+﻿using BlazorWindowManager.ClassLibrary.WindowManagerDialog;
+
+namespace BlazorWindowManager.ClassLibrary.Store.WindowManagerDialog;
+
+public record SetIsMinimizedDialogAction(WindowManagerDialogRecord WindowManagerDialogRecord, bool IsMinimized);

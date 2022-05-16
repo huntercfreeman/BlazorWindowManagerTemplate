@@ -1,11 +1,39 @@
 ﻿.bwmt_window-manager-theme-light {
     --bwmt_window-manager-dialog-display-background-color: #f9f2e8;
     --bwmt_window-manager-dialog-display-box-shadow: 0 0 3px #333;
+    --bwmt_primary-color: #679aff;
+    --bwmt_secondary-color: #b9b9b9;
+    --bwmt_success-color: #72e672;
+    --bwmt_danger-color: #ff7a7a;
+    --bwmt_warning-color: #ffff61;
+    --bwmt_info-color: #85eaf7;
+    --bwmt_primary-border-color: #4c4e54;
+    --bwmt_primary-font-color: black;
+    --bwmt_secondary-font-color: gray;
+    --bwmt_window-manager-dialog-task-bar-display-background-color: silver;
+    --bwmt_primary-active-background-color: #c0e0ff;
+    --bwmt_primary-hover-background-color: #94b2f2;
+    --bwmt_window-manager-dialog-display-title-background-color: #dadada;
+    --bwmt_primary-background-color: #fdfdfd;
 }
 
 .bwmt_window-manager-theme-dark {
     --bwmt_window-manager-dialog-display-background-color: #f9f2e8;
     --bwmt_window-manager-dialog-display-box-shadow: 0 0 3px #333;
+    --bwmt_primary-color: #679aff;
+    --bwmt_secondary-color: #b9b9b9;
+    --bwmt_success-color: #72e672;
+    --bwmt_danger-color: #ff7a7a;
+    --bwmt_warning-color: #ffff61;
+    --bwmt_info-color: #85eaf7;
+    --bwmt_primary-border-color: #4c4e54;
+    --bwmt_primary-font-color: black;
+    --bwmt_secondary-font-color: gray;
+    --bwmt_window-manager-dialog-task-bar-display-background-color: silver;
+    --bwmt_primary-active-background-color: #c0e0ff;
+    --bwmt_primary-hover-background-color: #94b2f2;
+    --bwmt_window-manager-dialog-display-title-background-color: #dadada;
+    --bwmt_primary-background-color: #fdfdfd;
 }
 
 .bwmt_window-manager-dialog-display {
