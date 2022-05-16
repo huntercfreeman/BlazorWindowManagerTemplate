@@ -3,7 +3,7 @@
 
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<div class="bwmt_grid-display"
+<div class="bwmt_grid-display  @GetCssClasses()"
      style="@_dimensionsRecord.BuildCssStyleString()">
     <BlazorWindowManager.RazorClassLibrary.Transformative.TransformativeDisplay DimensionsRecord="_dimensionsRecord"
                                                                                 OnDimensionsRecordChangedEventCallback="OnDimensionsRecordChangedEventCallback"/>

@@ -17,8 +17,6 @@ public partial class WindowManagerInitializerDisplay : FluxorComponent
 {
     [Inject]
     private IState<ThemeState> ThemeState { get; set; } = null!;
-    [Inject]
-    private IState<DragState> DragState { get; set; } = null!;
 
     // TODO: Make the website entirely unselectable when dragging
     //private string GetIsSelectableCssClass => DragState.Value.MouseEventArgs is null

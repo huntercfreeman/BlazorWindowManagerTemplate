@@ -1,10 +1,10 @@
 ﻿:root {
-    --hfd_grid-column-display-add-column-button-row-margin-top: 5px;
-    --hfd_grid-column-display-add-column-button-item-padding: 5px;
-    --hfd_grid-row-divider-display-height: 3px;
-    --hfd_grid-column-divider-display-width: 3px;
-    --hfd_dialog-task-bar-display-height: 4ch;
-    --hfd_dialog-display-title-height: 4ch;
+    --bwmt_grid-column-display-add-column-button-row-margin-top: 5px;
+    --bwmt_grid-column-display-add-column-button-item-padding: 5px;
+    --bwmt_grid-row-divider-display-height: 3px;
+    --bwmt_grid-column-divider-display-width: 3px;
+    --bwmt_dialog-task-bar-display-height: 4ch;
+    --bwmt_dialog-display-title-height: 4ch;
 }
 
 .bwmt_window-manager-theme-light {
