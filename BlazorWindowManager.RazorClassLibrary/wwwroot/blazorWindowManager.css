@@ -44,3 +44,70 @@
     background-color: var(--bwmt_window-manager-dialog-display-background-color);
     box-shadow: var(--bwmt_window-manager-dialog-display-box-shadow);
 }
+
+.bwmt_window-manager-dialog-display-title {
+    cursor: pointer;
+    background-color: var(--bwmt_window-manager-dialog-display-title-background-color);
+    height: var(--bwmt_window-manager-dialog-display-title-height);
+    display: flex;
+    justify-content: space-between;
+}
+
+.bwmt_window-manager-dialog-display-title-content {
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+}
+
+.bwmt_window-manager-dialog-display-title-control-buttons {
+    display: flex;
+    align-items: center;
+}
+
+    .bwmt_window-manager-dialog-display-title-control-buttons .bwmt_window-manager-dialog-display-title-control-button-wrapper {
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+        padding: 0 5px;
+    }
+
+        .bwmt_window-manager-dialog-display-title-control-buttons .bwmt_window-manager-dialog-display-title-control-button-wrapper:hover {
+            background-color: var(--hfd_primary-hover-background-color);
+        }
+
+.bwmt_window-manager-dialog-task-bar-display {
+    height: var(--bwmt_window-manager-dialog-task-bar-display-height);
+    background-color: var(--bwmt_window-manager-dialog-task-bar-display-background-color);
+}
+
+.bwmt_window-manager-dialog-task-entry-display {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    margin-left: 5px;
+}
+
+    .bwmt_window-manager-dialog-task-entry-display:hover {
+        background-color: var(--hfd_primary-hover-background-color);
+    }
+
+.bwmt_window-manager-dialog-task-entry-display-title {
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 5px;
+    padding-left: 5px;
+}
+
+.bwmt_window-manager-dialog-task-entry-display-close-button {
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 5px;
+}
+
+    .bwmt_window-manager-dialog-task-entry-display-close-button:hover {
+        background-color: var(--hfd_danger-color);
+    }
