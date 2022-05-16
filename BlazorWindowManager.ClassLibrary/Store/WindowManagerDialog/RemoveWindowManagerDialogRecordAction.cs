@@ -1,0 +1,3 @@
+﻿namespace BlazorWindowManager.ClassLibrary.Store.WindowManagerDialog;
+
+public record RemoveWindowManagerDialogRecordAction(Guid WindowManagerDialogRecordId);

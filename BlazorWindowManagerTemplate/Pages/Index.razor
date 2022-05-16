@@ -1,5 +1,7 @@
 ﻿@page "/"
 
+@using BlazorWindowManager.ClassLibrary.WindowManagerDialog
+
 <PageTitle>Index</PageTitle>
 
 <h1>Hello, world!</h1>
@@ -7,3 +9,19 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+<button class="btn btn-primary" @onclick="RenderBlazorWindowManagerDialog">Click me to create a BlazorWindowManager dialog that renders the Counter.razor blazor component</button>
+
+@code {
+    [Inject]
+    private IWindowManagerDialogService WindowManagerDialogService { get; set; } = null!;
+
+    private void RenderBlazorWindowManagerDialog()
+    {
+        var windowManagerDialogRecord = new WindowManagerDialogRecord(Guid.NewGuid(),
+            typeof(Counter),
+            null);
+
+        WindowManagerDialogService.AddWindowManagerDialogRecord(windowManagerDialogRecord);
+    }
+}

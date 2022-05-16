@@ -6,6 +6,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Store\**" />
+    <Content Remove="Store\**" />
+    <EmbeddedResource Remove="Store\**" />
+    <None Remove="Store\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
