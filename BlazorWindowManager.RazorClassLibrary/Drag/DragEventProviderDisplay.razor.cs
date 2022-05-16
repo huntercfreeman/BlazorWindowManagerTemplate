@@ -18,7 +18,7 @@ public partial class DragEventProviderDisplay : FluxorComponent
     private IDispatcher Dispatcher { get; set; } = null!;
 
     private string IsActiveCssClass => DragEventProviderState.Value.OnDragEventSubscriptions.Any()
-        ? "hfd_active"
+        ? "bwmt_active"
         : string.Empty;
 
     private SemaphoreSlim _dragStateChangedSemaphoreSlim = new(1, 1);

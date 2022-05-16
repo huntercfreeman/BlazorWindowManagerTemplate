@@ -36,6 +36,20 @@
     --bwmt_primary-background-color: #fdfdfd;
 }
 
+.bwmt_drag-event-provider-display {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 500;
+}
+
+    .bwmt_drag-event-provider-display.bwmt_active {
+        display: block;
+    }
+
 .bwmt_window-manager-dialog-display {
     z-index: 50;
     position: fixed;
