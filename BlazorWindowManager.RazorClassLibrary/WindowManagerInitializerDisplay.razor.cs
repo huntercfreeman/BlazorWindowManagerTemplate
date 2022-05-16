@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BlazorWindowManager.ClassLibrary.Store.Drag;
 using BlazorWindowManager.ClassLibrary.Store.Theme;
 using BlazorWindowManager.ClassLibrary.Theme;
 using Fluxor;
@@ -16,6 +17,13 @@ public partial class WindowManagerInitializerDisplay : FluxorComponent
 {
     [Inject]
     private IState<ThemeState> ThemeState { get; set; } = null!;
+    [Inject]
+    private IState<DragState> DragState { get; set; } = null!;
+
+    // TODO: Make the website entirely unselectable when dragging
+    //private string GetIsSelectableCssClass => DragState.Value.MouseEventArgs is null
+    //    ? string.Empty
+    //    : "bwmt_unselectable";
 
     private string GetCssClasses()
     {

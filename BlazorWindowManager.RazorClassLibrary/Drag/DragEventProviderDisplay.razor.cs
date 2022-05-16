@@ -15,6 +15,8 @@ public partial class DragEventProviderDisplay : FluxorComponent
     [Inject]
     private IState<DragEventProviderState> DragEventProviderState { get; set; } = null!;
     [Inject]
+    private IState<DragState> DragState { get; set; } = null!;
+    [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
 
     private string IsActiveCssClass => DragEventProviderState.Value.OnDragEventSubscriptions.Any()
@@ -24,6 +26,7 @@ public partial class DragEventProviderDisplay : FluxorComponent
     private SemaphoreSlim _dragStateChangedSemaphoreSlim = new(1, 1);
     private Stack<MouseEventArgs> _dragStateChangedStack = new();
     private CancellationTokenSource? _dragStateChangedCancellationTokenSource;
+    private readonly TimeSpan _dragStateThrottlingDelay = TimeSpan.FromMilliseconds(25);
     private Task? _dragStateThrottlingTask;
 
     private async Task DispatchOnDragEventActionOnMouseMove(MouseEventArgs mouseEventArgs)
@@ -59,6 +62,9 @@ public partial class DragEventProviderDisplay : FluxorComponent
 
                 var action = new DragEventAction(mostRecentMouseEventArgs);
 
+                if (_dragStateThrottlingTask?.IsCanceled ?? false)
+                    return;
+
                 Dispatcher.Dispatch(action);
 
                 _dragStateChangedCancellationTokenSource?.Cancel();
@@ -66,7 +72,7 @@ public partial class DragEventProviderDisplay : FluxorComponent
 
                 _dragStateThrottlingTask = Task.Run(async () =>
                 {
-                    await Task.Delay(25);
+                    await Task.Delay(_dragStateThrottlingDelay);
                 }, _dragStateChangedCancellationTokenSource.Token);
             }
         }
@@ -76,7 +82,7 @@ public partial class DragEventProviderDisplay : FluxorComponent
         }
     }
     
-    private void DispatchUnsubscribeActionOnMouseUp(MouseEventArgs mouseEventArgs)
+    private async void DispatchUnsubscribeActionOnMouseUp(MouseEventArgs mouseEventArgs)
     {
         _dragStateChangedCancellationTokenSource?.Cancel();
         _dragStateChangedCancellationTokenSource = null;
@@ -87,6 +93,15 @@ public partial class DragEventProviderDisplay : FluxorComponent
 
         var onDragEventAction = new DragEventAction(null);
 
+        Dispatcher.Dispatch(onDragEventAction);
+
+        // DragEvent state is being set to a MouseEventArgs of null due to this method.
+        // However, the throttling is set to 25 miliseconds.
+        // Seemingly there is a timing issue introduced by the throttling where the MouseEventArgs is set to null
+        // then the throttled Task to set the MouseEventArgs to a actual value is completed changing it from null.
+        // The user then experiences a "jump" when they drag something as it thinks they dragged in one motion
+        // but in reality the drag event was remnants and should have been null.
+        await Task.Delay(_dragStateThrottlingDelay * 2);
         Dispatcher.Dispatch(onDragEventAction);
     }
 }

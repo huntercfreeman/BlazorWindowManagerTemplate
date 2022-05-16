@@ -36,6 +36,26 @@
     --bwmt_primary-background-color: #fdfdfd;
 }
 
+.bwmt_unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.bwmt_visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
 .bwmt_drag-event-provider-display {
     display: none;
     width: 100vw;
