@@ -3,5 +3,5 @@
 public enum DimensionUnitKind
 {
     Pixels,
-    PercentageOfParentAsDecimal
+    PercentageOfParent
 }

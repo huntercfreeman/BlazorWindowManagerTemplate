@@ -1,3 +1,26 @@
-﻿<h3>GridDisplay</h3>
+﻿<div class="bwmt_grid-display"
+     style="@_dimensionsRecord.BuildCssStyleString()">
+     
+    @GridRecord.GridRecordId
 
+     @if(IsResizable)
+    {
+        <BlazorWindowManager.RazorClassLibrary.Transformative.TransformativeDisplay DimensionsRecord="_dimensionsRecord" 
+                                                                                OnDimensionsRecordChangedEventCallback="OnDimensionsRecordChangedEventCallback" />    
+    }
 
+    @if(GridRecord.GridWindowRecords.Any())
+    {
+        foreach(var row in GridRecord.GridWindowRecords)
+        {
+            foreach(var column in row)
+            {
+               <BlazorWindowManager.RazorClassLibrary.Grid.HelperComponents.GridWindowDisplay GridWindowRecord="column" />
+            }
+        }
+    }
+    else
+    {
+        <h3>The Grid has no windows open</h3>
+    }
+</div>

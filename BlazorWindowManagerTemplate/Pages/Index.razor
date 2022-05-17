@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @using BlazorWindowManager.ClassLibrary.Dimension
+@using BlazorWindowManager.ClassLibrary.Grid
 @using BlazorWindowManager.ClassLibrary.WindowManagerDialog
 
 <PageTitle>Index</PageTitle>
@@ -16,12 +17,17 @@ Welcome to your new app.
 <button class="btn btn-primary" @onclick="RenderBlazorWindowManagerDialogAsync">Click me to create a BlazorWindowManager dialog that renders the Counter.razor blazor component</button>
 
 <h3>The following is a showcase of the GridDisplay component</h3>
+<BlazorWindowManager.RazorClassLibrary.Grid.GridDisplay GridRecord="_gridRecord"
+                                                        InitialDimensionsRecord="DimensionsRecord.FromPixelUnits(400, 400, 0, 0)"
+                                                        IsResizable="true" />
 
 @code {
     [Inject]
     private IWindowManagerDialogService WindowManagerDialogService { get; set; } = null!;
     [Inject]
     private IViewportDimensionsService ViewportDimensionsService { get; set; } = null!;
+
+    private GridRecord _gridRecord = new GridRecord();
 
     private async Task RenderBlazorWindowManagerDialogAsync()
     {

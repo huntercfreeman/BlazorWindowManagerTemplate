@@ -3,7 +3,7 @@
 namespace BlazorWindowManager.ClassLibrary.Store.Grid;
 
 // GridRecordWindow alterations
-public record RegisterGridWindowTabRecordAction(GridWindowTabRecord GridWindowTabRecord);
+public record RegisterGridWindowTabRecordAction(Guid GridRecordId, Guid GridWindowRecordId, GridWindowTabRecord GridWindowTabRecord);
 
 
 // DragEvents when dragging to resize the grid windows????

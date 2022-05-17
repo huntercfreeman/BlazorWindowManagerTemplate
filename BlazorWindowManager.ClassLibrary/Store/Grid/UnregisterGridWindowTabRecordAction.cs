@@ -1,6 +1,6 @@
 ﻿namespace BlazorWindowManager.ClassLibrary.Store.Grid;
 
-public record UnregisterGridWindowTabRecordAction(Guid GridWindowRecordTabId);
+public record UnregisterGridWindowTabRecordAction(Guid GridRecordId, Guid GridWindowRecordId, Guid GridWindowRecordTabId);
 
 
 // DragEvents when dragging to resize the grid windows????

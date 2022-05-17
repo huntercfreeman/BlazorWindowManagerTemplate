@@ -50,14 +50,41 @@ public class GridReducer
     public static GridStates ReduceRegisterGridWindowTabRecordAction(GridStates previousGridStates,
         RegisterGridWindowTabRecordAction registerGridWindowTabRecordAction)
     {
+        var previousGridRecord = previousGridStates
+            .LookupGridRecordById(registerGridWindowTabRecordAction.GridRecordId);
 
+        var previousGridWindowRecord = previousGridRecord
+            .FindGridWindowRecordById(registerGridWindowTabRecordAction.GridWindowRecordId);
+
+        var nextGridWindowRecord = new GridWindowRecord(previousGridWindowRecord,
+            ConstructActionKind.Add,
+            registerGridWindowTabRecordAction.GridWindowTabRecord);
+
+        var nextGridRecord = new GridRecord(previousGridRecord, 
+            ConstructActionKind.Replace, 
+            nextGridWindowRecord);
+
+        return new GridStates(previousGridStates, ConstructActionKind.Replace, nextGridRecord);
     }
 
     [ReducerMethod]
     public static GridStates ReduceUnregisterGridWindowTabRecordAction(GridStates previousGridStates,
         UnregisterGridWindowTabRecordAction unregisterGridWindowTabRecordAction)
     {
+        var previousGridRecord = previousGridStates
+            .LookupGridRecordById(unregisterGridWindowTabRecordAction.GridRecordId);
 
+        var previousGridWindowRecord = previousGridRecord
+            .FindGridWindowRecordById(unregisterGridWindowTabRecordAction.GridWindowRecordId);
+
+        var nextGridWindowRecord = new GridWindowRecord(previousGridWindowRecord,
+            unregisterGridWindowTabRecordAction.GridWindowRecordTabId);
+
+        var nextGridRecord = new GridRecord(previousGridRecord,
+            ConstructActionKind.Replace,
+            nextGridWindowRecord);
+
+        return new GridStates(previousGridStates, ConstructActionKind.Replace, nextGridRecord);
     }
 }
 
