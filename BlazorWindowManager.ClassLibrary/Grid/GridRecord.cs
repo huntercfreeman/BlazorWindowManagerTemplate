@@ -33,6 +33,18 @@ public record GridRecord
             }
         }
     }
+    
+    public GridRecord(GridRecord otherGridRecord, params Guid[] gridWindowRecordIds)
+    {
+        _gridWindowRecordMap = new Dictionary<Guid, GridWindowRecord>(otherGridRecord._gridWindowRecordMap);
+
+        foreach (var gridWindowRecord in gridWindowRecordIds)
+        {
+            _gridWindowRecordMap.Remove(gridWindowRecord);
+        }
+    }
+
+    public Guid GridRecordId { get; } = Guid.NewGuid();
 
     private void ReplaceGridWindowRecord(GridWindowRecord gridWindowRecord)
     {

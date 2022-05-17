@@ -61,7 +61,7 @@ public record GridStates
 
     private void AddGridRecord(GridRecord gridRecord)
     {
-        _gridRecordMap.Add(gridRecord.GridRecordId, gridRecord);
+        _gridRecordMap.Add(gridRecord., gridRecord);
     }
     
     private void ReplaceGridRecord(GridRecord gridRecord)
@@ -80,71 +80,9 @@ public record GridStates
     public ImmutableArray<GridRecord> GridRecords => _gridRecordMap.Values
         .ToImmutableArray();
 
-    public GridRecord LookupGridWindowById(Guid gridRecordId)
+    public GridRecord LookupGridRecordById(Guid gridRecordId)
     {
         return _gridRecordMap[gridRecordId];
-    }
-}
-
-// GridStates alterations
-public record RegisterGridRecordAction(GridRecord GridRecord);
-public record UnregisterGridRecordAction(Guid GridRecordId);
-
-// GridRecord alterations
-public record RegisterGridWindowRecordAction(GridWindowRecord GridWindowRecord);
-public record UnregisterGridWindowRecordAction(Guid GridRecordId, Guid GridWindowRecordId);
-
-// GridRecordWindow alterations
-public record RegisterGridWindowTabRecordAction(GridWindowTabRecord GridWindowTabRecord);
-public record UnregisterGridWindowTabRecordAction(Guid GridWindowRecordTabId);
-
-public class GridReducer
-{
-    [ReducerMethod]
-    public static GridStates ReduceRegisterGridRecordAction(GridStates previousGridStates,
-        RegisterGridRecordAction registerGridRecordAction)
-    {
-        return new GridStates(previousGridStates, ConstructActionKind.Add, registerGridRecordAction.GridRecord);
-    }
-
-    [ReducerMethod]
-    public static GridStates ReduceUnregisterGridRecordAction(GridStates previousGridStates,
-        UnregisterGridRecordAction unregisterGridRecordAction)
-    {
-        return new GridStates(previousGridStates, unregisterGridRecordAction.GridRecordId);
-    }
-
-    [ReducerMethod]
-    public static GridStates ReduceRegisterGridWindowRecordAction(GridStates previousGridStates,
-        RegisterGridWindowRecordAction registerGridWindowRecordAction)
-    {
-        var nextGridRecord = new GridRecord(
-            previousGridStates.LookupGridWindowById(registerGridWindowRecordAction.GridWindowRecord.GridRecordId),
-            ConstructActionKind.Add,
-            registerGridWindowRecordAction.GridWindowRecord);
-
-        return new GridStates(previousGridStates, ConstructActionKind.Add, nextGridRecord);
-    }
-
-    [ReducerMethod]
-    public static GridStates ReduceUnregisterGridWindowRecordAction(GridStates previousGridStates,
-        UnregisterGridWindowRecordAction unregisterGridWindowRecordAction)
-    {
-
-    }
-
-    [ReducerMethod]
-    public static GridStates ReduceRegisterGridWindowTabRecordAction(GridStates previousGridStates,
-        RegisterGridWindowTabRecordAction registerGridWindowTabRecordAction)
-    {
-
-    }
-
-    [ReducerMethod]
-    public static GridStates ReduceUnregisterGridWindowTabRecordAction(GridStates previousGridStates,
-        UnregisterGridWindowTabRecordAction unregisterGridWindowTabRecordAction)
-    {
-
     }
 }
 

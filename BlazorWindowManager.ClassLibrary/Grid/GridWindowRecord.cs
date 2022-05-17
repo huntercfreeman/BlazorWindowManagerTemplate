@@ -1,3 +1,10 @@
 ﻿namespace BlazorWindowManager.ClassLibrary.Grid;
 
-public record GridWindowRecord(Guid GridRecordId, List<List<GridWindowTabRecord>> GridWindowRecords);
+public record GridWindowRecord
+{
+    private readonly Dictionary<Guid, GridWindowTabRecord> _gridWindowTabRecordMap;
+
+    public Guid GridWindowRecordId { get; } = Guid.NewGuid();
+
+
+}
