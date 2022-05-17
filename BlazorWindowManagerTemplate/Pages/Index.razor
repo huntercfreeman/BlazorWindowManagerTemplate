@@ -19,7 +19,9 @@ Welcome to your new app.
 <h3>The following is a showcase of the GridDisplay component</h3>
 <BlazorWindowManager.RazorClassLibrary.Grid.GridDisplay GridRecord="_gridRecord"
                                                         InitialDimensionsRecord="DimensionsRecord.FromPixelUnits(400, 400, 0, 0)"
-                                                        IsResizable="true" />
+                                                        IsResizable="true"
+                                                        AddWindowToGridRenderedType="typeof(Counter)"
+                                                        AddWindowToGridRenderedTypeParameters="null" />
 
 @code {
     [Inject]
