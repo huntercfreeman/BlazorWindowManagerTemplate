@@ -40,6 +40,7 @@ public partial class GridDisplay : ComponentBase
     }
 
     private DimensionsRecord _dimensionsRecord = null!;
+    private WindowManagerDialogRecord? _windowManagerDialogRecord;
 
     private void OnDimensionsRecordChangedEventCallback(DimensionsRecord dimensionsRecord)
     {
@@ -48,6 +49,9 @@ public partial class GridDisplay : ComponentBase
 
     private async Task OnAddWindowToGridOnClickAsync()
     {
+        if (_windowManagerDialogRecord is not null)
+            return;
+
         var dimensionsRecordForDialog = await WindowManagerDialogRecord.ConstructDefaultDimensionsRecord(ViewportDimensionsService);
 
         var completeDialogInteractionEventCallback = new EventCallback<object>(this, OnCompletedDialogInteraction);
@@ -57,13 +61,13 @@ public partial class GridDisplay : ComponentBase
             { "CompleteDialogInteractionEventCallback", completeDialogInteractionEventCallback }
         };
 
-        var windowManagerDialogRecord = new WindowManagerDialogRecord(Guid.NewGuid(),
+        _windowManagerDialogRecord = new WindowManagerDialogRecord(Guid.NewGuid(),
             "Add Window To Grid",
             AddWindowToGridRenderedType,
             combinedParametersDictionary,
             dimensionsRecordForDialog);
 
-        var action = new AddWindowManagerDialogRecordAction(windowManagerDialogRecord);
+        var action = new AddWindowManagerDialogRecordAction(_windowManagerDialogRecord);
 
         Dispatcher.Dispatch(action);
     }
@@ -74,6 +78,16 @@ public partial class GridDisplay : ComponentBase
 
         var gridWindowRecord = new GridWindowRecord("New Window", type);
 
-        var action = new RegisterGridWindowRecordAction(GridRecord.GridRecordId, gridWindowRecord);
+        if(!GridRecord.GridWindowRecords.Any())
+            GridRecord.GridWindowRecords.Add(new List<GridWindowRecord>());
+
+        GridRecord.GridWindowRecords.First().Add(gridWindowRecord);
+
+        if (_windowManagerDialogRecord is null)
+            return;
+
+        var action = new RemoveWindowManagerDialogRecordAction(_windowManagerDialogRecord.WindowManagerDialogRecordId);
+
+        Dispatcher.Dispatch(action);
     }
 }
