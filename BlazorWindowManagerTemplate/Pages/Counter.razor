@@ -8,8 +8,18 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+<BlazorWindowManager.RazorClassLibrary.Html.RenderCounter RenderCount="_renderCount" />
+
 @code {
     private int currentCount = 0;
+    private int _renderCount = 0;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        _renderCount++;
+
+        base.OnAfterRender(firstRender);
+    }
 
     private void IncrementCount()
     {
