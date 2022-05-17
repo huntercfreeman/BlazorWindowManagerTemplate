@@ -1,0 +1,12 @@
+﻿@page "/grid"
+@using BlazorWindowManager.ClassLibrary.Grid
+
+<div class="grid-example">
+    <h3>Example of Grid Component</h3>
+
+    <BlazorWindowManager.RazorClassLibrary.Grid.GridDisplay GridRecord="" />
+</div>
+
+@code {
+    private GridRecord _gridRecord = new(Guid.NewGuid(), );
+}

@@ -2,36 +2,22 @@
 
 @inherits FluxorComponent
 
-@if(_cachedHtmlElementRecord is not null)
+@if (_cachedHtmlElementRecord is not null)
 {
-    <div class="bwmt_theme-wrapping @GetCssClasses()">
-        <div class="bwmt_grid-display"
-             style="@_cachedHtmlElementRecord.DimensionsRecord.BuildCssStyleString()">
-
-             <BlazorWindowManager.RazorClassLibrary.Html.RenderCounter RenderCount="_renderCount" />
-            @if(IsResizable)
+    <div class="bwmt_grid-display"
+         style="@_cachedHtmlElementRecord.DimensionsRecord.BuildCssStyleString()">
+        <BlazorWindowManager.RazorClassLibrary.Transformative.TransformativeDisplay HtmlElementRecord="_cachedHtmlElementRecord"
+                                                                                @ref="_transformativeDisplay" />
+        
+        <div class="bwmt_grid-display-tabs">
+            @for (int i = 0; i < GridRecord.GridTabRecords.Length; i++)
             {
-                <BlazorWindowManager.RazorClassLibrary.Transformative.TransformativeDisplay HtmlElementRecord="_cachedHtmlElementRecord" />
+                var tabIndex = i;
+                var gridTabRecord = GridRecord.GridTabRecords[tabIndex];
+                <GridTabDisplay GridTabRecord="gridTabRecord" />
             }
 
-            @if(GridRecord.GridWindowRecords.Any())
-            {
-                foreach(var row in GridRecord.GridWindowRecords)
-                {
-                    foreach(var column in row)
-                    {
-                       <BlazorWindowManager.RazorClassLibrary.Grid.HelperComponents.GridWindowDisplay GridWindowRecord="column" />
-                    }
-                }
-            }
-            else
-            {
-                <h3>The Grid has no windows open</h3>
-                <h3 style="cursor: pointer;"
-                    @onclick="OnAddWindowToGridOnClickAsync">
-                    Click Here to Add Window to this grid
-                </h3>
-            }
+            <GridBodyDisplay RenderedContentType="GridRecord.GridTabRecords[GridRecord.ActiveTabIndex].RenderedContentType" />
         </div>
     </div>
 }

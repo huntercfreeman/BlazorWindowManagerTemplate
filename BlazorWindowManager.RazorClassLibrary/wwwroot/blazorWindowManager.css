@@ -278,6 +278,10 @@
     position: fixed;
 }
 
+.bwmt_grid-window-tab-display {
+    display: inline-flex;
+}
+
 .bwmt_on-click-out-of-bounds-display {
     position: fixed;
     width: 100vw;
