@@ -20,7 +20,7 @@ public record GridStates
         _gridRecordMap = new Dictionary<Guid, GridRecord>();
     }
     
-    public GridStates(GridStates otherGridStates, ConstructActionKind constructActionKind, params GridRecord[] gridRecords)
+    public GridStates(GridStates otherGridStates, ConstructorActionKind constructActionKind, params GridRecord[] gridRecords)
     {
         _gridRecordMap = new Dictionary<Guid, GridRecord>(otherGridStates._gridRecordMap);
 
@@ -28,10 +28,10 @@ public record GridStates
         {
             switch (constructActionKind)
             {
-                case ConstructActionKind.Add:
+                case ConstructorActionKind.Add:
                     AddGridRecord(gridRecord);
                     break;
-                case ConstructActionKind.Replace:
+                case ConstructorActionKind.Replace:
                     ReplaceGridRecord(gridRecord);
                     break;
                 default:

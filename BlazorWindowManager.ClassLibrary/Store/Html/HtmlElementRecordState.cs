@@ -1,0 +1,52 @@
+﻿using BlazorWindowManager.ClassLibrary.ConstructorAction;
+using BlazorWindowManager.ClassLibrary.Html;
+using Fluxor;
+using System.Collections.Immutable;
+
+namespace BlazorWindowManager.ClassLibrary.Store.Html;
+
+[FeatureState]
+public record HtmlElementRecordsState
+{
+    private Dictionary<HtmlElementRecordKey, HtmlElementRecord> _htmlElementRecordMap;
+    
+    public HtmlElementRecordsState()
+    {
+        _htmlElementRecordMap = new();
+    }
+
+    public HtmlElementRecordsState(HtmlElementRecordsState otherHtmlElementRecordsState, 
+        ConstructorActionKind constructorActionKind,
+        HtmlElementRecord htmlElementRecord)
+    {
+        _htmlElementRecordMap = new(otherHtmlElementRecordsState._htmlElementRecordMap);
+
+        switch(constructorActionKind)
+        {
+            case ConstructorActionKind.Add:
+                PerformAdd(htmlElementRecord);
+                break;
+            case ConstructorActionKind.Replace:
+                PerformReplace(htmlElementRecord);
+                break;
+        }
+    }
+
+    private void PerformAdd(HtmlElementRecord htmlElementRecord)
+    {
+        _htmlElementRecordMap.Add(htmlElementRecord.HtmlElementRecordKey, htmlElementRecord);
+    }
+
+    public ImmutableArray<HtmlElementRecord> HtmlElementRecords => _htmlElementRecordMap.Values
+        .ToImmutableArray();
+
+    private void PerformReplace(HtmlElementRecord htmlElementRecord)
+    {
+        _htmlElementRecordMap[htmlElementRecord.HtmlElementRecordKey] = htmlElementRecord;
+    }
+
+    public HtmlElementRecord LookupHtmlElementRecord(HtmlElementRecordKey htmlElementRecordKey)
+    {
+        return _htmlElementRecordMap[htmlElementRecordKey];
+    }
+}

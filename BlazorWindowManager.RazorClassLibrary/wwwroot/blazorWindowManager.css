@@ -277,3 +277,18 @@
 .bwmt_grid-window-display-title-context-menu {
     position: fixed;
 }
+
+.bwmt_on-click-out-of-bounds-display {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    background-color: aqua;
+    opacity: 0.5;
+}
+
+.bwmt_html-element-example-display {
+    position: relative;
+    border: 2px solid purple;
+}

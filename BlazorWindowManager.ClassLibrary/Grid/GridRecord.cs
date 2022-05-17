@@ -17,7 +17,7 @@ public record GridRecord
     {
     }
 
-    public GridRecord(GridRecord otherGridRecord, ConstructActionKind constructActionKind, params GridWindowRecord[] gridWindowRecords)
+    public GridRecord(GridRecord otherGridRecord, ConstructorActionKind constructActionKind, params GridWindowRecord[] gridWindowRecords)
     {
         GridWindowRecords = new List<List<GridWindowRecord>>(otherGridRecord.GridWindowRecords);
 
@@ -25,10 +25,10 @@ public record GridRecord
         {
             switch (constructActionKind)
             {
-                case ConstructActionKind.Add:
+                case ConstructorActionKind.Add:
                     AddGridWindowRecord(gridWindowRecord);
                     break;
-                case ConstructActionKind.Replace:
+                case ConstructorActionKind.Replace:
                     ReplaceGridWindowRecord(gridWindowRecord);
                     break;
                 default:

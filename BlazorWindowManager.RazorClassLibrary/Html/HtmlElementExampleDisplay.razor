@@ -1,0 +1,12 @@
+﻿<div class="bwmt_html-element-example-display"
+     style="@HtmlElementRecordsState.Value.LookupHtmlElementRecord(HtmlElementRecordKey).DimensionsRecord.BuildCssStyleString()">
+    <BlazorWindowManager.RazorClassLibrary.Transformative.TransformativeDisplay DimensionsRecord="HtmlElementRecordsState.Value.LookupHtmlElementRecord(HtmlElementRecordKey).DimensionsRecord"
+                                                                                OnDimensionsRecordChangedEventCallback="OnDimensionsRecordChangedEventCallback"/>
+
+    HtmlElementExampleDisplay
+
+    <div @onclick="RequestZIndexOnClick"
+         style="cursor: pointer;">
+        ZIndex: @HtmlElementRecordsState.Value.LookupHtmlElementRecord(HtmlElementRecordKey).ZIndexRecord.ZIndexValue
+    </div>
+</div>

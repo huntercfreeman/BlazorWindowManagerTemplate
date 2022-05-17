@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlazorWindowManager.ClassLibrary.ConstructorAction;
 
-public enum ConstructActionKind
+public enum ConstructorActionKind
 {
     Add,
     Replace

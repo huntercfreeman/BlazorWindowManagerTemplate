@@ -10,7 +10,7 @@ public class GridReducer
     public static GridStates ReduceRegisterGridRecordAction(GridStates previousGridStates,
         RegisterGridRecordAction registerGridRecordAction)
     {
-        return new GridStates(previousGridStates, ConstructActionKind.Add, registerGridRecordAction.GridRecord);
+        return new GridStates(previousGridStates, ConstructorActionKind.Add, registerGridRecordAction.GridRecord);
     }
 
     [ReducerMethod]
@@ -42,7 +42,7 @@ public class GridReducer
         var nextGridRecord = new GridRecord(previousGridRecordFromId,
             unregisterGridWindowRecordAction.GridWindowRecordId);
 
-        return new GridStates(previousGridStates, ConstructActionKind.Replace, nextGridRecord);
+        return new GridStates(previousGridStates, ConstructorActionKind.Replace, nextGridRecord);
     }
 
     [ReducerMethod]
@@ -56,14 +56,14 @@ public class GridReducer
             .FindGridWindowRecordById(registerGridWindowTabRecordAction.GridWindowRecordId);
 
         var nextGridWindowRecord = new GridWindowRecord(previousGridWindowRecord,
-            ConstructActionKind.Add,
+            ConstructorActionKind.Add,
             registerGridWindowTabRecordAction.GridWindowTabRecord);
 
         var nextGridRecord = new GridRecord(previousGridRecord, 
-            ConstructActionKind.Replace, 
+            ConstructorActionKind.Replace, 
             nextGridWindowRecord);
 
-        return new GridStates(previousGridStates, ConstructActionKind.Replace, nextGridRecord);
+        return new GridStates(previousGridStates, ConstructorActionKind.Replace, nextGridRecord);
     }
 
     [ReducerMethod]
@@ -80,10 +80,10 @@ public class GridReducer
             unregisterGridWindowTabRecordAction.GridWindowRecordTabId);
 
         var nextGridRecord = new GridRecord(previousGridRecord,
-            ConstructActionKind.Replace,
+            ConstructorActionKind.Replace,
             nextGridWindowRecord);
 
-        return new GridStates(previousGridStates, ConstructActionKind.Replace, nextGridRecord);
+        return new GridStates(previousGridStates, ConstructorActionKind.Replace, nextGridRecord);
     }
 }
 

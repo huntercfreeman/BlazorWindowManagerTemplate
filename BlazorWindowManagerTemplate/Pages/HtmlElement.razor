@@ -1,0 +1,13 @@
+﻿@page "/htmlElement"
+@using BlazorWindowManager.ClassLibrary.Dimension
+@using BlazorWindowManager.ClassLibrary.Html
+
+<div class="html-element-example">
+    <BlazorWindowManager.RazorClassLibrary.Html.HtmlElementExampleWrapperDisplay />
+</div>
+
+@code {
+    private HtmlElementRecord _htmlElementRecord = new(new HtmlElementRecordKey(Guid.NewGuid()),
+        DimensionsRecord.FromPixelUnits(400, 400, 0, 0),
+        new ZIndexRecord(1));
+}

@@ -15,7 +15,7 @@ public record GridWindowRecord
         RenderedContentType = renderedContentType;
     }
 
-    public GridWindowRecord(GridWindowRecord otherGridWindowRecord, ConstructActionKind constructActionKind, params GridWindowTabRecord[] gridWindowTabRecords)
+    public GridWindowRecord(GridWindowRecord otherGridWindowRecord, ConstructorActionKind constructActionKind, params GridWindowTabRecord[] gridWindowTabRecords)
     {
         _gridWindowTabRecordMap = new Dictionary<Guid, GridWindowTabRecord>(otherGridWindowRecord._gridWindowTabRecordMap);
 
@@ -23,10 +23,10 @@ public record GridWindowRecord
         {
             switch (constructActionKind)
             {
-                case ConstructActionKind.Add:
+                case ConstructorActionKind.Add:
                     AddGridWindowTabRecord(gridWindowTabRecord);
                     break;
-                case ConstructActionKind.Replace:
+                case ConstructorActionKind.Replace:
                     ReplaceGridWindowTabRecord(gridWindowTabRecord);
                     break;
                 default:
