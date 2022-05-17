@@ -1,5 +1,6 @@
 ﻿using BlazorWindowManager.ClassLibrary.ConstructorAction;
 using BlazorWindowManager.ClassLibrary.Dimension;
+using BlazorWindowManager.ClassLibrary.Html;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -9,15 +10,12 @@ using System.Threading.Tasks;
 
 namespace BlazorWindowManager.ClassLibrary.Grid;
 
-public record GridRecord
+public record GridRecord(HtmlElementRecordKey HtmlElementRecordKey)
 {
     public readonly List<List<GridWindowRecord>> GridWindowRecords = new();
 
-    public GridRecord()
-    {
-    }
-
     public GridRecord(GridRecord otherGridRecord, ConstructorActionKind constructActionKind, params GridWindowRecord[] gridWindowRecords)
+        : this(otherGridRecord.HtmlElementRecordKey)
     {
         GridWindowRecords = new List<List<GridWindowRecord>>(otherGridRecord.GridWindowRecords);
 
@@ -40,6 +38,7 @@ public record GridRecord
     }
 
     public GridRecord(GridRecord otherGridRecord, params Guid[] gridWindowRecordIds)
+        : this(otherGridRecord.HtmlElementRecordKey)
     {
         GridWindowRecords = new List<List<GridWindowRecord>>(otherGridRecord.GridWindowRecords);
 

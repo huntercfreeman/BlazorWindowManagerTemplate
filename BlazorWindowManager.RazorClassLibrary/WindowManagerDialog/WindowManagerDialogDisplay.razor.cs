@@ -48,6 +48,35 @@ public partial class WindowManagerDialogDisplay : FluxorComponent
         await base.OnInitializedAsync();
     }
 
+    protected override bool ShouldRender()
+    {
+        bool shouldRender;
+
+        try
+        {
+            _cachedHtmlElementRecord = HtmlElementRecordsState.Value
+                .LookupHtmlElementRecord(WindowManagerDialogRecord.HtmlElementRecordKey);
+
+            if (_previousHtmlElementSequence is null ||
+                _previousHtmlElementSequence.Value != _cachedHtmlElementRecord.HtmlElementSequence)
+            {
+                shouldRender = true;
+            }
+            else
+            {
+                shouldRender = false;
+            }
+
+            _previousHtmlElementSequence = _cachedHtmlElementRecord.HtmlElementSequence;
+        }
+        catch (KeyNotFoundException)
+        {
+            shouldRender = false;
+        }
+
+        return shouldRender;
+    }
+
     protected override void OnAfterRender(bool firstRender)
     {
         _renderCount++;
@@ -72,34 +101,5 @@ public partial class WindowManagerDialogDisplay : FluxorComponent
         var action = new RemoveWindowManagerDialogRecordAction(WindowManagerDialogRecord.WindowManagerDialogRecordId);
 
         Dispatcher.Dispatch(action);
-    }
-
-    protected override bool ShouldRender()
-    {
-        bool shouldRender;
-
-        try
-        {
-            _cachedHtmlElementRecord = HtmlElementRecordsState.Value
-                .LookupHtmlElementRecord(WindowManagerDialogRecord.HtmlElementRecordKey);
-            
-            if (_previousHtmlElementSequence is null ||
-                _previousHtmlElementSequence.Value != _cachedHtmlElementRecord.HtmlElementSequence)
-            {
-                shouldRender = true;
-            }
-            else
-            {
-                shouldRender = false;
-            }
-
-            _previousHtmlElementSequence = _cachedHtmlElementRecord.HtmlElementSequence;
-        }
-        catch (KeyNotFoundException)
-        {
-            shouldRender = false;
-        }
-
-        return shouldRender;
     }
 }

@@ -13,13 +13,21 @@ using Fluxor;
 using BlazorWindowManager.ClassLibrary.Store.Grid;
 using Fluxor.Blazor.Web.Components;
 using BlazorWindowManager.ClassLibrary.Html;
+using BlazorWindowManager.ClassLibrary.Store.Html;
+using BlazorWindowManager.ClassLibrary.Store.Theme;
+using System.Text;
+using BlazorWindowManager.ClassLibrary.Theme;
 
-namespace BlazorWindowManager.RazorClassLibrary.Grid.HelperComponents;
+namespace BlazorWindowManager.RazorClassLibrary.Grid;
 
-public partial class GridDisplay
+public partial class GridDisplay : FluxorComponent
 {
     [Inject]
     private IViewportDimensionsService ViewportDimensionsService { get; set; } = null!;
+    [Inject]
+    private IState<HtmlElementRecordsState> HtmlElementRecordsState { get; set; } = null!;
+    [Inject]
+    private IState<ThemeState> ThemeState { get; set; } = null!;
     [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
 
@@ -34,15 +42,58 @@ public partial class GridDisplay
     [Parameter]
     public bool IsResizable { get; set; } = false;
 
-    protected override void OnInitialized()
-    {
-        _dimensionsRecord = InitialDimensionsRecord;
+    private WindowManagerDialogRecord? _windowManagerDialogRecord;
+    private Guid? _previousHtmlElementSequence;
+    private HtmlElementRecord? _cachedHtmlElementRecord;
+    private int _renderCount;
 
-        base.OnInitialized();
+    protected override async Task OnInitializedAsync()
+    {
+        var dimensionsRecordForGrid = InitialDimensionsRecord ?? DimensionsRecord.FromPixelUnits(400, 400, 0, 0);
+        var registerHtmlElemementAction = new RegisterHtmlElemementAction(GridRecord.HtmlElementRecordKey,
+            dimensionsRecordForGrid,
+            new ZIndexRecord(0));
+
+        Dispatcher.Dispatch(registerHtmlElemementAction);
+
+        await base.OnInitializedAsync();
     }
 
-    private DimensionsRecord _dimensionsRecord = null!;
-    private WindowManagerDialogRecord? _windowManagerDialogRecord;
+    protected override void OnAfterRender(bool firstRender)
+    {
+        _renderCount++;
+
+        base.OnAfterRender(firstRender);
+    }
+
+    protected override bool ShouldRender()
+    {
+        bool shouldRender;
+
+        try
+        {
+            _cachedHtmlElementRecord = HtmlElementRecordsState.Value
+                .LookupHtmlElementRecord(GridRecord.HtmlElementRecordKey);
+
+            if (_previousHtmlElementSequence is null ||
+                _previousHtmlElementSequence.Value != _cachedHtmlElementRecord.HtmlElementSequence)
+            {
+                shouldRender = true;
+            }
+            else
+            {
+                shouldRender = false;
+            }
+
+            _previousHtmlElementSequence = _cachedHtmlElementRecord.HtmlElementSequence;
+        }
+        catch (KeyNotFoundException)
+        {
+            shouldRender = false;
+        }
+
+        return shouldRender;
+    }
 
     private async Task OnAddWindowToGridOnClickAsync()
     {
@@ -86,5 +137,17 @@ public partial class GridDisplay
         var action = new RemoveWindowManagerDialogRecordAction(_windowManagerDialogRecord.WindowManagerDialogRecordId);
 
         Dispatcher.Dispatch(action);
+    }
+
+    private string GetCssClasses()
+    {
+        var classBuilder = new StringBuilder();
+
+        classBuilder.Append(ThemeState.Value.BlazorWindowManagerThemeKind.ConvertToCssClass());
+
+        if (!string.IsNullOrWhiteSpace(ThemeState.Value.CssClassForOverridingColors))
+            classBuilder.Append(ThemeState.Value.CssClassForOverridingColors);
+
+        return classBuilder.ToString();
     }
 }
