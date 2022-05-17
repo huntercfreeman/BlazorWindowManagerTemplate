@@ -2,6 +2,7 @@
 
 @using BlazorWindowManager.ClassLibrary.Dimension
 @using BlazorWindowManager.ClassLibrary.Grid
+@using BlazorWindowManager.ClassLibrary.Html
 @using BlazorWindowManager.ClassLibrary.WindowManagerDialog
 @using BlazorWindowManagerTemplate.Components
 
@@ -40,7 +41,7 @@ Welcome to your new app.
             $"{nameof(Counter)} Dialog",
             typeof(Counter),
             null,
-            initialDialogDimensionsRecord,
+            new HtmlElementRecordKey(Guid.NewGuid()),
             IsMinimized: false
         );
 

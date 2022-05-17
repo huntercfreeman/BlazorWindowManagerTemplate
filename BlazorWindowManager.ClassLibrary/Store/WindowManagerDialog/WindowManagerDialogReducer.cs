@@ -55,23 +55,4 @@ public class WindowManagerDialogReducer
 
         return nextWindowManagerDialogState;
     }
-
-    [ReducerMethod]
-    public static WindowManagerDialogWrapperState ReduceReplaceDialogDimensionsRecordAction(WindowManagerDialogWrapperState previousWindowManagerDialogWrapperState,
-        ReplaceWindowManagerDialogRecordAction replaceWindowManagerDialogRecordAction)
-    {
-        var nextWindowManagerDialogWrapperState = new WindowManagerDialogWrapperState(previousWindowManagerDialogWrapperState);
-
-        var nextWindowManagerDialogRecord = replaceWindowManagerDialogRecordAction.WindowManagerDialogRecord with
-        {
-            DimensionsRecord = replaceWindowManagerDialogRecordAction.ReplacementDimensionsRecord
-        };
-
-        nextWindowManagerDialogWrapperState.WindowManagerDialogRecordMap.Remove(replaceWindowManagerDialogRecordAction.WindowManagerDialogRecord.WindowManagerDialogRecordId);
-
-        nextWindowManagerDialogWrapperState.WindowManagerDialogRecordMap.Add(nextWindowManagerDialogRecord.WindowManagerDialogRecordId,
-            nextWindowManagerDialogRecord);
-
-        return nextWindowManagerDialogWrapperState;
-    }
 }

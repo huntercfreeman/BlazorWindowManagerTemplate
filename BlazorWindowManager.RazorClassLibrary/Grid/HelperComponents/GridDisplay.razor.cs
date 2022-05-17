@@ -12,6 +12,7 @@ using BlazorWindowManager.ClassLibrary.WindowManagerDialog;
 using Fluxor;
 using BlazorWindowManager.ClassLibrary.Store.Grid;
 using Fluxor.Blazor.Web.Components;
+using BlazorWindowManager.ClassLibrary.Html;
 
 namespace BlazorWindowManager.RazorClassLibrary.Grid.HelperComponents;
 
@@ -61,7 +62,7 @@ public partial class GridDisplay
             "Add Window To Grid",
             AddWindowToGridRenderedType,
             combinedParametersDictionary,
-            dimensionsRecordForDialog);
+            new HtmlElementRecordKey(Guid.NewGuid()));
 
         var action = new AddWindowManagerDialogRecordAction(_windowManagerDialogRecord);
 

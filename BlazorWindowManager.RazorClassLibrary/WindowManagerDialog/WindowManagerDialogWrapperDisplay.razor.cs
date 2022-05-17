@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using BlazorWindowManager.ClassLibrary.Store.Html;
 using BlazorWindowManager.ClassLibrary.Store.WindowManagerDialog;
 using Fluxor;
 using Fluxor.Blazor.Web.Components;

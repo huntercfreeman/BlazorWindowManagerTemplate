@@ -1,4 +1,5 @@
 ﻿using BlazorWindowManager.ClassLibrary.Dimension;
+using BlazorWindowManager.ClassLibrary.Html;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ public record WindowManagerDialogRecord(Guid WindowManagerDialogRecordId,
     string WindowManagerDialogRecordDisplayName,
     Type RenderedContentType,
     Dictionary<string, object>? RenderedContentParameters, 
-    DimensionsRecord DimensionsRecord, 
+    HtmlElementRecordKey HtmlElementRecordKey, 
     bool IsMinimized = false)
 {
     public const double DEFAULT_WIDTH_PERCENTAGE_OF_VIEWPORT_DIMENSIONS_MULTIPLIER_AS_DECIMAL = 0.7;

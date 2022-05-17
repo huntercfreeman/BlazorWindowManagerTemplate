@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BlazorWindowManager.ClassLibrary.Dimension;
+using BlazorWindowManager.ClassLibrary.Html;
+using BlazorWindowManager.ClassLibrary.Store.Html;
 using BlazorWindowManager.ClassLibrary.Store.WindowManagerDialog;
 using BlazorWindowManager.ClassLibrary.WindowManagerDialog;
 using BlazorWindowManager.RazorClassLibrary.Transformative;
@@ -15,6 +17,10 @@ namespace BlazorWindowManager.RazorClassLibrary.WindowManagerDialog;
 public partial class WindowManagerDialogDisplay : ComponentBase
 {
     [Inject]
+    private IViewportDimensionsService ViewportDimensionsService { get; set; } = null!;
+    [Inject]
+    private IState<HtmlElementRecordsState> HtmlElementRecordsState { get; set; } = null!;
+    [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
 
     [Parameter, EditorRequired]
@@ -23,6 +29,22 @@ public partial class WindowManagerDialogDisplay : ComponentBase
     public EventCallback<object> CompleteDialogInteractionEventCallback { get; set; }
 
     private TransformativeDisplay _transformativeDisplay = null!;
+    private Guid? _previousHtmlElementSequence;
+    private HtmlElementRecord? _cachedHtmlElementRecord;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var dimensionsRecordForDialog = await BlazorWindowManager.ClassLibrary.WindowManagerDialog.WindowManagerDialogRecord
+            .ConstructDefaultDimensionsRecord(ViewportDimensionsService);
+        
+        var registerHtmlElemementAction = new RegisterHtmlElemementAction(WindowManagerDialogRecord.HtmlElementRecordKey,
+            dimensionsRecordForDialog,
+            new ZIndexRecord(1));
+
+        Dispatcher.Dispatch(registerHtmlElemementAction);
+
+        await base.OnInitializedAsync();
+    }
 
     private void FireSubscribeToDragEventWithMoveHandle()
     {
@@ -41,5 +63,34 @@ public partial class WindowManagerDialogDisplay : ComponentBase
         var action = new RemoveWindowManagerDialogRecordAction(WindowManagerDialogRecord.WindowManagerDialogRecordId);
 
         Dispatcher.Dispatch(action);
+    }
+
+    protected override bool ShouldRender()
+    {
+        bool shouldRender;
+
+        try
+        {
+            _cachedHtmlElementRecord = HtmlElementRecordsState.Value
+                .LookupHtmlElementRecord(WindowManagerDialogRecord.HtmlElementRecordKey);
+            
+            if (_previousHtmlElementSequence is null ||
+                _previousHtmlElementSequence.Value != _cachedHtmlElementRecord.HtmlElementSequence)
+            {
+                shouldRender = true;
+            }
+            else
+            {
+                shouldRender = false;
+            }
+
+            _previousHtmlElementSequence = _cachedHtmlElementRecord.HtmlElementSequence;
+        }
+        catch (KeyNotFoundException)
+        {
+            shouldRender = false;
+        }
+
+        return shouldRender;
     }
 }

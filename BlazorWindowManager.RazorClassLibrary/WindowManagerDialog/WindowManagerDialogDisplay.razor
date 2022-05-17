@@ -1,5 +1,7 @@
-﻿<div class="bwmt_window-manager-dialog-display"
-     style="@WindowManagerDialogRecord.DimensionsRecord.BuildCssStyleString()">
+﻿@if(_cachedHtmlElementRecord is not null)
+{
+    <div class="bwmt_window-manager-dialog-display"
+     style="@HtmlElementRecordsState.Value.LookupHtmlElementRecord(WindowManagerDialogRecord.HtmlElementRecordKey).DimensionsRecord.BuildCssStyleString()">
 
      <div class="bwmt_window-manager-dialog-display-title bwmt_unselectable"
           @onmousedown="FireSubscribeToDragEventWithMoveHandle">
@@ -26,13 +28,12 @@
           </div>
      </div>
 
-     @* TODO: come back to this working on something need to comment it for now *@
-     @*<BlazorWindowManager.RazorClassLibrary.Transformative.TransformativeDisplay DimensionsRecord="WindowManagerDialogRecord.DimensionsRecord"
-                                                                              OnDimensionsRecordChangedEventCallback="OnDimensionsRecordChangedEventCallback"
-                                                                              @ref="_transformativeDisplay" />*@
+     <BlazorWindowManager.RazorClassLibrary.Transformative.TransformativeDisplay HtmlElementRecord="_cachedHtmlElementRecord"
+                                                                                 @ref="_transformativeDisplay" />
 
     <CascadingValue Name="CompleteDialogInteractionEventCallback" Value="CompleteDialogInteractionEventCallback">
         <DynamicComponent Type="WindowManagerDialogRecord.RenderedContentType"
                        Parameters="WindowManagerDialogRecord.RenderedContentParameters" />
     </CascadingValue>
 </div>
+}
