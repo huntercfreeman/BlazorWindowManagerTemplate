@@ -1,5 +1,20 @@
 ﻿<div class="bwmt_grid-window-display">
-    @GridWindowRecord.GridWindowRecordId
+    <div class="bwmt_grid-window-display-title">
+        <div class="bwmt_window-manager-dialog-display-title-content">
+              @GridWindowRecord.GridWindowDisplayName
+          </div>
+          
+          <div class="bwmt_window-manager-dialog-display-title-control-buttons">
+              <div class="bwmt_window-manager-dialog-display-title-control-button-wrapper"
+                   @onclick="CloseWindowTabOnClick"
+                   @onclick:stopPropagation="true"
+                   @onmousedown:stopPropagation="true">
+                  <IconChromeClose />
+              </div>
+          </div>
+    </div>
 
-    <DynamicComponent Type="GridWindowRecord.RenderedContentType" />
+    <div class="bwmt_grid-window-display-body">
+        <DynamicComponent Type="GridWindowRecord.RenderedContentType" />
+    </div>
 </div>

@@ -5,6 +5,7 @@
     --bwmt_grid-column-divider-display-width: 3px;
     --bwmt_dialog-task-bar-display-height: 4ch;
     --bwmt_dialog-display-title-height: 4ch;
+    --bwmt_grid-window-display-title-height: 4ch;
 }
 
 .bwmt_window-manager-theme-light {
@@ -23,6 +24,7 @@
     --bwmt_primary-active-background-color: #c0e0ff;
     --bwmt_primary-hover-background-color: #94b2f2;
     --bwmt_window-manager-dialog-display-title-background-color: #dadada;
+    --bwmt_grid-window-display-title-background-color: #dadada;
     --bwmt_primary-background-color: #fdfdfd;
 }
 
@@ -42,6 +44,7 @@
     --bwmt_primary-active-background-color: #c0e0ff;
     --bwmt_primary-hover-background-color: #94b2f2;
     --bwmt_window-manager-dialog-display-title-background-color: #dadada;
+    --bwmt_grid-window-display-title-background-color: #dadada;
     --bwmt_primary-background-color: #fdfdfd;
 }
 
@@ -117,7 +120,37 @@
         .bwmt_window-manager-dialog-display-title-control-buttons .bwmt_window-manager-dialog-display-title-control-button-wrapper:hover {
             background-color: var(--bwmt_primary-hover-background-color);
         }
+        
+.bwmt_grid-window-display-title {
+    cursor: pointer;
+    background-color: var(--bwmt_window-manager-dialog-display-title-background-color);
+    height: var(--bwmt_window-manager-dialog-display-title-height);
+    display: flex;
+    justify-content: space-between;
+}
 
+.bwmt_grid-window-display-title-content {
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+}
+
+.bwmt_grid-window-display-title-control-buttons {
+    display: flex;
+    align-items: center;
+}
+
+    .bwmt_grid-window-display-title-control-buttons .bwmt_grid-window-display-title-control-button-wrapper {
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+        padding: 0 5px;
+    }
+
+        .bwmt_grid-window-display-title-control-buttons .bwmt_grid-window-display-title-control-button-wrapper:hover {
+            background-color: var(--bwmt_primary-hover-background-color);
+        }
+        
 .bwmt_window-manager-dialog-task-bar-display {
     height: var(--bwmt_window-manager-dialog-task-bar-display-height);
     background-color: var(--bwmt_window-manager-dialog-task-bar-display-background-color);

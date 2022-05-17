@@ -1,9 +1,7 @@
 ﻿<div class="bwmt_grid-display"
      style="@_dimensionsRecord.BuildCssStyleString()">
-     
-    @GridRecord.GridRecordId
 
-     @if(IsResizable)
+    @if(IsResizable)
     {
         <BlazorWindowManager.RazorClassLibrary.Transformative.TransformativeDisplay DimensionsRecord="_dimensionsRecord" 
                                                                                     OnDimensionsRecordChangedEventCallback="OnDimensionsRecordChangedEventCallback" />    

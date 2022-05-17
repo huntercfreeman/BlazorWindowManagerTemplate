@@ -11,10 +11,11 @@ using BlazorWindowManager.ClassLibrary.Store.WindowManagerDialog;
 using BlazorWindowManager.ClassLibrary.WindowManagerDialog;
 using Fluxor;
 using BlazorWindowManager.ClassLibrary.Store.Grid;
+using Fluxor.Blazor.Web.Components;
 
-namespace BlazorWindowManager.RazorClassLibrary.Grid;
+namespace BlazorWindowManager.RazorClassLibrary.Grid.HelperComponents;
 
-public partial class GridDisplay : ComponentBase
+public partial class GridDisplay
 {
     [Inject]
     private IViewportDimensionsService ViewportDimensionsService { get; set; } = null!;

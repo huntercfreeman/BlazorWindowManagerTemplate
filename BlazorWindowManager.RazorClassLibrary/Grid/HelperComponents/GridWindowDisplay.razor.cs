@@ -13,4 +13,9 @@ public partial class GridWindowDisplay : ComponentBase
 {
     [Parameter]
     public GridWindowRecord GridWindowRecord { get; set; } = null!;
+
+    private void CloseWindowTabOnClick()
+    {
+
+    }
 }
