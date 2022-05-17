@@ -30,7 +30,8 @@ public class HtmlElementReducer
 
         var nextHtmlElementRecord = previousHtmlElementRecord with
         {
-            DimensionsRecord = replaceHtmlElementDimensionsRecordAction.DimensionsRecord
+            DimensionsRecord = replaceHtmlElementDimensionsRecordAction.DimensionsRecord,
+            HtmlElementSequence = Guid.NewGuid()
         };
 
         return new HtmlElementRecordsState(previousHtmlElementRecordsState, 
@@ -44,7 +45,8 @@ public class HtmlElementReducer
     {
         var htmlElementRecord = new HtmlElementRecord(registerHtmlElemementAction.HtmlElementRecordKey,
             registerHtmlElemementAction.DimensionsRecord,
-            registerHtmlElemementAction.ZIndexRecord);
+            registerHtmlElemementAction.ZIndexRecord,
+            Guid.NewGuid());
 
         return new HtmlElementRecordsState(previousHtmlElementRecordsState,
             ConstructorAction.ConstructorActionKind.Add,

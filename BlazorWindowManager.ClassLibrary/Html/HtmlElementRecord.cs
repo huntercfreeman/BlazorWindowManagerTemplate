@@ -9,6 +9,7 @@ namespace BlazorWindowManager.ClassLibrary.Html;
 
 public record HtmlElementRecord(HtmlElementRecordKey HtmlElementRecordKey, 
     DimensionsRecord DimensionsRecord, 
-    ZIndexRecord ZIndexRecord)
+    ZIndexRecord ZIndexRecord,
+    Guid HtmlElementSequence)
 {
 }
