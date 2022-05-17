@@ -9,12 +9,13 @@ using BlazorWindowManager.ClassLibrary.Store.WindowManagerDialog;
 using BlazorWindowManager.ClassLibrary.WindowManagerDialog;
 using BlazorWindowManager.RazorClassLibrary.Transformative;
 using Fluxor;
+using Fluxor.Blazor.Web.Components;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace BlazorWindowManager.RazorClassLibrary.WindowManagerDialog;
 
-public partial class WindowManagerDialogDisplay : ComponentBase
+public partial class WindowManagerDialogDisplay : FluxorComponent
 {
     [Inject]
     private IViewportDimensionsService ViewportDimensionsService { get; set; } = null!;
@@ -31,6 +32,7 @@ public partial class WindowManagerDialogDisplay : ComponentBase
     private TransformativeDisplay _transformativeDisplay = null!;
     private Guid? _previousHtmlElementSequence;
     private HtmlElementRecord? _cachedHtmlElementRecord;
+    private int _renderCount;
 
     protected override async Task OnInitializedAsync()
     {
@@ -44,6 +46,13 @@ public partial class WindowManagerDialogDisplay : ComponentBase
         Dispatcher.Dispatch(registerHtmlElemementAction);
 
         await base.OnInitializedAsync();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        _renderCount++;
+
+        base.OnAfterRender(firstRender);
     }
 
     private void FireSubscribeToDragEventWithMoveHandle()

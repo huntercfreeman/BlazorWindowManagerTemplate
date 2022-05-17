@@ -1,4 +1,8 @@
-﻿@if(_cachedHtmlElementRecord is not null)
+﻿@using Fluxor.Blazor.Web.Components
+
+@inherits FluxorComponent
+
+@if(_cachedHtmlElementRecord is not null)
 {
     <div class="bwmt_window-manager-dialog-display"
      style="@HtmlElementRecordsState.Value.LookupHtmlElementRecord(WindowManagerDialogRecord.HtmlElementRecordKey).DimensionsRecord.BuildCssStyleString()">
@@ -7,6 +11,7 @@
           @onmousedown="FireSubscribeToDragEventWithMoveHandle">
           <div class="bwmt_window-manager-dialog-display-title-content">
               @WindowManagerDialogRecord.WindowManagerDialogRecordDisplayName
+              <BlazorWindowManager.RazorClassLibrary.Html.RenderCounter RenderCount="_renderCount" />
           </div>
           
           <div class="bwmt_window-manager-dialog-display-title-control-buttons">
