@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace BlazorWindowManager.ClassLibrary.Grid;
 
-public record GridRecord(Guid GridRecordId, List<List<GridWindowRecord>> GridWindowRecords)
+public record GridRecord
 {
     private readonly Dictionary<Guid, GridWindowRecord> _gridWindowRecordMap;
 
-    public GridRecord(GridRecord otherGridRecord, ConstructActionKind constructActionKind, GridWindowRecord[] gridWindowRecords)
+    public GridRecord(GridRecord otherGridRecord, ConstructActionKind constructActionKind, params GridWindowRecord[] gridWindowRecords)
     {
         _gridWindowRecordMap = new Dictionary<Guid, GridWindowRecord>(otherGridRecord._gridWindowRecordMap);
 
@@ -29,19 +29,19 @@ public record GridRecord(Guid GridRecordId, List<List<GridWindowRecord>> GridWin
                 default:
                     throw new ApplicationException($"The {nameof(constructActionKind)} with value: " +
                         $"'{constructActionKind}' is not " +
-                        $"currently supported for constructing a {nameof(GridStates)}");
+                        $"currently supported for constructing a {nameof(GridRecord)}");
             }
         }
     }
 
     private void ReplaceGridWindowRecord(GridWindowRecord gridWindowRecord)
     {
-        throw new NotImplementedException();
+        _gridWindowRecordMap[gridWindowRecord.GridRecordId] = gridWindowRecord;
     }
 
     private void AddGridWindowRecord(GridWindowRecord gridWindowRecord)
     {
-        throw new NotImplementedException();
+        _gridWindowRecordMap.Add(gridWindowRecord.GridRecordId, gridWindowRecord);
     }
 
     public ImmutableArray<GridWindowRecord> GridWindowRecords => _gridWindowRecordMap.Values

@@ -79,6 +79,11 @@ public record GridStates
     
     public ImmutableArray<GridRecord> GridRecords => _gridRecordMap.Values
         .ToImmutableArray();
+
+    public GridRecord LookupGridWindowById(Guid gridRecordId)
+    {
+        return _gridRecordMap[gridRecordId];
+    }
 }
 
 // GridStates alterations
@@ -113,7 +118,12 @@ public class GridReducer
     public static GridStates ReduceRegisterGridWindowRecordAction(GridStates previousGridStates,
         RegisterGridWindowRecordAction registerGridWindowRecordAction)
     {
-        return new GridStates(previousGridStates, );
+        var nextGridRecord = new GridRecord(
+            previousGridStates.LookupGridWindowById(registerGridWindowRecordAction.GridWindowRecord.GridRecordId),
+            ConstructActionKind.Add,
+            registerGridWindowRecordAction.GridWindowRecord);
+
+        return new GridStates(previousGridStates, ConstructActionKind.Add, nextGridRecord);
     }
 
     [ReducerMethod]
