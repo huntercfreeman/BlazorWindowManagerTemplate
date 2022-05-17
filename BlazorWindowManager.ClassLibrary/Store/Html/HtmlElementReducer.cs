@@ -23,6 +23,22 @@ public class HtmlElementReducer
     }
     
     [ReducerMethod]
+    public static HtmlElementRecordsState ReduceReplaceHtmlElementDimensionsRecordAction(HtmlElementRecordsState previousHtmlElementRecordsState,
+        ReplaceHtmlElementDimensionsRecordAction replaceHtmlElementDimensionsRecordAction)
+    {
+        var previousHtmlElementRecord = previousHtmlElementRecordsState.LookupHtmlElementRecord(replaceHtmlElementDimensionsRecordAction.HtmlElementRecordKey);
+
+        var nextHtmlElementRecord = previousHtmlElementRecord with
+        {
+            DimensionsRecord = replaceHtmlElementDimensionsRecordAction.DimensionsRecord
+        };
+
+        return new HtmlElementRecordsState(previousHtmlElementRecordsState, 
+            ConstructorAction.ConstructorActionKind.Replace, 
+            nextHtmlElementRecord);
+    }
+    
+    [ReducerMethod]
     public static HtmlElementRecordsState ReduceRegisterHtmlElemementAction(HtmlElementRecordsState previousHtmlElementRecordsState,
         RegisterHtmlElemementAction registerHtmlElemementAction)
     {

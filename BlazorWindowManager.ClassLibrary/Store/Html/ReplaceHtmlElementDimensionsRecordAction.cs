@@ -1,0 +1,6 @@
+﻿using BlazorWindowManager.ClassLibrary.Dimension;
+using BlazorWindowManager.ClassLibrary.Html;
+
+namespace BlazorWindowManager.ClassLibrary.Store.Html;
+
+public record ReplaceHtmlElementDimensionsRecordAction(HtmlElementRecordKey HtmlElementRecordKey, DimensionsRecord DimensionsRecord);
