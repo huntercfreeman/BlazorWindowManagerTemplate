@@ -29,13 +29,6 @@ public partial class WindowManagerDialogDisplay : ComponentBase
         _transformativeDisplay.SubscribeToDragEventWithMoveHandle();
     }
 
-    private void OnDimensionsRecordChangedEventCallback(DimensionsRecord replacementDimensionsRecord)
-    {
-        var action = new ReplaceWindowManagerDialogRecordAction(WindowManagerDialogRecord, replacementDimensionsRecord);
-
-        Dispatcher.Dispatch(action);
-    }
-
     private void MinimizeDialogOnClick()
     {
         var action = new SetIsMinimizedDialogAction(WindowManagerDialogRecord, true);

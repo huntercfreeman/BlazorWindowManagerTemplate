@@ -33,11 +33,6 @@ public partial class HtmlElementExampleDisplay : FluxorComponent
         Dispatcher.Dispatch(zIndexRequestAction);
     }
 
-    private void OnDimensionsRecordChangedEventCallback()
-    {
-
-    }
-
     protected override bool ShouldRender()
     {
         var htmlElementRecord = HtmlElementRecordsState.Value.LookupHtmlElementRecord(HtmlElementRecordKey);

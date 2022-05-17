@@ -43,11 +43,6 @@ public partial class GridDisplay
     private DimensionsRecord _dimensionsRecord = null!;
     private WindowManagerDialogRecord? _windowManagerDialogRecord;
 
-    private void OnDimensionsRecordChangedEventCallback(DimensionsRecord dimensionsRecord)
-    {
-        _dimensionsRecord = dimensionsRecord;
-    }
-
     private async Task OnAddWindowToGridOnClickAsync()
     {
         if (_windowManagerDialogRecord is not null)

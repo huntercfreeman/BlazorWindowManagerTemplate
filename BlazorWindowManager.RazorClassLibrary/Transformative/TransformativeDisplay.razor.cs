@@ -26,8 +26,6 @@ public partial class TransformativeDisplay : FluxorComponent
 
     [Parameter, EditorRequired]
     public HtmlElementRecord HtmlElementRecord { get; set; } = null!;
-    [Parameter, EditorRequired]
-    public EventCallback<DimensionsRecord> OnDimensionsRecordChangedEventCallback { get; set; }
 
     private DimensionValuedUnit DEFAULT_HANDLE_SIZE_IN_PIXELS = new DimensionValuedUnit(7, DimensionUnitKind.Pixels);
     private Action? _dragStateEventHandler;
@@ -360,8 +358,10 @@ public partial class TransformativeDisplay : FluxorComponent
                     DimensionUnitKind.Pixels),
         };
 
-        if(OnDimensionsRecordChangedEventCallback.HasDelegate)
-            OnDimensionsRecordChangedEventCallback.InvokeAsync(nextDimensionsRecord);
+        var replaceHtmlElementDimensionsRecordAction =
+            new ReplaceHtmlElementDimensionsRecordAction(HtmlElementRecord.HtmlElementRecordKey, nextDimensionsRecord);
+
+        Dispatcher.Dispatch(replaceHtmlElementDimensionsRecordAction);
     }
     
     private void SubscribeToDragEventWithEastResizeHandle()
@@ -402,8 +402,10 @@ public partial class TransformativeDisplay : FluxorComponent
                 DimensionUnitKind.Pixels)
         };
 
-        if(OnDimensionsRecordChangedEventCallback.HasDelegate)
-            OnDimensionsRecordChangedEventCallback.InvokeAsync(nextDimensionsRecord);
+        var replaceHtmlElementDimensionsRecordAction =
+            new ReplaceHtmlElementDimensionsRecordAction(HtmlElementRecord.HtmlElementRecordKey, nextDimensionsRecord);
+
+        Dispatcher.Dispatch(replaceHtmlElementDimensionsRecordAction);
     }
     
     private void SubscribeToDragEventWithWestResizeHandle()
@@ -449,8 +451,10 @@ public partial class TransformativeDisplay : FluxorComponent
                 DimensionUnitKind.Pixels)
         };
 
-        if (OnDimensionsRecordChangedEventCallback.HasDelegate)
-            OnDimensionsRecordChangedEventCallback.InvokeAsync(nextDimensionsRecord);
+        var replaceHtmlElementDimensionsRecordAction =
+            new ReplaceHtmlElementDimensionsRecordAction(HtmlElementRecord.HtmlElementRecordKey, nextDimensionsRecord);
+
+        Dispatcher.Dispatch(replaceHtmlElementDimensionsRecordAction);
     }
     
     private void SubscribeToDragEventWithSouthEastResizeHandle()
@@ -471,8 +475,10 @@ public partial class TransformativeDisplay : FluxorComponent
                 DimensionUnitKind.Pixels)
         };
 
-        if (OnDimensionsRecordChangedEventCallback.HasDelegate)
-            OnDimensionsRecordChangedEventCallback.InvokeAsync(nextDimensionsRecord);
+        var replaceHtmlElementDimensionsRecordAction =
+            new ReplaceHtmlElementDimensionsRecordAction(HtmlElementRecord.HtmlElementRecordKey, nextDimensionsRecord);
+
+        Dispatcher.Dispatch(replaceHtmlElementDimensionsRecordAction);
     }
     
     private void SubscribeToDragEventWithSouthWestResizeHandle()
@@ -494,8 +500,10 @@ public partial class TransformativeDisplay : FluxorComponent
             Left = new DimensionValuedUnit(HtmlElementRecord.DimensionsRecord.Left.Value + DragState.Value.DeltaX, DimensionUnitKind.Pixels)
         };
 
-        if (OnDimensionsRecordChangedEventCallback.HasDelegate)
-            OnDimensionsRecordChangedEventCallback.InvokeAsync(nextDimensionsRecord);
+        var replaceHtmlElementDimensionsRecordAction =
+            new ReplaceHtmlElementDimensionsRecordAction(HtmlElementRecord.HtmlElementRecordKey, nextDimensionsRecord);
+
+        Dispatcher.Dispatch(replaceHtmlElementDimensionsRecordAction);
     }
     
     private void SubscribeToDragEventWithNorthWestResizeHandle()
@@ -519,8 +527,10 @@ public partial class TransformativeDisplay : FluxorComponent
             Left = new DimensionValuedUnit(HtmlElementRecord.DimensionsRecord.Left.Value + DragState.Value.DeltaX, DimensionUnitKind.Pixels)
         };
 
-        if (OnDimensionsRecordChangedEventCallback.HasDelegate)
-            OnDimensionsRecordChangedEventCallback.InvokeAsync(nextDimensionsRecord);
+        var replaceHtmlElementDimensionsRecordAction =
+            new ReplaceHtmlElementDimensionsRecordAction(HtmlElementRecord.HtmlElementRecordKey, nextDimensionsRecord);
+
+        Dispatcher.Dispatch(replaceHtmlElementDimensionsRecordAction);
     }
     
     public void SubscribeToDragEventWithMoveHandle()
@@ -541,8 +551,10 @@ public partial class TransformativeDisplay : FluxorComponent
                     DimensionUnitKind.Pixels)
         };
 
-        if (OnDimensionsRecordChangedEventCallback.HasDelegate)
-            OnDimensionsRecordChangedEventCallback.InvokeAsync(nextDimensionsRecord);
+        var replaceHtmlElementDimensionsRecordAction =
+            new ReplaceHtmlElementDimensionsRecordAction(HtmlElementRecord.HtmlElementRecordKey, nextDimensionsRecord);
+
+        Dispatcher.Dispatch(replaceHtmlElementDimensionsRecordAction);
     }
 
     private void ValidateDimensionUnitKindIsSupported(string dimensionName, 
