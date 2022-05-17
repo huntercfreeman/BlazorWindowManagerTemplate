@@ -11,7 +11,7 @@ namespace BlazorWindowManager.ClassLibrary.Grid;
 
 public record GridRecord
 {
-    private readonly List<List<GridWindowRecord>> _gridWindowRecords = new();
+    public readonly List<List<GridWindowRecord>> GridWindowRecords = new();
 
     public GridRecord()
     {
@@ -19,7 +19,7 @@ public record GridRecord
 
     public GridRecord(GridRecord otherGridRecord, ConstructActionKind constructActionKind, params GridWindowRecord[] gridWindowRecords)
     {
-        _gridWindowRecords = new List<List<GridWindowRecord>>(otherGridRecord._gridWindowRecords);
+        GridWindowRecords = new List<List<GridWindowRecord>>(otherGridRecord.GridWindowRecords);
 
         foreach (var gridWindowRecord in gridWindowRecords)
         {
@@ -41,12 +41,12 @@ public record GridRecord
 
     public GridRecord(GridRecord otherGridRecord, params Guid[] gridWindowRecordIds)
     {
-        _gridWindowRecords = new List<List<GridWindowRecord>>(otherGridRecord._gridWindowRecords);
+        GridWindowRecords = new List<List<GridWindowRecord>>(otherGridRecord.GridWindowRecords);
 
         // TODO: short circuit the loops when the corresponding GridWindow is found
         foreach (var gridWindowRecordId in gridWindowRecordIds)
         {
-            foreach (var row in _gridWindowRecords)
+            foreach (var row in GridWindowRecords)
             {
                 foreach (var column in row)
                 {
@@ -63,9 +63,9 @@ public record GridRecord
 
     private void ReplaceGridWindowRecord(GridWindowRecord gridWindowRecord)
     {
-        for (int i = 0; i < _gridWindowRecords.Count; i++)
+        for (int i = 0; i < GridWindowRecords.Count; i++)
         {
-            List<GridWindowRecord>? row = _gridWindowRecords[i];
+            List<GridWindowRecord>? row = GridWindowRecords[i];
             for (int i1 = 0; i1 < row.Count; i1++)
             {
                 GridWindowRecord? column = row[i1];
@@ -79,14 +79,14 @@ public record GridRecord
 
     private void AddGridWindowRecord(GridWindowRecord gridWindowRecord)
     {
-        _gridWindowRecords.First().Add(gridWindowRecord);
+        GridWindowRecords.First().Add(gridWindowRecord);
     }
 
     private ImmutableArray<ImmutableArray<GridWindowRecord>> GetGridWindowRecords()
     {
         List<ImmutableArray<GridWindowRecord>> temporaryGridWindowRecords = new();
 
-        foreach (var row in _gridWindowRecords)
+        foreach (var row in GridWindowRecords)
         {
             var temporaryRow = new List<GridWindowRecord>();
 
@@ -101,11 +101,9 @@ public record GridRecord
         return temporaryGridWindowRecords.ToImmutableArray();
     }
 
-    public ImmutableArray<ImmutableArray<GridWindowRecord>> GridWindowRecords => GetGridWindowRecords();
-
     public GridWindowRecord? FindGridWindowRecordById(Guid gridWindowRecordId)
     {
-        foreach (var row in _gridWindowRecords)
+        foreach (var row in GridWindowRecords)
         {
             foreach (var column in row)
             {

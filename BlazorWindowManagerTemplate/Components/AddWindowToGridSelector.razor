@@ -1,0 +1,41 @@
+﻿@using BlazorWindowManagerTemplate.Pages
+
+<div class="add-window-to-grid-selector">
+    <h3>Click a typeof() to select it for return</h3>
+
+    <div @onclick="() => _selectedType = typeof(Counter)"
+        style="@GetSelectedStyling(typeof(Counter))">
+        return typeof(Counter)
+    </div>
+    
+    <div @onclick="() => _selectedType = typeof(FetchData)"
+        style="@GetSelectedStyling(typeof(FetchData))">
+        return typeof(FetchData)
+    </div>
+    
+    <div @onclick="() => _selectedType = typeof(BlazorWindowManagerTemplate.Pages.Index)"
+        style="@GetSelectedStyling(typeof(BlazorWindowManagerTemplate.Pages.Index))">
+        return typeof(BlazorWindowManagerTemplate.Pages.Index)
+    </div>
+
+    <hr/>
+
+    <div @onclick="FireCompleteDialogInteractionEventCallback">Return selected typeof()</div>
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback<object> CompleteDialogInteractionEventCallback { get; set; }
+
+    private Type _selectedType = typeof(Counter);
+
+    private string GetSelectedStyling(Type type) => _selectedType == type
+        ? "background-color: #a2c5fd"
+        : string.Empty;
+
+    private void FireCompleteDialogInteractionEventCallback()
+    {
+        if (CompleteDialogInteractionEventCallback.HasDelegate)
+            CompleteDialogInteractionEventCallback.InvokeAsync(_selectedType);
+    }
+}

@@ -30,6 +30,8 @@
                                                                               OnDimensionsRecordChangedEventCallback="OnDimensionsRecordChangedEventCallback"
                                                                               @ref="_transformativeDisplay" />
 
-    <DynamicComponent Type="WindowManagerDialogRecord.RenderedContentType"
+    <CascadingValue Name="CompleteDialogInteractionEventCallback" Value="CompleteDialogInteractionEventCallback">
+        <DynamicComponent Type="WindowManagerDialogRecord.RenderedContentType"
                        Parameters="WindowManagerDialogRecord.RenderedContentParameters" />
+    </CascadingValue>
 </div>

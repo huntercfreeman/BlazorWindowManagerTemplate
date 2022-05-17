@@ -3,6 +3,7 @@
 @using BlazorWindowManager.ClassLibrary.Dimension
 @using BlazorWindowManager.ClassLibrary.Grid
 @using BlazorWindowManager.ClassLibrary.WindowManagerDialog
+@using BlazorWindowManagerTemplate.Components
 
 <PageTitle>Index</PageTitle>
 
@@ -20,7 +21,7 @@ Welcome to your new app.
 <BlazorWindowManager.RazorClassLibrary.Grid.GridDisplay GridRecord="_gridRecord"
                                                         InitialDimensionsRecord="DimensionsRecord.FromPixelUnits(400, 400, 0, 0)"
                                                         IsResizable="true"
-                                                        AddWindowToGridRenderedType="typeof(Counter)"
+                                                        AddWindowToGridRenderedType="typeof(AddWindowToGridSelector)"
                                                         AddWindowToGridRenderedTypeParameters="null" />
 
 @code {

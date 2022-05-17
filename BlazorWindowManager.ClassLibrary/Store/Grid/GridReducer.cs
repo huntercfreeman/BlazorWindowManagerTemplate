@@ -24,12 +24,11 @@ public class GridReducer
     public static GridStates ReduceRegisterGridWindowRecordAction(GridStates previousGridStates,
         RegisterGridWindowRecordAction registerGridWindowRecordAction)
     {
-        var nextGridRecord = new GridRecord(
-            previousGridStates.LookupGridRecordById(registerGridWindowRecordAction.GridWindowRecord.GridWindowRecordId),
-            ConstructActionKind.Add,
-            registerGridWindowRecordAction.GridWindowRecord);
+        var gridWindowRecord = previousGridStates.LookupGridRecordById(registerGridWindowRecordAction.GridRecordId);
 
-        return new GridStates(previousGridStates, ConstructActionKind.Add, nextGridRecord);
+        gridWindowRecord.GridWindowRecords.First().Add(registerGridWindowRecordAction.GridWindowRecord);
+
+        return previousGridStates;
     }
 
     [ReducerMethod]

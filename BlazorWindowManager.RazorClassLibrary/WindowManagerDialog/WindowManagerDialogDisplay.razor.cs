@@ -19,6 +19,8 @@ public partial class WindowManagerDialogDisplay : ComponentBase
 
     [Parameter, EditorRequired]
     public WindowManagerDialogRecord WindowManagerDialogRecord { get; set; } = null!;
+    [Parameter]
+    public EventCallback<object> CompleteDialogInteractionEventCallback { get; set; }
 
     private TransformativeDisplay _transformativeDisplay = null!;
 

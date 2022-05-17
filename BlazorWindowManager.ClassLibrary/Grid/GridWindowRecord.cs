@@ -9,6 +9,12 @@ public record GridWindowRecord
 
     public Guid GridWindowRecordId { get; } = Guid.NewGuid();
 
+    public GridWindowRecord(string gridWindowDisplayName, Type renderedContentType)
+    {
+        GridWindowDisplayName = gridWindowDisplayName;
+        RenderedContentType = renderedContentType;
+    }
+
     public GridWindowRecord(GridWindowRecord otherGridWindowRecord, ConstructActionKind constructActionKind, params GridWindowTabRecord[] gridWindowTabRecords)
     {
         _gridWindowTabRecordMap = new Dictionary<Guid, GridWindowTabRecord>(otherGridWindowRecord._gridWindowTabRecordMap);
@@ -53,6 +59,9 @@ public record GridWindowRecord
 
     public ImmutableArray<GridWindowTabRecord> GridWindowTabRecords => _gridWindowTabRecordMap.Values
         .ToImmutableArray();
+
+    public string GridWindowDisplayName { get; }
+    public Type RenderedContentType { get; }
 
     public GridWindowTabRecord LookupGridWindowRecordById(Guid gridWindowTabRecordId) =>
         _gridWindowTabRecordMap[gridWindowTabRecordId];
