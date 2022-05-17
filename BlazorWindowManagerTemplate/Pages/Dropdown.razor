@@ -1,0 +1,28 @@
+﻿@page "/dropdown"
+
+@using BlazorWindowManager.ClassLibrary.Dropdown
+
+<div class="dropdown-example">
+    <div @onclick="ShowDropdownOnClick"
+         style="cursor: pointer;">
+        ShowDropdownOnClick
+    </div>
+
+    <BlazorWindowManager.RazorClassLibrary.Dropdown.DropdownGroupDisplay DropdownGroupRecord="_dropdownGroupRecord" />
+</div>
+
+@code {
+    private DropdownGroupRecord _dropdownGroupRecord = new(false, new List<DropdownRecord>
+    {
+        new DropdownRecord(false, Array.Empty<DropdownRecord>(), "Test Dropdown 1"),
+        new DropdownRecord(false, Array.Empty<DropdownRecord>(), "Test Dropdown 2"),
+    });
+
+    private void ShowDropdownOnClick()
+    {
+        _dropdownGroupRecord = _dropdownGroupRecord with
+        {
+            ShouldDisplayDropdownRecords = true
+        };
+    }
+}

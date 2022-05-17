@@ -1,0 +1,10 @@
+﻿<div class="bwmt_dropdown-group-display">
+    
+    @if(DropdownGroupRecord.ShouldDisplayDropdownRecords)
+    {
+        foreach(var dropdownRecord in DropdownGroupRecord.DropdownRecords)
+        {
+            <DropdownDisplay DropdownRecord="dropdownRecord" />
+        }
+    }
+</div>

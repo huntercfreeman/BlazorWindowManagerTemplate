@@ -18,4 +18,9 @@ public partial class GridWindowDisplay : ComponentBase
     {
 
     }
+
+    private void ShowContextMenuOnMouseDown()
+    {
+
+    }
 }

@@ -273,3 +273,7 @@
     width: var(--bwmt_grid-column-divider-display-width);
     background-color: var(--bwmt_primary-border-color);
 }
+
+.bwmt_grid-window-display-title-context-menu {
+    position: fixed;
+}
