@@ -30,7 +30,7 @@ public partial class GridRowDisplay : ComponentBase
 
     private string GetStyle()
     {
-        var leftOperator = new DimensionValuedUnit(100.0, DimensionUnitKind.PercentageOfParentAsDecimal);
+        var leftOperator = new DimensionValuedUnit(100.0 / GridTotalRowCount, DimensionUnitKind.PercentageOfParentAsDecimal);
 
         var operand = DimensionValuedUnitCalculationOperatorKind.Subtraction;
 
