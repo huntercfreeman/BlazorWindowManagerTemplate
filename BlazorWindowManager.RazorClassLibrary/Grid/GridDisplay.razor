@@ -2,7 +2,8 @@
 
 @inherits FluxorComponent
 
-@if (_cachedHtmlElementRecord is not null)
+@if (_cachedHtmlElementRecord is not null && 
+     _cachedGridTabContainerRecord is not null)
 {
     <div class="bwmt_grid-display"
          style="@_cachedHtmlElementRecord.DimensionsRecord.BuildCssStyleString()">
@@ -10,14 +11,16 @@
                                                                                 @ref="_transformativeDisplay" />
         
         <div class="bwmt_grid-display-tabs">
-            @for (int i = 0; i < GridRecord.GridTabRecords.Length; i++)
+            @for (int i = 0; i < _cachedGridTabContainerRecord.GridTabRecords.Length; i++)
             {
                 var tabIndex = i;
-                var gridTabRecord = GridRecord.GridTabRecords[tabIndex];
-                <GridTabDisplay GridTabRecord="gridTabRecord" />
+                var gridTabRecord = _cachedGridTabContainerRecord.GridTabRecords[tabIndex];
+                <GridTabDisplay GridTabRecord="gridTabRecord"
+                                ActiveTabIndex="_cachedGridTabContainerRecord.ActiveTabIndex"
+                                MyTabIndex="tabIndex" />
             }
 
-            <GridBodyDisplay RenderedContentType="GridRecord.GridTabRecords[GridRecord.ActiveTabIndex].RenderedContentType" />
+            <GridBodyDisplay RenderedContentType="_cachedGridTabContainerRecord.GridTabRecords[_cachedGridTabContainerRecord.ActiveTabIndex].RenderedContentType" />
         </div>
     </div>
 }

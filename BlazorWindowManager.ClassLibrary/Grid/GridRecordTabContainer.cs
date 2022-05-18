@@ -3,6 +3,6 @@
 namespace BlazorWindowManager.ClassLibrary.Grid;
 
 public record GridTabContainerRecord(GridRecordKey GridRecordKey, 
-    int ActiveTab, 
+    int ActiveTabIndex, 
     ImmutableArray<GridTabRecord> GridTabRecords,
-    Guid HtmlElementSequence);
+    Guid GridTabContainerSequence);

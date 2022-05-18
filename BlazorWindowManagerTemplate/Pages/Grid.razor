@@ -1,12 +1,36 @@
 ﻿@page "/grid"
 @using BlazorWindowManager.ClassLibrary.Grid
+@using BlazorWindowManager.ClassLibrary.Html
+@using System.Collections.Immutable
 
 <div class="grid-example">
     <h3>Example of Grid Component</h3>
 
-    <BlazorWindowManager.RazorClassLibrary.Grid.GridDisplay GridRecord="" />
+    <BlazorWindowManager.RazorClassLibrary.Grid.GridDisplay GridRecord="_gridRecord"
+                                                            GridTabContainerRecord="_initialGridTabContainerRecord" />
 </div>
 
 @code {
-    private GridRecord _gridRecord = new(Guid.NewGuid(), );
+    public Grid()
+    {
+        _gridRecordKey = new GridRecordKey(Guid.NewGuid());
+
+        _gridRecord = new GridRecord(_gridRecordKey, new HtmlElementRecordKey(Guid.NewGuid()));
+
+        var initialGridTabRecords = new GridTabRecord[]
+        {
+            new GridTabRecord(Guid.NewGuid(), typeof(Counter), nameof(Counter)),
+            new GridTabRecord(Guid.NewGuid(), typeof(FetchData), nameof(FetchData)),
+            new GridTabRecord(Guid.NewGuid(), typeof(Counter), nameof(Counter))
+        };
+
+        _initialGridTabContainerRecord = new GridTabContainerRecord(_gridRecordKey,
+            0,
+            initialGridTabRecords.ToImmutableArray(),
+            Guid.NewGuid());
+    }
+
+    private GridRecordKey _gridRecordKey;
+    private GridRecord _gridRecord;
+    private GridTabContainerRecord _initialGridTabContainerRecord;
 }

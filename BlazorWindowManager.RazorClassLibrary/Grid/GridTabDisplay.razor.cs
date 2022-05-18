@@ -7,11 +7,25 @@ using Microsoft.AspNetCore.Components.Web;
 using BlazorWindowManager.RazorClassLibrary.Icons.Codicon;
 using BlazorWindowManager.ClassLibrary.Grid;
 using System.Collections.Immutable;
+using Fluxor;
 
 namespace BlazorWindowManager.RazorClassLibrary.Grid;
 
 public partial class GridTabDisplay : ComponentBase
 {
+    [Inject]
+    private IDispatcher Dispatcher { get; set; } = null!;
+
     [Parameter, EditorRequired]
     public GridTabRecord GridTabRecord { get; set; } = null!;
+    [Parameter, EditorRequired]
+    public int ActiveTabIndex { get; set; }
+    [Parameter, EditorRequired]
+    public int MyTabIndex { get; set; }
+
+    private string IsActiveCssClass => ActiveTabIndex == MyTabIndex
+        ? "bwmt_active"
+        : string.Empty;
+
+
 }

@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace BlazorWindowManager.ClassLibrary.Grid;
 
-public record GridRecord(Guid GridRecordId, 
+public record GridRecord(GridRecordKey GridRecordKey, 
     HtmlElementRecordKey HtmlElementRecordKey);

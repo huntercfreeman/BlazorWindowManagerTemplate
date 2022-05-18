@@ -6,26 +6,31 @@ using BlazorWindowManager.RazorClassLibrary.Transformative;
 using Fluxor;
 using Fluxor.Blazor.Web.Components;
 using BlazorWindowManager.ClassLibrary.Grid;
+using BlazorWindowManager.ClassLibrary.Store.Grid;
 
 namespace BlazorWindowManager.RazorClassLibrary.Grid;
 
 public partial class GridDisplay : FluxorComponent
 {
     [Inject]
-    private IViewportDimensionsService ViewportDimensionsService { get; set; } = null!;
-    [Inject]
     private IState<HtmlElementRecordsState> HtmlElementRecordsState { get; set; } = null!;
+    [Inject]
+    private IState<GridRecordsState> GridRecordsState { get; set; } = null!;
     [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
 
     [Parameter, EditorRequired]
     public GridRecord GridRecord { get; set; } = null!;
+    [Parameter, EditorRequired]
+    public GridTabContainerRecord GridTabContainerRecord { get; set; } = null!;
     [Parameter]
     public DimensionsRecord? InitialDimensionsRecord { get; set; }
 
     private TransformativeDisplay _transformativeDisplay = null!;
     private Guid? _previousHtmlElementSequence;
+    private Guid? _previousGridTabContainerSequence;
     private HtmlElementRecord? _cachedHtmlElementRecord;
+    private GridTabContainerRecord? _cachedGridTabContainerRecord;
     private int _renderCount;
 
     protected override async Task OnInitializedAsync()
@@ -36,11 +41,10 @@ public partial class GridDisplay : FluxorComponent
 
         Dispatcher.Dispatch(registerHtmlElemementAction);
 
-        var registerHtmlElemementAction = new RegisterHtmlElemementAction(GridRecord.HtmlElementRecordKey,
-            InitialDimensionsRecord ?? DimensionsRecord.FromPixelUnits(400, 400, 0, 0),
-            new ZIndexRecord(1));
+        var registerGridTabContainerRecordAction = new RegisterGridTabContainerRecordAction(GridRecord.GridRecordKey,
+            GridTabContainerRecord);
 
-        Dispatcher.Dispatch(registerHtmlElemementAction);
+        Dispatcher.Dispatch(registerGridTabContainerRecordAction);
 
         await base.OnInitializedAsync();
     }
@@ -51,20 +55,35 @@ public partial class GridDisplay : FluxorComponent
 
         try
         {
+            // Get HtmlElementRecord
+            var htmlElementRecordStepNeedsRerender = false;
+
             _cachedHtmlElementRecord = HtmlElementRecordsState.Value
                 .LookupHtmlElementRecord(GridRecord.HtmlElementRecordKey);
 
             if (_previousHtmlElementSequence is null ||
                 _previousHtmlElementSequence.Value != _cachedHtmlElementRecord.HtmlElementSequence)
             {
-                shouldRender = true;
-            }
-            else
-            {
-                shouldRender = false;
+                htmlElementRecordStepNeedsRerender = true;
             }
 
             _previousHtmlElementSequence = _cachedHtmlElementRecord.HtmlElementSequence;
+
+            // Get GridTabContainerRecord
+            var gridTabContainerRecordStepNeedsRerender = false;
+
+            _cachedGridTabContainerRecord = GridRecordsState.Value
+                .LookupHtmlElementRecord(GridRecord.GridRecordKey);
+
+            if (_previousGridTabContainerSequence is null ||
+                _previousGridTabContainerSequence.Value != _cachedGridTabContainerRecord.GridTabContainerSequence)
+            {
+                gridTabContainerRecordStepNeedsRerender = true;
+            }
+
+            _previousGridTabContainerSequence = _cachedGridTabContainerRecord.GridTabContainerSequence;
+
+            shouldRender = htmlElementRecordStepNeedsRerender || gridTabContainerRecordStepNeedsRerender;
         }
         catch (KeyNotFoundException)
         {
