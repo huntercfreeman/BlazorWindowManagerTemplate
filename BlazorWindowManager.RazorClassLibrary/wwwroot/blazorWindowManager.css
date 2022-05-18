@@ -233,7 +233,13 @@
     width: 100%;
     height: 100%;
     position: relative;
-    border: 2px solid blue;
+}
+
+.bwmt_grid-body-display {
+    height: 100%;
+    border-left: 2px solid var(--bwmt_primary-active-background-color);
+    border-right: 2px solid var(--bwmt_primary-active-background-color);
+    border-bottom: 2px solid var(--bwmt_primary-active-background-color);
 }
 
 .bwmt_grid-row-display {

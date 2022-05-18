@@ -26,7 +26,10 @@ _cachedGridTabContainerRecord: @(_cachedGridTabContainerRecord?.GridRecordKey.Gr
                 }
             </div>
 
-            <GridBodyDisplay RenderedContentType="_cachedGridTabContainerRecord.GridTabRecords[_cachedGridTabContainerRecord.ActiveTabIndex].RenderedContentType" />
+            <div class="grid-body-display-wrapping"
+                 style="height: calc(@_cachedHtmlElementRecord.DimensionsRecord.Height.BuildCssStyleString() - 32px);">
+                <GridBodyDisplay RenderedContentType="_cachedGridTabContainerRecord.GridTabRecords[_cachedGridTabContainerRecord.ActiveTabIndex].RenderedContentType" />
+            </div>
         </div>
     </div>
 }
