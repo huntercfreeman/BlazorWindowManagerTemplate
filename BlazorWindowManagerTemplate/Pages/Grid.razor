@@ -26,8 +26,8 @@
 
         _initialGridTabContainerRecord = new GridTabContainerRecord(_gridRecordKey,
             0,
-            initialGridTabRecords.ToImmutableArray(),
-            Guid.NewGuid());
+            Guid.NewGuid(),
+            initialGridTabRecords.ToArray());
     }
 
     private GridRecordKey _gridRecordKey;
