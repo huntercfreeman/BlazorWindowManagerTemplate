@@ -291,13 +291,13 @@
 
 }
 
+    .bwmt_grid-tabs-display.bwmt_active {
+        background-color: var(--bwmt_primary-active-background-color);
+    }
+
 .bwmt_grid-tabs-display-display-name {
 
 }
-
-    .bwmt_grid-tabs-display-display-name.bwmt_active {
-        background-color: var(--bwmt_primary-active-background-color);
-    }
 
 .bwmt_grid-tabs-display-close-button {
     margin-left: 5px;
