@@ -7,6 +7,9 @@ using Fluxor;
 using Fluxor.Blazor.Web.Components;
 using BlazorWindowManager.ClassLibrary.Grid;
 using BlazorWindowManager.ClassLibrary.Store.Grid;
+using BlazorWindowManager.ClassLibrary.Store.Theme;
+using System.Text;
+using BlazorWindowManager.ClassLibrary.Theme;
 
 namespace BlazorWindowManager.RazorClassLibrary.Grid;
 
@@ -16,6 +19,8 @@ public partial class GridDisplay : FluxorComponent
     private IState<HtmlElementRecordsState> HtmlElementRecordsState { get; set; } = null!;
     [Inject]
     private IState<GridRecordsState> GridRecordsState { get; set; } = null!;
+    [Inject]
+    private IState<ThemeState> ThemeState { get; set; } = null!;
     [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
 
@@ -91,6 +96,18 @@ public partial class GridDisplay : FluxorComponent
         }
 
         return shouldRender;
+    }
+
+    private string GetCssClasses()
+    {
+        var classBuilder = new StringBuilder();
+
+        classBuilder.Append(ThemeState.Value.BlazorWindowManagerThemeKind.ConvertToCssClass());
+
+        if (!string.IsNullOrWhiteSpace(ThemeState.Value.CssClassForOverridingColors))
+            classBuilder.Append(ThemeState.Value.CssClassForOverridingColors);
+
+        return classBuilder.ToString();
     }
 
     protected override void OnAfterRender(bool firstRender)

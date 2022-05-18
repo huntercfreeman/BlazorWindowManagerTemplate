@@ -123,8 +123,7 @@
         
 .bwmt_grid-window-display-title {
     cursor: pointer;
-    background-color: var(--bwmt_window-manager-dialog-display-title-background-color);
-    height: var(--bwmt_window-manager-dialog-display-title-height);
+    
     display: flex;
     justify-content: space-between;
 }
@@ -150,7 +149,13 @@
         .bwmt_grid-window-display-title-control-buttons .bwmt_grid-window-display-title-control-button-wrapper:hover {
             background-color: var(--bwmt_primary-hover-background-color);
         }
-        
+
+.bwmt_grid-display-tabs {
+    display: flex;
+    background-color: var(--bwmt_window-manager-dialog-display-title-background-color);
+    height: var(--bwmt_window-manager-dialog-display-title-height);
+}
+
 .bwmt_window-manager-dialog-task-bar-display {
     height: var(--bwmt_window-manager-dialog-task-bar-display-height);
     background-color: var(--bwmt_window-manager-dialog-task-bar-display-background-color);
