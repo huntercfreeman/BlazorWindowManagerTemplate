@@ -1,11 +1,13 @@
-﻿<div class="bwmt_grid-tabs-display @IsActiveCssClass">
+﻿<div class="bwmt_grid-tabs-display @IsActiveCssClass"
+     @onclick="DispatchSetActiveGridTabActionOnClick">
 
     <span class="bwmt_grid-tabs-display-display-name">
         @GridTabRecord.GridTabDisplayName
     </span>
 
     <span class="bwmt_grid-tabs-display-close-button"
-          @onclick="DispatchCloseGridTabActionOnClick">
+          @onclick="DispatchCloseGridTabActionOnClick"
+          @onclick:stopPropagation="true">
         <IconChromeClose />
     </span>
 </div>

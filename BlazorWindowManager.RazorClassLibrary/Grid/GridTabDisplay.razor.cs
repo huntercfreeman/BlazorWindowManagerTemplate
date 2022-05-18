@@ -36,4 +36,11 @@ public partial class GridTabDisplay : ComponentBase
 
         Dispatcher.Dispatch(closeGridTabAction);
     }
+    
+    private void DispatchSetActiveGridTabActionOnClick()
+    {
+        var setActiveGridTabAction = new SetActiveGridTabAction(GridRecordKey, MyTabIndex);
+
+        Dispatcher.Dispatch(setActiveGridTabAction);
+    }
 }

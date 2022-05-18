@@ -23,6 +23,17 @@ public record GridTabContainerRecord
             _gridTabRecordMap.Add(gridTabRecord.GridTabRecordId, gridTabRecord);
         }
     }
+    
+    public GridTabContainerRecord(GridTabContainerRecord otherGridTabContainerRecord,
+        int toBeActiveTabIndex,
+        Guid gridTabContainerSequence)
+    {
+        _gridTabRecordMap = new Dictionary<Guid, GridTabRecord>(otherGridTabContainerRecord._gridTabRecordMap);
+
+        GridRecordKey = otherGridTabContainerRecord.GridRecordKey;
+        ActiveTabIndex = toBeActiveTabIndex;
+        GridTabContainerSequence = gridTabContainerSequence;
+    }
 
     public GridTabContainerRecord(GridTabContainerRecord otherGridTabContainerRecord,
         int activeTabIndex,

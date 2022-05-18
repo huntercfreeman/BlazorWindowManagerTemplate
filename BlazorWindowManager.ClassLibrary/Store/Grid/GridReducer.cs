@@ -33,4 +33,21 @@ public class GridReducer
 
         return nextGridRecordsState;
     }
+    
+    [ReducerMethod]
+    public static GridRecordsState ReduceSetActiveGridTabAction(GridRecordsState previousGridRecordsState,
+        SetActiveGridTabAction setActiveGridTabAction)
+    {
+        var previousGridTabContainerRecord = previousGridRecordsState.LookupGridTabContainerRecord(setActiveGridTabAction.GridRecordKey);
+
+        var nextGridTabContainerRecord = new GridTabContainerRecord(previousGridTabContainerRecord,
+            setActiveGridTabAction.ToBeActiveTabIndex,
+            Guid.NewGuid());
+
+        var nextGridRecordsState = new GridRecordsState(previousGridRecordsState,
+            ConstructorActionKind.Replace,
+            nextGridTabContainerRecord);
+
+        return nextGridRecordsState;
+    }
 }
