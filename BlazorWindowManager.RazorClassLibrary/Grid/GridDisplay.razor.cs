@@ -51,7 +51,16 @@ public partial class GridDisplay : FluxorComponent
 
         Dispatcher.Dispatch(registerGridTabContainerRecordAction);
 
+        ShouldRender();
+
         await base.OnInitializedAsync();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        _renderCount++;
+
+        base.OnAfterRender(firstRender);
     }
 
     protected override bool ShouldRender()
@@ -110,10 +119,12 @@ public partial class GridDisplay : FluxorComponent
         return classBuilder.ToString();
     }
 
-    protected override void OnAfterRender(bool firstRender)
+    protected override void Dispose(bool disposing)
     {
-        _renderCount++;
+        var unregisterHtmlElemementAction = new UnregisterHtmlElemementAction(GridRecord.HtmlElementRecordKey);
 
-        base.OnAfterRender(firstRender);
+        Dispatcher.Dispatch(unregisterHtmlElemementAction);
+
+        base.Dispose(disposing);
     }
 }

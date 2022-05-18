@@ -2,6 +2,9 @@
 
 @inherits FluxorComponent
 
+_cachedHtmlElementRecord: @(_cachedHtmlElementRecord?.HtmlElementRecordKey.Id.ToString() ?? "null")
+_cachedGridTabContainerRecord: @(_cachedGridTabContainerRecord?.GridRecordKey.GridTabRecordId.ToString() ?? "null")
+
 @if (_cachedHtmlElementRecord is not null && 
      _cachedGridTabContainerRecord is not null)
 {

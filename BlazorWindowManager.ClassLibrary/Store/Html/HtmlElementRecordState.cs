@@ -31,6 +31,14 @@ public record HtmlElementRecordsState
                 break;
         }
     }
+    
+    public HtmlElementRecordsState(HtmlElementRecordsState otherHtmlElementRecordsState, 
+        HtmlElementRecordKey htmlElementRecordKey)
+    {
+        _htmlElementRecordMap = new(otherHtmlElementRecordsState._htmlElementRecordMap);
+
+        _htmlElementRecordMap.Remove(htmlElementRecordKey);
+    }
 
     private void PerformAdd(HtmlElementRecord htmlElementRecord)
     {

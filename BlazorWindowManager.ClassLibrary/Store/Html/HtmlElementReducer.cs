@@ -57,6 +57,7 @@ public class HtmlElementReducer
     public static HtmlElementRecordsState ReduceUnregisterHtmlElemementAction(HtmlElementRecordsState previousHtmlElementRecordsState,
         UnregisterHtmlElemementAction unregisterHtmlElemementAction)
     {
-        return previousHtmlElementRecordsState;
+        return new HtmlElementRecordsState(previousHtmlElementRecordsState,
+            unregisterHtmlElemementAction.HtmlElementRecordKey);
     }
 }
