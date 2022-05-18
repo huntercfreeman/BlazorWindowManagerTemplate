@@ -10,20 +10,6 @@ using System.Threading.Tasks;
 
 namespace BlazorWindowManager.ClassLibrary.Store.Grid;
 
-public class GridReducer
-{
-    [ReducerMethod]
-    public static GridRecordsState ReduceRegisterGridRecordTabContainerAction(GridRecordsState previousGridRecordsState,
-        RegisterGridTabContainerRecordAction registerGridTabContainerRecordAction)
-    {
-        var nextGridRecordsState = new GridRecordsState(previousGridRecordsState,
-            ConstructorActionKind.Add,
-            registerGridTabContainerRecordAction.GridTabContainerRecord);
-
-        return nextGridRecordsState;
-    }
-}
-
 [FeatureState]
 public record GridRecordsState
 {
@@ -64,7 +50,7 @@ public record GridRecordsState
         _gridTabContainerRecordMap[gridTabContainerRecord.GridRecordKey] = gridTabContainerRecord;
     }
 
-    public GridTabContainerRecord LookupHtmlElementRecord(GridRecordKey gridRecordKey)
+    public GridTabContainerRecord LookupGridTabContainerRecord(GridRecordKey gridRecordKey)
     {
         return _gridTabContainerRecordMap[gridRecordKey];
     }

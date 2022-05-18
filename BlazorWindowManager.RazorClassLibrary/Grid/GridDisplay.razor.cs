@@ -78,7 +78,7 @@ public partial class GridDisplay : FluxorComponent
             var gridTabContainerRecordStepNeedsRerender = false;
 
             _cachedGridTabContainerRecord = GridRecordsState.Value
-                .LookupHtmlElementRecord(GridRecord.GridRecordKey);
+                .LookupGridTabContainerRecord(GridRecord.GridRecordKey);
 
             if (_previousGridTabContainerSequence is null ||
                 _previousGridTabContainerSequence.Value != _cachedGridTabContainerRecord.GridTabContainerSequence)
