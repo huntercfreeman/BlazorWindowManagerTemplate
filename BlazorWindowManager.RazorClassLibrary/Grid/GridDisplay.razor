@@ -14,31 +14,29 @@ _cachedGridTabContainerRecord: @(_cachedGridTabContainerRecord?.GridRecordKey.Gr
             <BlazorWindowManager.RazorClassLibrary.Transformative.TransformativeDisplay HtmlElementRecord="_cachedHtmlElementRecord"
                                                                                         @ref="_transformativeDisplay" />
         
-            @if(_cachedGridTabContainerRecord.ActiveTabIndex is not null)
+            @if (_cachedGridTabContainerRecord.ActiveTabIndex is not null)
             {
-                    <div class="bwmt_grid-display-tabs">
+                <div class="bwmt_grid-display-tabs">
                     @for (int i = 0; i < _cachedGridTabContainerRecord.GridTabRecords.Length; i++)
                     {
                         var tabIndex = i;
                         var gridTabRecord = _cachedGridTabContainerRecord.GridTabRecords[tabIndex];
 
                         <GridTabDisplay GridTabRecord="gridTabRecord"
-                                        GridRecordKey="GridRecord.GridRecordKey"
-                                        ActiveTabIndex="_cachedGridTabContainerRecord.ActiveTabIndex.Value"
-                                        MyTabIndex="tabIndex"
-                                        AllowEmptyGrid="AllowEmptyGrid" />
+                                            GridRecordKey="GridRecord.GridRecordKey"
+                                            ActiveTabIndex="_cachedGridTabContainerRecord.ActiveTabIndex.Value"
+                                            MyTabIndex="tabIndex"
+                                            AllowEmptyGrid="AllowEmptyGrid" />
                     }
                 </div>
+            }
 
                 <div class="grid-body-display-wrapping"
                      style="height: calc(@_cachedHtmlElementRecord.DimensionsRecord.Height.BuildCssStyleString() - 32px);">
-                    <GridBodyDisplay RenderedContentType="_cachedGridTabContainerRecord.GridTabRecords[_cachedGridTabContainerRecord.ActiveTabIndex.Value].RenderedContentType" />
-                </div>
-            }
-            else
-            {
-                <h3>Active Tab Index is null</h3>
-            }
+
+                    <GridBodyDisplay RenderedContentType="GetGridBodyRenderedContentType()"
+                                     EmptyGridTabContainerRenderFragment="EmptyGridTabContainerRenderFragment" />
+            </div>
         </div>
     </div>
 }

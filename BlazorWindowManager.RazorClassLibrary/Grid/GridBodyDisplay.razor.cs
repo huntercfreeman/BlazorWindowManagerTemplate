@@ -11,5 +11,7 @@ namespace BlazorWindowManager.RazorClassLibrary.Grid;
 public partial class GridBodyDisplay : ComponentBase
 {
     [Parameter, EditorRequired]
-    public Type RenderedContentType { get; set; } = null!;
+    public Type? RenderedContentType { get; set; }
+    [Parameter, EditorRequired]
+    public RenderFragment EmptyGridTabContainerRenderFragment { get; set; } = null!;
 }

@@ -2,12 +2,17 @@
 @using BlazorWindowManager.ClassLibrary.Grid
 @using BlazorWindowManager.ClassLibrary.Html
 @using System.Collections.Immutable
+@using BlazorWindowManagerTemplate.Components
 
 <div class="grid-example">
     <h3>Example of Grid Component</h3>
 
     <BlazorWindowManager.RazorClassLibrary.Grid.GridDisplay GridRecord="_gridRecord"
-                                                            GridTabContainerRecord="_initialGridTabContainerRecord" />
+                                                            GridTabContainerRecord="_initialGridTabContainerRecord">
+        <EmptyGridTabContainerRenderFragment>
+            <AddWindowToGridSelector />
+        </EmptyGridTabContainerRenderFragment>
+    </BlazorWindowManager.RazorClassLibrary.Grid.GridDisplay>
 </div>
 
 @code {
