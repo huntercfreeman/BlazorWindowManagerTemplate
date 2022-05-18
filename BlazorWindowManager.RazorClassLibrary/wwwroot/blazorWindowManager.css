@@ -1,6 +1,6 @@
 ﻿:root {
-    --bwmt_grid-column-display-add-column-button-row-margin-top: 5px;
-    --bwmt_grid-column-display-add-column-button-item-padding: 5px;
+    --bwmt_grid-display-add-button-row-margin-top: 5px;
+    --bwmt_grid-display-add-button-item-padding: 5px;
     --bwmt_grid-row-divider-display-height: 3px;
     --bwmt_grid-column-divider-display-width: 3px;
     --bwmt_dialog-task-bar-display-height: 4ch;
@@ -22,6 +22,7 @@
     --bwmt_secondary-font-color: gray;
     --bwmt_window-manager-dialog-task-bar-display-background-color: silver;
     --bwmt_primary-active-background-color: #c0e0ff;
+    --bwmt_secondary-active-background-color: #c0e0ff;
     --bwmt_primary-hover-background-color: #94b2f2;
     --bwmt_window-manager-dialog-display-title-background-color: #dadada;
     --bwmt_grid-window-display-title-background-color: #dadada;
@@ -42,6 +43,7 @@
     --bwmt_secondary-font-color: gray;
     --bwmt_window-manager-dialog-task-bar-display-background-color: silver;
     --bwmt_primary-active-background-color: #c0e0ff;
+    --bwmt_secondary-active-background-color: #c0e0ff;
     --bwmt_primary-hover-background-color: #94b2f2;
     --bwmt_window-manager-dialog-display-title-background-color: #dadada;
     --bwmt_grid-window-display-title-background-color: #dadada;
@@ -348,4 +350,32 @@
 .bwmt_html-element-example-display {
     position: relative;
     border: 2px solid purple;
+}
+
+.bwmt_grid-display-add-buttons {
+    position: absolute;
+    left: calc(50% - 4em);
+    top: calc(50% - 9ch);
+    font-family: monospace;
+}
+
+.bwmt_grid-display-add-button-row {
+    margin-top: var(--bwmt_grid-display-add-button-row-margin-top);
+}
+
+.bwmt_grid-display-add-button-item {
+    cursor: pointer;
+    padding: var(--bwmt_grid-display-add-button-item-padding);
+}
+
+    .bwmt_grid-display-add-button-item:hover {
+        background-color: var(--bwmt_primary-hover-background-color);
+    }
+
+    .bwmt_grid-display-add-button-item.bwmt_active {
+        background-color: var(--bwmt_primary-active-background-color);
+    }
+
+.bwmt_grid-display-add-button-item-diagonal {
+    visibility: hidden;
 }

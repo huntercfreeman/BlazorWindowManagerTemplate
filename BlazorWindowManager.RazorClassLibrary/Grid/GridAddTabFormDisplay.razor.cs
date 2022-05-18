@@ -8,6 +8,7 @@ using BlazorWindowManager.RazorClassLibrary.Icons.Codicon;
 using BlazorWindowManager.ClassLibrary.Store.Grid;
 using BlazorWindowManager.ClassLibrary.Grid;
 using Fluxor;
+using BlazorWindowManager.ClassLibrary.Direction;
 
 namespace BlazorWindowManager.RazorClassLibrary.Grid;
 
@@ -25,6 +26,8 @@ public partial class GridAddTabFormDisplay : ComponentBase
     [CascadingParameter, EditorRequired]
     public GridRecordKey GridRecordKey { get; set; } = null!;
 
+    private CardinalDirectionKind _selectedCardinalDirectionKind = CardinalDirectionKind.CurrentPosition;
+
     private void OnTypeToRenderSelectedAction((Type renderedContentType, string renderedContentTabDisplayName) argumentTuple)
     {
         var guidId = ActiveGridTabId ?? Guid.NewGuid();
@@ -34,5 +37,10 @@ public partial class GridAddTabFormDisplay : ComponentBase
             ActiveGridTabIndex ?? 0);
 
         Dispatcher.Dispatch(replaceGridTabAction);
+    }
+
+    private void OnCardinalDirectionKindSelectedEventCallback(CardinalDirectionKind cardinalDirectionKind)
+    {
+        _selectedCardinalDirectionKind = cardinalDirectionKind;
     }
 }
