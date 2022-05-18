@@ -5,40 +5,45 @@
 _cachedHtmlElementRecord: @(_cachedHtmlElementRecord?.HtmlElementRecordKey.Id.ToString() ?? "null")
 _cachedGridTabContainerRecord: @(_cachedGridTabContainerRecord?.GridRecordKey.GridTabRecordId.ToString() ?? "null")
 
-@if (_cachedHtmlElementRecord is not null && 
-     _cachedGridTabContainerRecord is not null)
+@if (_cachedHtmlElementRecord is not null &&
+ _cachedGridTabContainerRecord is not null)
 {
-    <div  class="bwmt_grid-display-theme-wrapping @GetCssClasses()">
+    <div class="bwmt_grid-display-theme-wrapping @GetCssClasses()">
         <div class="bwmt_grid-display"
-             style="@_cachedHtmlElementRecord.DimensionsRecord.BuildCssStyleString()">
+         style="@_cachedHtmlElementRecord.DimensionsRecord.BuildCssStyleString()">
             <BlazorWindowManager.RazorClassLibrary.Transformative.TransformativeDisplay HtmlElementRecord="_cachedHtmlElementRecord"
-                                                                                        @ref="_transformativeDisplay" />
-        
-            @if (_cachedGridTabContainerRecord.ActiveTabIndex is not null)
-            {
+                                                                                    @ref="_transformativeDisplay" />
+            <CascadingValue Value="GridRecord.GridRecordKey">
                 <div class="bwmt_grid-display-tabs">
-                    @for (int i = 0; i < _cachedGridTabContainerRecord.GridTabRecords.Length; i++)
+                    @if (_cachedGridTabContainerRecord.ActiveTabIndex is not null)
                     {
-                        var tabIndex = i;
-                        var gridTabRecord = _cachedGridTabContainerRecord.GridTabRecords[tabIndex];
+                    <div class="bwmt_grid-display-change-active-tab-section">
+                        @for (int i = 0; i < _cachedGridTabContainerRecord.GridTabRecords.Length; i++)
+                            {
+                                var tabIndex = i;
+                                var gridTabRecord = _cachedGridTabContainerRecord.GridTabRecords[tabIndex];
 
-                        <GridTabDisplay GridTabRecord="gridTabRecord"
-                                            GridRecordKey="GridRecord.GridRecordKey"
-                                            ActiveTabIndex="_cachedGridTabContainerRecord.ActiveTabIndex.Value"
-                                            MyTabIndex="tabIndex"
-                                            AllowEmptyGrid="AllowEmptyGrid" />
+                            <GridTabDisplay GridTabRecord="gridTabRecord"
+                                    GridRecordKey="GridRecord.GridRecordKey"
+                                    ActiveTabIndex="_cachedGridTabContainerRecord.ActiveTabIndex.Value"
+                                    MyTabIndex="tabIndex"
+                                    AllowEmptyGrid="AllowEmptyGrid" />
+                            }
+                    </div>
                     }
-                </div>
-            }
 
-                <div class="grid-body-display-wrapping"
-                     style="height: calc(@_cachedHtmlElementRecord.DimensionsRecord.Height.BuildCssStyleString() - 32px);">
-
-                     <CascadingValue Name="@TYPE_TO_RENDER_SELECTED_ACTION_PARAMETER_NAME" Value="OnTypeToRenderSelectedAction">
-                        <GridBodyDisplay RenderedContentType="GetGridBodyRenderedContentType()"
-                                         EmptyGridTabContainerRenderFragment="EmptyGridTabContainerRenderFragment" />
-                    </CascadingValue>
+                <GridAddTabDisplay />
             </div>
-        </div>
+
+            <div class="grid-body-display-wrapping"
+                 style="height: calc(@_cachedHtmlElementRecord.DimensionsRecord.Height.BuildCssStyleString() - 32px);">
+
+                <CascadingValue Name="@TYPE_TO_RENDER_SELECTED_ACTION_PARAMETER_NAME" Value="OnTypeToRenderSelectedAction">
+                    <GridBodyDisplay RenderedContentType="GetGridBodyRenderedContentType()"
+                                     EmptyGridTabContainerRenderFragment="EmptyGridTabContainerRenderFragment" />
+                </CascadingValue>
+            </div>
+        </CascadingValue>
     </div>
+</div>
 }

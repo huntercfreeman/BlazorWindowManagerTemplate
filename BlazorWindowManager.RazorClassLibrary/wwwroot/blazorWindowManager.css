@@ -156,6 +156,15 @@
     height: var(--bwmt_window-manager-dialog-display-title-height);
 }
 
+.bwmt_grid-display-change-active-tab-section {
+    display: inline-flex;
+}
+
+.bwmt_grid-add-tab-display {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
 .bwmt_window-manager-dialog-task-bar-display {
     height: var(--bwmt_window-manager-dialog-task-bar-display-height);
     background-color: var(--bwmt_window-manager-dialog-task-bar-display-background-color);
