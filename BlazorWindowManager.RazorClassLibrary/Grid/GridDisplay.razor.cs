@@ -29,6 +29,8 @@ public partial class GridDisplay : FluxorComponent
     [Parameter, EditorRequired]
     public GridTabContainerRecord GridTabContainerRecord { get; set; } = null!;
     [Parameter]
+    public bool AllowEmptyGrid { get; set; } = true;
+    [Parameter]
     public DimensionsRecord? InitialDimensionsRecord { get; set; }
 
     private TransformativeDisplay _transformativeDisplay = null!;

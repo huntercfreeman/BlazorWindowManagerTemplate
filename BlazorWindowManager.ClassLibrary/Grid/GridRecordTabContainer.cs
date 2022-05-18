@@ -67,10 +67,10 @@ public record GridTabContainerRecord
     {
         _gridTabRecordMap = new Dictionary<Guid, GridTabRecord>(otherGridTabContainerRecord._gridTabRecordMap);
 
-        int nextActiveTabIndex = otherGridTabContainerRecord.ActiveTabIndex;
+        int? nextActiveTabIndex = otherGridTabContainerRecord.ActiveTabIndex;
 
         if (nextActiveTabIndex == otherGridTabContainerRecord.GridTabRecords.Length - 1)
-            nextActiveTabIndex--; 
+            nextActiveTabIndex--;
         
         GridRecordKey = otherGridTabContainerRecord.GridRecordKey;
         ActiveTabIndex = nextActiveTabIndex;
@@ -80,6 +80,9 @@ public record GridTabContainerRecord
         {
             _gridTabRecordMap.Remove(gridTabRecordId);
         }
+
+        if (!_gridTabRecordMap.Any())
+            ActiveTabIndex = null;
     }
     
     private void PerformAdd(GridTabRecord gridTabRecord)
@@ -96,6 +99,6 @@ public record GridTabContainerRecord
         .ToImmutableArray();
 
     public GridRecordKey GridRecordKey { get; }
-    public int ActiveTabIndex { get; }
+    public int? ActiveTabIndex { get; }
     public Guid GridTabContainerSequence { get; }
 }

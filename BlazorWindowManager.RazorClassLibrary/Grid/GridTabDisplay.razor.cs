@@ -25,6 +25,8 @@ public partial class GridTabDisplay : ComponentBase
     public int ActiveTabIndex { get; set; }
     [Parameter, EditorRequired]
     public int MyTabIndex { get; set; }
+    [Parameter, EditorRequired]
+    public bool AllowEmptyGrid { get; set; }
 
     private string IsActiveCssClass => ActiveTabIndex == MyTabIndex
         ? "bwmt_active"
@@ -32,7 +34,7 @@ public partial class GridTabDisplay : ComponentBase
 
     private void DispatchCloseGridTabActionOnClick()
     {
-        var closeGridTabAction = new CloseGridTabAction(GridRecordKey, GridTabRecord.GridTabRecordId, MyTabIndex);
+        var closeGridTabAction = new CloseGridTabAction(GridRecordKey, GridTabRecord.GridTabRecordId, MyTabIndex, AllowEmptyGrid);
 
         Dispatcher.Dispatch(closeGridTabAction);
     }

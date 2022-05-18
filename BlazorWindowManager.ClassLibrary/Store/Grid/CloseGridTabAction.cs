@@ -2,4 +2,4 @@
 
 namespace BlazorWindowManager.ClassLibrary.Store.Grid;
 
-public record CloseGridTabAction(GridRecordKey GridRecordKey, Guid GridTabRecordId, int ToBeClosedTabIndex);
+public record CloseGridTabAction(GridRecordKey GridRecordKey, Guid GridTabRecordId, int ToBeClosedTabIndex, bool AllowEmptyGrid);
