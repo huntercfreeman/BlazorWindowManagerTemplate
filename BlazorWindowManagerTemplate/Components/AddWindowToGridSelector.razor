@@ -1,41 +1,40 @@
 ﻿@using BlazorWindowManagerTemplate.Pages
 
 <div class="add-window-to-grid-selector">
-    <h3>Click a typeof() to select it for return</h3>
+    <h3>Select a Blazor component Type to render</h3>
 
-    <div @onclick="() => _selectedType = typeof(Counter)"
+    <div @onclick="() => _selectionTuple = (typeof(Counter), nameof(Counter))"
         style="@GetSelectedStyling(typeof(Counter))">
-        return typeof(Counter)
+        (@typeof(Counter).Name, @nameof(Counter))
     </div>
     
-    <div @onclick="() => _selectedType = typeof(FetchData)"
+    <div @onclick="() => _selectionTuple = (typeof(FetchData), nameof(FetchData))"
         style="@GetSelectedStyling(typeof(FetchData))">
-        return typeof(FetchData)
+        (@typeof(FetchData).Name, @nameof(FetchData))
     </div>
     
-    <div @onclick="() => _selectedType = typeof(BlazorWindowManagerTemplate.Pages.Index)"
+    <div @onclick="() => _selectionTuple = (typeof(BlazorWindowManagerTemplate.Pages.Index), nameof(BlazorWindowManagerTemplate.Pages.Index))"
         style="@GetSelectedStyling(typeof(BlazorWindowManagerTemplate.Pages.Index))">
-        return typeof(BlazorWindowManagerTemplate.Pages.Index)
+        (@typeof(BlazorWindowManagerTemplate.Pages.Index).Name, @nameof(BlazorWindowManagerTemplate.Pages.Index))
     </div>
 
     <hr/>
 
-    <div @onclick="FireCompleteDialogInteractionEventCallback">Return selected typeof()</div>
+    <div @onclick="FireTypeToRenderSelectedAction">Return selection: (@_selectionTuple.renderedContentType.Name, @_selectionTuple.renderedContentTabDisplayName)</div>
 </div>
 
 @code {
-    [Parameter]
-    public EventCallback<object> CompleteDialogInteractionEventCallback { get; set; }
+    [CascadingParameter(Name=$"{BlazorWindowManager.RazorClassLibrary.Grid.GridDisplay.TYPE_TO_RENDER_SELECTED_ACTION_PARAMETER_NAME}")]
+    public Action<(Type renderedContentType, string renderedContentTabDisplayName)> TypeToRenderSelectedAction { get; set; }
 
-    private Type _selectedType = typeof(Counter);
+    private (Type renderedContentType, string renderedContentTabDisplayName) _selectionTuple = (typeof(Counter), nameof(Counter));
 
-    private string GetSelectedStyling(Type type) => _selectedType == type
+    private string GetSelectedStyling(Type type) => _selectionTuple.renderedContentType == type
         ? "background-color: #a2c5fd"
         : string.Empty;
 
-    private void FireCompleteDialogInteractionEventCallback()
+    private void FireTypeToRenderSelectedAction()
     {
-        if (CompleteDialogInteractionEventCallback.HasDelegate)
-            CompleteDialogInteractionEventCallback.InvokeAsync(_selectedType);
+        TypeToRenderSelectedAction(_selectionTuple);
     }
 }

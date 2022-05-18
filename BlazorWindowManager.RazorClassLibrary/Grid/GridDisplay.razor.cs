@@ -35,6 +35,8 @@ public partial class GridDisplay : FluxorComponent
     [Parameter]
     public DimensionsRecord? InitialDimensionsRecord { get; set; }
     
+    public const string TYPE_TO_RENDER_SELECTED_ACTION_PARAMETER_NAME = "TypeToRenderSelectedAction";
+
     private TransformativeDisplay _transformativeDisplay = null!;
     private Guid? _previousHtmlElementSequence;
     private Guid? _previousGridTabContainerSequence;
@@ -132,6 +134,14 @@ public partial class GridDisplay : FluxorComponent
             classBuilder.Append(ThemeState.Value.CssClassForOverridingColors);
 
         return classBuilder.ToString();
+    }
+
+    private void OnTypeToRenderSelectedAction((Type renderedContentType, string renderedContentTabDisplayName) argumentTuple)
+    {
+        var addGridTabAction = new AddGridTabAction(GridRecord.GridRecordKey, 
+            new GridTabRecord(Guid.NewGuid(), argumentTuple.renderedContentType, argumentTuple.renderedContentTabDisplayName));
+
+        Dispatcher.Dispatch(addGridTabAction);
     }
 
     protected override void Dispose(bool disposing)

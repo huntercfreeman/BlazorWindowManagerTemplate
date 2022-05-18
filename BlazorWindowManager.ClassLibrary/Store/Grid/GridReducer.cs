@@ -35,6 +35,25 @@ public class GridReducer
     }
     
     [ReducerMethod]
+    public static GridRecordsState ReduceAddGridTabAction(GridRecordsState previousGridRecordsState,
+        AddGridTabAction addGridTabAction)
+    {
+        var previousGridTabContainerRecord = previousGridRecordsState.LookupGridTabContainerRecord(addGridTabAction.GridRecordKey);
+
+        var nextGridTabContainerRecord = new GridTabContainerRecord(previousGridTabContainerRecord,
+            previousGridTabContainerRecord.ActiveTabIndex ?? 0,
+            Guid.NewGuid(),
+            ConstructorActionKind.Add,
+            addGridTabAction.GridTabRecord);
+
+        var nextGridRecordsState = new GridRecordsState(previousGridRecordsState,
+            ConstructorActionKind.Replace,
+            nextGridTabContainerRecord);
+
+        return nextGridRecordsState;
+    }
+    
+    [ReducerMethod]
     public static GridRecordsState ReduceSetActiveGridTabAction(GridRecordsState previousGridRecordsState,
         SetActiveGridTabAction setActiveGridTabAction)
     {
