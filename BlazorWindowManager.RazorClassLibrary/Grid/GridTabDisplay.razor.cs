@@ -17,8 +17,9 @@ public partial class GridTabDisplay : ComponentBase
     [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
 
-    [Parameter, EditorRequired]
+    [CascadingParameter, EditorRequired]
     public GridRecordKey GridRecordKey { get; set; } = null!;
+
     [Parameter, EditorRequired]
     public GridTabRecord GridTabRecord { get; set; } = null!;
     [Parameter, EditorRequired]

@@ -14,6 +14,7 @@ _cachedGridTabContainerRecord: @(_cachedGridTabContainerRecord?.GridRecordKey.Gr
             <BlazorWindowManager.RazorClassLibrary.Transformative.TransformativeDisplay HtmlElementRecord="_cachedHtmlElementRecord"
                                                                                     @ref="_transformativeDisplay" />
             <CascadingValue Value="GridRecord.GridRecordKey">
+            <CascadingValue Value="EmptyGridTabContainerRenderFragment">
                 <div class="bwmt_grid-display-tabs">
                     @if (_cachedGridTabContainerRecord.ActiveTabIndex is not null)
                     {
@@ -24,7 +25,6 @@ _cachedGridTabContainerRecord: @(_cachedGridTabContainerRecord?.GridRecordKey.Gr
                                 var gridTabRecord = _cachedGridTabContainerRecord.GridTabRecords[tabIndex];
 
                             <GridTabDisplay GridTabRecord="gridTabRecord"
-                                    GridRecordKey="GridRecord.GridRecordKey"
                                     ActiveTabIndex="_cachedGridTabContainerRecord.ActiveTabIndex.Value"
                                     MyTabIndex="tabIndex"
                                     AllowEmptyGrid="AllowEmptyGrid" />
@@ -32,17 +32,21 @@ _cachedGridTabContainerRecord: @(_cachedGridTabContainerRecord?.GridRecordKey.Gr
                     </div>
                     }
 
-                <GridAddTabDisplay />
+                <GridAddTabDisplay NextAvailableTabIndex="_cachedGridTabContainerRecord.GridTabRecords.Length" />
             </div>
 
             <div class="grid-body-display-wrapping"
                  style="height: calc(@_cachedHtmlElementRecord.DimensionsRecord.Height.BuildCssStyleString() - 32px);">
 
                 <CascadingValue Name="@TYPE_TO_RENDER_SELECTED_ACTION_PARAMETER_NAME" Value="OnTypeToRenderSelectedAction">
-                    <GridBodyDisplay RenderedContentType="GetGridBodyRenderedContentType()"
-                                     EmptyGridTabContainerRenderFragment="EmptyGridTabContainerRenderFragment" />
+                    <CascadingValue Value="GetActiveGridTabId()">
+                    <CascadingValue Value="_cachedGridTabContainerRecord.ActiveTabIndex">
+                        <GridBodyDisplay RenderedContentType="GetGridBodyRenderedContentType()" />
+                    </CascadingValue>
+                    </CascadingValue>
                 </CascadingValue>
             </div>
+        </CascadingValue>
         </CascadingValue>
     </div>
 </div>

@@ -135,11 +135,25 @@ public partial class GridDisplay : FluxorComponent
 
         return classBuilder.ToString();
     }
+    
+    private Guid? GetActiveGridTabId()
+    {
+        if(_cachedGridTabContainerRecord is not null &&
+            _cachedGridTabContainerRecord.ActiveTabIndex is not null)
+        {
+            return _cachedGridTabContainerRecord
+                .GridTabRecords[_cachedGridTabContainerRecord.ActiveTabIndex.Value]
+                .GridTabRecordId;
+        }
+
+        return null;
+    }
 
     private void OnTypeToRenderSelectedAction((Type renderedContentType, string renderedContentTabDisplayName) argumentTuple)
     {
         var addGridTabAction = new AddGridTabAction(GridRecord.GridRecordKey, 
-            new GridTabRecord(Guid.NewGuid(), argumentTuple.renderedContentType, argumentTuple.renderedContentTabDisplayName));
+            new GridTabRecord(Guid.NewGuid(), argumentTuple.renderedContentType, argumentTuple.renderedContentTabDisplayName),
+            0);
 
         Dispatcher.Dispatch(addGridTabAction);
     }
