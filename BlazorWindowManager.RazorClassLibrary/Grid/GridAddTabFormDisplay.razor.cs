@@ -32,11 +32,22 @@ public partial class GridAddTabFormDisplay : ComponentBase
     {
         var guidId = ActiveGridTabId ?? Guid.NewGuid();
 
-        var replaceGridTabAction = new ReplaceGridTabAction(GridRecordKey,
-            new GridTabRecord(guidId, argumentTuple.renderedContentType, argumentTuple.renderedContentTabDisplayName),
-            ActiveGridTabIndex ?? 0);
+        if(_selectedCardinalDirectionKind == CardinalDirectionKind.CurrentPosition)
+        {
+            var replaceGridTabAction = new ReplaceGridTabAction(GridRecordKey,
+                new GridTabRecord(guidId, argumentTuple.renderedContentType, argumentTuple.renderedContentTabDisplayName),
+                ActiveGridTabIndex ?? 0);
 
-        Dispatcher.Dispatch(replaceGridTabAction);
+            Dispatcher.Dispatch(replaceGridTabAction);
+        }
+        else
+        {
+            var replaceGridTabAction = new ReplaceGridTabAction(GridRecordKey,
+                new GridTabRecord(guidId, argumentTuple.renderedContentType, argumentTuple.renderedContentTabDisplayName),
+                ActiveGridTabIndex ?? 0);
+
+            Dispatcher.Dispatch(replaceGridTabAction);
+        }
     }
 
     private void OnCardinalDirectionKindSelectedEventCallback(CardinalDirectionKind cardinalDirectionKind)

@@ -18,7 +18,7 @@ public partial class GridDisplay : FluxorComponent
     [Inject]
     private IState<HtmlElementRecordsState> HtmlElementRecordsState { get; set; } = null!;
     [Inject]
-    private IState<GridRecordsState> GridRecordsState { get; set; } = null!;
+    private IState<GridTabContainerRecordsState> GridRecordsState { get; set; } = null!;
     [Inject]
     private IState<ThemeState> ThemeState { get; set; } = null!;
     [Inject]

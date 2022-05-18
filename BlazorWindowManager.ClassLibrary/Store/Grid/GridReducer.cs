@@ -7,10 +7,10 @@ namespace BlazorWindowManager.ClassLibrary.Store.Grid;
 public class GridReducer
 {
     [ReducerMethod]
-    public static GridRecordsState ReduceRegisterGridRecordTabContainerAction(GridRecordsState previousGridRecordsState,
+    public static GridTabContainerRecordsState ReduceRegisterGridRecordTabContainerAction(GridTabContainerRecordsState previousGridRecordsState,
         RegisterGridTabContainerRecordAction registerGridTabContainerRecordAction)
     {
-        var nextGridRecordsState = new GridRecordsState(previousGridRecordsState,
+        var nextGridRecordsState = new GridTabContainerRecordsState(previousGridRecordsState,
             ConstructorActionKind.Add,
             registerGridTabContainerRecordAction.GridTabContainerRecord);
 
@@ -18,7 +18,7 @@ public class GridReducer
     }
     
     [ReducerMethod]
-    public static GridRecordsState ReduceCloseGridTabAction(GridRecordsState previousGridRecordsState,
+    public static GridTabContainerRecordsState ReduceCloseGridTabAction(GridTabContainerRecordsState previousGridRecordsState,
         CloseGridTabAction closeGridTabAction)
     {
         var previousGridTabContainerRecord = previousGridRecordsState.LookupGridTabContainerRecord(closeGridTabAction.GridRecordKey);
@@ -27,7 +27,7 @@ public class GridReducer
             Guid.NewGuid(),
             closeGridTabAction.GridTabRecordId);
 
-        var nextGridRecordsState = new GridRecordsState(previousGridRecordsState,
+        var nextGridRecordsState = new GridTabContainerRecordsState(previousGridRecordsState,
             ConstructorActionKind.Replace,
             nextGridTabContainerRecord);
 
@@ -35,7 +35,7 @@ public class GridReducer
     }
     
     [ReducerMethod]
-    public static GridRecordsState ReduceAddGridTabAction(GridRecordsState previousGridRecordsState,
+    public static GridTabContainerRecordsState ReduceAddGridTabAction(GridTabContainerRecordsState previousGridRecordsState,
         AddGridTabAction addGridTabAction)
     {
         var previousGridTabContainerRecord = previousGridRecordsState.LookupGridTabContainerRecord(addGridTabAction.GridRecordKey);
@@ -46,7 +46,7 @@ public class GridReducer
             ConstructorActionKind.Add,
             addGridTabAction.GridTabRecord);
 
-        var nextGridRecordsState = new GridRecordsState(previousGridRecordsState,
+        var nextGridRecordsState = new GridTabContainerRecordsState(previousGridRecordsState,
             ConstructorActionKind.Replace,
             nextGridTabContainerRecord);
 
@@ -54,7 +54,7 @@ public class GridReducer
     }
     
     [ReducerMethod]
-    public static GridRecordsState ReduceReplaceGridTabAction(GridRecordsState previousGridRecordsState,
+    public static GridTabContainerRecordsState ReduceReplaceGridTabAction(GridTabContainerRecordsState previousGridRecordsState,
         ReplaceGridTabAction replaceGridTabAction)
     {
         var previousGridTabContainerRecord = previousGridRecordsState.LookupGridTabContainerRecord(replaceGridTabAction.GridRecordKey);
@@ -65,7 +65,7 @@ public class GridReducer
             ConstructorActionKind.Replace,
             replaceGridTabAction.GridTabRecord);
 
-        var nextGridRecordsState = new GridRecordsState(previousGridRecordsState,
+        var nextGridRecordsState = new GridTabContainerRecordsState(previousGridRecordsState,
             ConstructorActionKind.Replace,
             nextGridTabContainerRecord);
 
@@ -73,7 +73,7 @@ public class GridReducer
     }
     
     [ReducerMethod]
-    public static GridRecordsState ReduceSetActiveGridTabAction(GridRecordsState previousGridRecordsState,
+    public static GridTabContainerRecordsState ReduceSetActiveGridTabAction(GridTabContainerRecordsState previousGridRecordsState,
         SetActiveGridTabAction setActiveGridTabAction)
     {
         var previousGridTabContainerRecord = previousGridRecordsState.LookupGridTabContainerRecord(setActiveGridTabAction.GridRecordKey);
@@ -82,7 +82,7 @@ public class GridReducer
             setActiveGridTabAction.ToBeActiveTabIndex,
             Guid.NewGuid());
 
-        var nextGridRecordsState = new GridRecordsState(previousGridRecordsState,
+        var nextGridRecordsState = new GridTabContainerRecordsState(previousGridRecordsState,
             ConstructorActionKind.Replace,
             nextGridTabContainerRecord);
 
