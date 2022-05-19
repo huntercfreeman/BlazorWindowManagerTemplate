@@ -8,6 +8,7 @@ using BlazorWindowManager.RazorClassLibrary.Icons.Codicon;
 
 namespace BlazorWindowManager.RazorClassLibrary.Grid;
 
-public partial class GridItemDivider : ComponentBase
+public partial class GridRowDividerDisplay : ComponentBase
 {
+
 }

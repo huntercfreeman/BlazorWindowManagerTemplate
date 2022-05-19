@@ -5,10 +5,12 @@
 
 @inherits FluxorComponent
 
-@if (_cachedGridBoard is not null)
+@if (_cachedGridBoard is not null &&
+     _cachedHtmlElementRecord is not null)
 {
     <div class="bwmt_grid-display-theme-wrapping @GetCssClasses()">
-        <div class="bwmt_grid-display">
+        <div class="bwmt_grid-display"
+             style="@_cachedHtmlElementRecord.DimensionsRecord.BuildCssStyleString()">
             <TransformativeDisplay HtmlElementRecord="_cachedHtmlElementRecord" />
             
             @if (_cachedGridBoard.GridItemRecords.Any())
@@ -22,11 +24,13 @@
 
                     if (previousRow is not null)
                     {
-                        <GridRowDivider />
+                        <GridRowDividerDisplay />
                     }
 
                     <CascadingValue Value="ChooseGridTabRecordRenderFragment">
-                        <GridRowDisplay Row="row"/>
+                        <CascadingValue Name="GridDisplayCachedHtmlElementRecord" Value="_cachedHtmlElementRecord">
+                            <GridRowDisplay Row="row"/>
+                        </CascadingValue>
                     </CascadingValue>
 
                     previousRow = row;
