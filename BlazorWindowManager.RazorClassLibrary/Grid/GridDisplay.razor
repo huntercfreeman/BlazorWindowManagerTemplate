@@ -25,9 +25,11 @@
                 {
                         <GridRowDivider />
                 }
-
-                <GridRowDisplay Row="row" />
-
+                
+                <CascadingValue Value="ChooseGridTabRecordRenderFragment">
+                    <GridRowDisplay Row="row" />
+                </CascadingValue>
+                
                 previousRow = row;
             }
         }

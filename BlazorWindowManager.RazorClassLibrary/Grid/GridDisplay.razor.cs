@@ -14,10 +14,12 @@ public partial class GridDisplay : FluxorComponent
     [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
 
+    public const string ON_CHOSE_GRID_TAB_RECORD_ACTION_PARAMETER_NAME = "OnChoseGridTabRecordAction";
+    
     [Parameter, EditorRequired]
     public GridRecord GridRecord { get; set; } = null!;
-    [Parameter]
-    public IEnumerable<IEnumerable<GridItemRecord>>? InitialGridItemRecords { get; set; }
+    [Parameter, EditorRequired]
+    public RenderFragment ChooseGridTabRecordRenderFragment { get; set; } = null!;
 
     private GridBoard? _cachedGridBoard;
     private Guid? _previousGridBoardSequence;
@@ -27,6 +29,8 @@ public partial class GridDisplay : FluxorComponent
         var registerGridRecordAction = new RegisterGridRecordAction(GridRecord.GridRecordKey);
 
         Dispatcher.Dispatch(registerGridRecordAction);
+
+        ShouldRender();
 
         base.OnInitialized();
     }

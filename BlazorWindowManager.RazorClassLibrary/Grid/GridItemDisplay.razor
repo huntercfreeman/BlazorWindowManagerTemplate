@@ -5,18 +5,16 @@
 @if (_cachedGridTabContainer is not null)
 {
     <div class="bwmt_grid-item-display">
-        @GridItemRecord.GridItemRecordKey
-
-        <hr />
-
-        <div style="cursor: pointer;"
-         @onclick="AddGridTabRecordOnClick">
-            AddGridTabRecordOnClick
-        </div>
-
-        @foreach(var gridTabContainerRecord in _cachedGridTabContainer.GridTabRecords)
+        @if (!_cachedGridTabContainer.GridTabRecords.Any())
         {
-            <GridTabDisplay GridTabRecord="gridTabContainerRecord" />
+            <CascadingValue Name="@BlazorWindowManager.RazorClassLibrary.Grid.GridDisplay.ON_CHOSE_GRID_TAB_RECORD_ACTION_PARAMETER_NAME" IsFixed="true" Value="OnGridTabRecordChosenAction">
+                @ChooseGridTabRecordRenderFragment
+            </CascadingValue>
+        }
+
+        @foreach (var gridTabContainerRecord in _cachedGridTabContainer.GridTabRecords)
+        {
+            <GridTabDisplay GridTabRecord="gridTabContainerRecord"/>
         }
     </div>
 }
