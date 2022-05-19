@@ -89,4 +89,28 @@ public partial class GridItemDisplay : FluxorComponent
 
         Dispatcher.Dispatch(addGridTabRecordAction);
     }
+    
+    private Type? GetGridBodyRenderedContentType()
+    {
+        if(_cachedGridTabContainer is not null &&
+           _cachedGridTabContainer.ActiveTabIndex is not null)
+        {
+            return _cachedGridTabContainer.GridTabRecords[_cachedGridTabContainer.ActiveTabIndex.Value].RenderedContentType;
+        }
+
+        return null;
+    }
+
+    private Guid? GetActiveGridTabId()
+    {
+        if(_cachedGridTabContainer is not null &&
+           _cachedGridTabContainer.ActiveTabIndex is not null)
+        {
+            return _cachedGridTabContainer
+                .GridTabRecords[_cachedGridTabContainer.ActiveTabIndex.Value]
+                .GridTabRecordKey.Id;
+        }
+
+        return null;
+    }
 }

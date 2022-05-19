@@ -24,6 +24,7 @@ public record GridItemRecordsState
     public GridItemRecordsState(GridItemRecordsState otherGridItemsState,
         GridItemRecordKey gridItemRecordKey,
         GridTabRecord gridTabRecord,
+        int? tabToSetAsActive,
         ConstructorActionKind constructorActionKind)
     {
         _gridTabContainerRecordMap = new(otherGridItemsState._gridTabContainerRecordMap);
@@ -38,7 +39,8 @@ public record GridItemRecordsState
 
         var nextGridTabContainerRecord = new GridTabContainerRecord(previousGridTabContainerRecord,
             gridTabRecord,
-            previousGridTabContainerRecord.ActiveTabIndex);
+            previousGridTabContainerRecord.ActiveTabIndex,
+            constructorActionKind);
 
         _gridTabContainerRecordMap[gridItemRecordKey] = nextGridTabContainerRecord;
     }

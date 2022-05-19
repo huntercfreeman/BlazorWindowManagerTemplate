@@ -2,6 +2,6 @@
 
 namespace BlazorWindowManager.ClassLibrary.Store.Grid;
 
-public record CloseGridTabRecordAction(GridItemRecordKey GridItemRecordKey,
+public record SetActiveGridTabRecordAction(GridItemRecordKey GridItemRecordKey,
     GridTabRecordKey GridTabRecordKey,
     int? TabToSetAsActive);

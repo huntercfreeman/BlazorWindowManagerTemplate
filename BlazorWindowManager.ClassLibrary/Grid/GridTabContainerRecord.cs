@@ -16,7 +16,8 @@ public record GridTabContainerRecord
 
     public GridTabContainerRecord(GridTabContainerRecord previousGridTabContainerRecord, 
         GridTabRecord gridTabRecord,
-        int? tabToSetAsActive)
+        int? tabToSetAsActive,
+        ConstructorActionKind constructorActionKind)
     {
         GridTabContainerRecordSequence = Guid.NewGuid();
 

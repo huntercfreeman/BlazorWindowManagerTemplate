@@ -23,7 +23,8 @@ public class GridItemReducer
         var nextGridItemRecordsState = new GridItemRecordsState(previousGridItemRecordsState,
             addGridTabRecordAction.GridItemRecordKey,
             addGridTabRecordAction.GridTabRecord,
-            ConstructorActionKind.Replace);
+            addGridTabRecordAction.TabToSetAsActive,
+            ConstructorActionKind.Add);
 
         return nextGridItemRecordsState;
     }
@@ -49,6 +50,19 @@ public class GridItemReducer
             setActiveGridTabRecordAction.GridItemRecordKey,
             setActiveGridTabRecordAction.GridTabRecordKey,
             setActiveGridTabRecordAction.TabToSetAsActive,
+            ConstructorActionKind.Replace);
+
+        return nextGridItemRecordsState;
+    }
+    
+    [ReducerMethod]
+    public static GridItemRecordsState ReduceReplaceGridTabRecordAction(GridItemRecordsState previousGridItemRecordsState,
+        ReplaceGridTabRecordAction replaceGridTabRecordAction)
+    {
+        var nextGridItemRecordsState = new GridItemRecordsState(previousGridItemRecordsState,
+            replaceGridTabRecordAction.GridItemRecordKey,
+            replaceGridTabRecordAction.GridTabRecord,
+            replaceGridTabRecordAction.TabToSetAsActive,
             ConstructorActionKind.Replace);
 
         return nextGridItemRecordsState;

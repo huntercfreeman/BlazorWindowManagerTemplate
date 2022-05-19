@@ -1,0 +1,10 @@
+﻿<div class="bwmt_grid-body-display">
+    @if(RenderedContentType is null)
+    {
+        @EmptyGridTabContainerRenderFragment
+    }
+    else
+    {
+        <DynamicComponent Type="RenderedContentType" />
+    }
+</div>
