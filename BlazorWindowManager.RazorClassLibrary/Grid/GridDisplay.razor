@@ -7,16 +7,13 @@
 @if(_cachedGridBoard is not null)
 {
     <div class="bwmt_grid-display">
-        GridRecord.GridRecordKey.Id: @GridRecord.GridRecordKey.Id
-
-        <hr />
-
         <div style="cursor: pointer;"
-             @onclick="AddGridItemRecordOnClick">
-             AddGridItemRecordOnClick
-        </div>
-
-        @{
+                 @onclick="StateHasChanged">
+                 StateHasChanged
+            </div>
+        
+        @if(_cachedGridBoard.GridItemRecords.Any())
+        {
             ImmutableArray<GridItemRecord>? previousRow = null;
 
             for (int i = 0; i < _cachedGridBoard.GridItemRecords.Length; i++)
@@ -29,10 +26,17 @@
                         <GridRowDivider />
                 }
 
-                    <GridRowDisplay Row="row" />
+                <GridRowDisplay Row="row" />
 
                 previousRow = row;
             }
+        }
+        else
+        {
+            <div style="cursor: pointer;"
+                 @onclick="AddGridItemRecordOnClick">
+                 GridRecord is empty click here to add a GridItem
+            </div>
         }
     </div>   
 }
