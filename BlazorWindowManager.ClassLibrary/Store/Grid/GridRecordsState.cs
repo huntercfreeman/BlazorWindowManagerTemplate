@@ -22,14 +22,25 @@ public record GridRecordsState
     }
     
     public GridRecordsState(GridRecordsState otherGridRecordsState,
+        GridRecordKey gridRecordKey)
+    {
+        _gridRecordItemContainerMap = new(otherGridRecordsState._gridRecordItemContainerMap);
+
+        _gridRecordItemContainerMap.Add(gridRecordKey, new());
+    }
+    
+    public GridRecordsState(GridRecordsState otherGridRecordsState,
         GridRecordKey gridRecordKey,
-        GridItemRecord gridItemRecord,
+        GridItemRecord? gridItemRecord,
         ConstructorActionKind constructorActionKind,
         CardinalDirectionKind? cardinalDirectionKind,
         int? rowIndexRelativeTo,
         int? columnIndexRelativeTo)
     {
         _gridRecordItemContainerMap = new(otherGridRecordsState._gridRecordItemContainerMap);
+
+        if (gridItemRecord is null)
+            return;
 
         switch (constructorActionKind)
         {
@@ -56,6 +67,19 @@ public record GridRecordsState
             cardinalDirectionKind,
             rowIndexRelativeTo,
             columnIndexRelativeTo);
+
+        _gridRecordItemContainerMap[gridRecordKey] = nextGridBoard;
+    }
+
+    public GridRecordsState(GridRecordsState otherGridRecordsState, 
+        GridRecordKey gridRecordKey, 
+        GridItemRecord gridItemRecord) 
+    {
+        _gridRecordItemContainerMap = new(otherGridRecordsState._gridRecordItemContainerMap);
+
+        var previousGridBoard = _gridRecordItemContainerMap[gridRecordKey];
+
+        var nextGridBoard = new GridBoard(previousGridBoard, gridItemRecord);
 
         _gridRecordItemContainerMap[gridRecordKey] = nextGridBoard;
     }

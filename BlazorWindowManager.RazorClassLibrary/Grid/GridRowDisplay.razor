@@ -1,0 +1,22 @@
+﻿@using BlazorWindowManager.ClassLibrary.Grid
+
+<div class="bwmt_grid-row-display">
+    @{
+        GridItemRecord? previousGridItemRecord = null;
+
+        for (int j = 0; j < Row.Length; j++)
+        {
+            var gridItemRecordIndex = j;
+            var gridItemRecord = Row[gridItemRecordIndex];
+
+            if (previousGridItemRecord is not null)
+            {
+                <GridItemDivider />
+            }
+
+            <GridItemDisplay GridItemRecord="gridItemRecord" />
+
+            previousGridItemRecord = gridItemRecord;
+        }
+    }
+</div>

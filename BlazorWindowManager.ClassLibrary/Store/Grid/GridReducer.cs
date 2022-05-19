@@ -9,12 +9,15 @@ public class GridReducer
     public static GridRecordsState ReduceRegisterGridRecordAction(GridRecordsState previousGridRecordsState,
         RegisterGridRecordAction registerGridRecordAction)
     {
+        return new GridRecordsState(previousGridRecordsState, registerGridRecordAction.GridRecordKey);
+    }
+    
+    [ReducerMethod]
+    public static GridRecordsState ReduceAddGridItemRecordAction(GridRecordsState previousGridRecordsState,
+        AddGridItemRecordAction addGridItemRecordAction)
+    {
         return new GridRecordsState(previousGridRecordsState,
-            registerGridRecordAction.GridRecordKey,
-            registerGridRecordAction.GridItemRecord,
-            ConstructorActionKind.Add,
-            registerGridRecordAction.CardinalDirectionKind,
-            registerGridRecordAction.RowIndexRelativeTo,
-            registerGridRecordAction.ColumnIndexRelativeTo);
+            addGridItemRecordAction.GridRecordKey,
+            addGridItemRecordAction.GridItemRecord);
     }
 }

@@ -9,6 +9,13 @@
     <div class="bwmt_grid-display">
         GridRecord.GridRecordKey.Id: @GridRecord.GridRecordKey.Id
 
+        <hr />
+
+        <div style="cursor: pointer;"
+             @onclick="AddGridItemRecordOnClick">
+             AddGridItemRecordOnClick
+        </div>
+
         @{
             ImmutableArray<GridItemRecord>? previousRow = null;
 
@@ -19,33 +26,10 @@
 
                 if(previousRow is not null)
                 {
-                    <div class="bwmt_grid-row-divider-display">
-                        row divider goes here
-                    </div>
+                        <GridRowDivider />
                 }
 
-                GridItemRecord? previousGridItemRecord = null;
-
-                <div class="bwmt_grid-row-display">
-                    @for(int j = 0; j < row.Length; j++)
-                    {
-                        var gridItemRecordIndex = j;
-                        var gridItemRecord = row[gridItemRecordIndex];
-
-                        if(previousGridItemRecord is not null)
-                        {
-                            <div class="bwmt_grid-item-divider-display">
-                                column divider goes here
-                            </div>
-                        }
-
-                        <div class="bwmt_grid-item-display">
-                            GridItem goes here
-                        </div>
-
-                        previousGridItemRecord = gridItemRecord;
-                    }
-                </div>
+                    <GridRowDisplay Row="row" />
 
                 previousRow = row;
             }

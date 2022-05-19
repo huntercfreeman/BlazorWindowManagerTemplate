@@ -1,4 +1,5 @@
 using BlazorWindowManager.ClassLibrary.Grid;
+using BlazorWindowManager.ClassLibrary.Html;
 using BlazorWindowManager.ClassLibrary.Store.Grid;
 using Fluxor;
 using Fluxor.Blazor.Web.Components;
@@ -23,11 +24,7 @@ public partial class GridDisplay : FluxorComponent
 
     protected override void OnInitialized()
     {
-        var registerGridRecordAction = new RegisterGridRecordAction(GridRecord.GridRecordKey,
-            null,
-            null,
-            null,
-            null);
+        var registerGridRecordAction = new RegisterGridRecordAction(GridRecord.GridRecordKey);
 
         Dispatcher.Dispatch(registerGridRecordAction);
 
@@ -61,5 +58,14 @@ public partial class GridDisplay : FluxorComponent
         }
 
         return shouldRender;
+    }
+
+    private void AddGridItemRecordOnClick()
+    {
+        var addGridItemRecordAction = new AddGridItemRecordAction(GridRecord.GridRecordKey,
+            new GridItemRecord(new GridItemRecordKey(Guid.NewGuid()),
+                               new HtmlElementRecordKey(Guid.NewGuid())));
+
+        Dispatcher.Dispatch(addGridItemRecordAction);
     }
 }

@@ -15,8 +15,21 @@ public record GridBoard
     public GridBoard()
     {
         _gridItemRecords = new();
+        GridBoardSequence = Guid.NewGuid();
     }
-    
+
+    public GridBoard(GridBoard previousGridBoard, GridItemRecord gridItemRecord)
+    {
+        _gridItemRecords = new(previousGridBoard._gridItemRecords);
+
+        if (!_gridItemRecords.Any())
+            _gridItemRecords.Add(new());
+
+        _gridItemRecords.First().Add(gridItemRecord);
+
+        GridBoardSequence = Guid.NewGuid();
+    }
+
     public GridBoard(GridBoard otherGridBoard, 
         GridItemRecord gridItemRecord,
         CardinalDirectionKind? cardinalDirectionKind,
@@ -31,11 +44,13 @@ public record GridBoard
         }
 
         _gridItemRecords.First().Add(gridItemRecord);
+
+        GridBoardSequence = Guid.NewGuid();
     }
 
     public ImmutableArray<ImmutableArray<GridItemRecord>> GridItemRecords => GetGridItemRecords();
 
-    public Guid GridBoardSequence { get; set; }
+    public Guid GridBoardSequence { get; }
 
     private ImmutableArray<ImmutableArray<GridItemRecord>> GetGridItemRecords()
     {
