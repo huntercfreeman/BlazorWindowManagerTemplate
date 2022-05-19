@@ -41,7 +41,7 @@ public class HtmlElementReducer
     
     [ReducerMethod]
     public static HtmlElementRecordsState ReduceRegisterHtmlElemementAction(HtmlElementRecordsState previousHtmlElementRecordsState,
-        RegisterHtmlElemementAction registerHtmlElemementAction)
+        RegisterHtmlElementAction registerHtmlElemementAction)
     {
         var htmlElementRecord = new HtmlElementRecord(registerHtmlElemementAction.HtmlElementRecordKey,
             registerHtmlElemementAction.DimensionsRecord,

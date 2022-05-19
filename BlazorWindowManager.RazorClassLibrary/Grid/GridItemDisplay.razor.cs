@@ -9,6 +9,7 @@ using BlazorWindowManager.ClassLibrary.Grid;
 using BlazorWindowManager.ClassLibrary.Store.Grid;
 using Fluxor;
 using Fluxor.Blazor.Web.Components;
+using BlazorWindowManager.RazorClassLibrary.Html;
 
 namespace BlazorWindowManager.RazorClassLibrary.Grid;
 
@@ -21,8 +22,8 @@ public partial class GridItemDisplay : FluxorComponent
 
     [Parameter, EditorRequired]
     public GridItemRecord GridItemRecord { get; set; } = null!;
-
-    private GridBoard? _cachedGridTabContainer;
+    
+    private GridTabContainerRecord? _cachedGridTabContainer;
     private Guid? _previousGridTabContainerSequence;
 
     protected override void OnInitialized()
@@ -40,11 +41,11 @@ public partial class GridItemDisplay : FluxorComponent
 
         try
         {
-            _cachedGridTabContainer = GridRecordsState.Value
-                .LookupGridBoard(GridItemRecord.GridItemRecordKey);
+            _cachedGridTabContainer = GridItemRecordsState.Value
+                .LookupGridTabContainer(GridItemRecord.GridItemRecordKey);
 
-            if (_previousGridBoardSequence is null ||
-                _previousGridBoardSequence.Value != _cachedGridTabContainer.GridBoardSequence)
+            if (_previousGridTabContainerSequence is null ||
+                _previousGridTabContainerSequence.Value != _cachedGridTabContainer.GridTabContainerRecordSequence)
             {
                 shouldRender = true;
             }
@@ -53,7 +54,7 @@ public partial class GridItemDisplay : FluxorComponent
                 shouldRender = false;
             }
 
-            _previousGridBoardSequence = _cachedGridTabContainer.GridBoardSequence;
+            _previousGridTabContainerSequence = _cachedGridTabContainer.GridTabContainerRecordSequence;
         }
         catch (KeyNotFoundException)
         {
@@ -63,12 +64,13 @@ public partial class GridItemDisplay : FluxorComponent
         return shouldRender;
     }
 
-    private void AddGridItemRecordOnClick()
+    private void AddGridTabRecordOnClick()
     {
-        var addGridItemRecordAction = new AddGridItemRecordAction(GridRecord.GridRecordKey,
-            new GridItemRecord(new GridItemRecordKey(Guid.NewGuid()),
-                               new HtmlElementRecordKey(Guid.NewGuid())));
+        var addGridTabRecordAction = new AddGridTabRecordAction(GridItemRecord.GridItemRecordKey,
+            new GridTabRecord(new GridTabRecordKey(Guid.NewGuid()),
+                              typeof(HtmlElementExampleWrapperDisplay),
+                              nameof(HtmlElementExampleWrapperDisplay)));
 
-        Dispatcher.Dispatch(addGridItemRecordAction);
+        Dispatcher.Dispatch(addGridTabRecordAction);
     }
 }

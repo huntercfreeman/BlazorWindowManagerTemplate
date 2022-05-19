@@ -2,6 +2,21 @@
 
 @inherits FluxorComponent
 
-<div class="bwmt_grid-item-display">
-    @GridItemRecord.GridItemRecordKey
-</div>
+@if (_cachedGridTabContainer is not null)
+{
+    <div class="bwmt_grid-item-display">
+        @GridItemRecord.GridItemRecordKey
+
+        <hr />
+
+        <div style="cursor: pointer;"
+         @onclick="AddGridTabRecordOnClick">
+            AddGridTabRecordOnClick
+        </div>
+
+        @foreach(var gridTabContainerRecord in _cachedGridTabContainer.GridTabRecords)
+        {
+            <GridTabDisplay GridTabRecord="gridTabContainerRecord" />
+        }
+    </div>
+}

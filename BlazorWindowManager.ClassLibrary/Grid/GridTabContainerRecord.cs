@@ -1,4 +1,6 @@
-﻿namespace BlazorWindowManager.ClassLibrary.Grid;
+﻿using System.Collections.Immutable;
+
+namespace BlazorWindowManager.ClassLibrary.Grid;
 
 public record GridTabContainerRecord
 {
@@ -6,18 +8,29 @@ public record GridTabContainerRecord
 
     public GridTabContainerRecord()
     {
+        GridTabContainerRecordSequence = Guid.NewGuid();
+
         _gridTabRecordMap = new();
     }
 
     public GridTabContainerRecord(GridTabContainerRecord previousGridTabContainerRecord, 
         GridTabRecord gridTabRecord)
     {
-        GridTabContainerRecordSequence = new();
+        GridTabContainerRecordSequence = Guid.NewGuid();
 
         _gridTabRecordMap = new(previousGridTabContainerRecord._gridTabRecordMap);
 
-        _gridTabRecordMap.Add(gridTabRecord.GridTabRecordKey, gridTabRecord);
+        try
+        {
+            _gridTabRecordMap[gridTabRecord.GridTabRecordKey] = gridTabRecord;
+        }
+        catch (KeyNotFoundException)
+        {
+            _gridTabRecordMap.Add(gridTabRecord.GridTabRecordKey, gridTabRecord);
+        }
     }
 
     public Guid GridTabContainerRecordSequence { get; }
+    public ImmutableArray<GridTabRecord> GridTabRecords => _gridTabRecordMap.Values
+        .ToImmutableArray();
 }

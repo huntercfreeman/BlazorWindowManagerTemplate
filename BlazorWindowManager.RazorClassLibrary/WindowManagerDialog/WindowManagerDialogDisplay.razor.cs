@@ -39,7 +39,7 @@ public partial class WindowManagerDialogDisplay : FluxorComponent
         var dimensionsRecordForDialog = await BlazorWindowManager.ClassLibrary.WindowManagerDialog.WindowManagerDialogRecord
             .ConstructDefaultDimensionsRecord(ViewportDimensionsService);
         
-        var registerHtmlElemementAction = new RegisterHtmlElemementAction(WindowManagerDialogRecord.HtmlElementRecordKey,
+        var registerHtmlElemementAction = new RegisterHtmlElementAction(WindowManagerDialogRecord.HtmlElementRecordKey,
             dimensionsRecordForDialog,
             new ZIndexRecord(1));
 

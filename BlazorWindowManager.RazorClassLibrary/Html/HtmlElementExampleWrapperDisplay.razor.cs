@@ -25,7 +25,7 @@ public partial class HtmlElementExampleWrapperDisplay
         
         _htmlElementRecordKeys.Add(htmlElementKey);
 
-        var registerHtmlElemementAction = new RegisterHtmlElemementAction(htmlElementKey,
+        var registerHtmlElemementAction = new RegisterHtmlElementAction(htmlElementKey,
             DimensionsRecord.FromPixelUnits(400, 400, 0, 0),
             new ZIndexRecord(1));
 

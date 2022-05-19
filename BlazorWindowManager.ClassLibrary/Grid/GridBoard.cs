@@ -15,20 +15,21 @@ public record GridBoard
 
     public GridBoard()
     {
-        _gridItemRecords = new();
         GridBoardSequence = Guid.NewGuid();
+
+        _gridItemRecords = new();
     }
 
     public GridBoard(GridBoard previousGridBoard, GridItemRecord gridItemRecord)
     {
+        GridBoardSequence = Guid.NewGuid();
+
         _gridItemRecords = new(previousGridBoard._gridItemRecords);
 
         if (!_gridItemRecords.Any())
             _gridItemRecords.Add(new());
 
         _gridItemRecords.First().Add(gridItemRecord);
-
-        GridBoardSequence = Guid.NewGuid();
     }
 
     public GridBoard(GridBoard otherGridBoard, 
@@ -37,16 +38,16 @@ public record GridBoard
         int? rowIndexRelativeTo,
         int? columnIndexRelativeTo)
     {
+        GridBoardSequence = Guid.NewGuid();
+
         _gridItemRecords = new(otherGridBoard._gridItemRecords);
 
-        if(!_gridItemRecords.Any())
+        if (!_gridItemRecords.Any())
         {
             _gridItemRecords.Add(new List<GridItemRecord>());
         }
 
         _gridItemRecords.First().Add(gridItemRecord);
-
-        GridBoardSequence = Guid.NewGuid();
     }
 
     public ImmutableArray<ImmutableArray<GridItemRecord>> GridItemRecords => BlazorWindowManagerImmutableArrayExtensions.ConvertToImmutable(_gridItemRecords);
