@@ -1,4 +1,5 @@
-﻿using BlazorWindowManager.ClassLibrary.Grid;
+﻿using BlazorWindowManager.ClassLibrary.ConstructorAction;
+using BlazorWindowManager.ClassLibrary.Grid;
 using Fluxor;
 
 namespace BlazorWindowManager.ClassLibrary.Store.Grid;
@@ -22,7 +23,8 @@ public record GridItemRecordsState
 
     public GridItemRecordsState(GridItemRecordsState otherGridItemsState,
         GridItemRecordKey gridItemRecordKey,
-        GridTabRecord gridTabRecord)
+        GridTabRecord gridTabRecord,
+        ConstructorActionKind constructorActionKind)
     {
         _gridTabContainerRecordMap = new(otherGridItemsState._gridTabContainerRecordMap);
 
@@ -35,9 +37,29 @@ public record GridItemRecordsState
         }
 
         var nextGridTabContainerRecord = new GridTabContainerRecord(previousGridTabContainerRecord,
-            gridTabRecord);
+            gridTabRecord,
+            previousGridTabContainerRecord.ActiveTabIndex);
 
         _gridTabContainerRecordMap[gridItemRecordKey] = nextGridTabContainerRecord;
+    }
+    
+    public GridItemRecordsState(GridItemRecordsState otherGridItemsState,
+        GridItemRecordKey gridItemRecordKey,
+        GridTabRecordKey gridTabRecordKey,
+        int? tabToSetAsActive,
+        ConstructorActionKind constructorActionKind)
+    {
+        _gridTabContainerRecordMap = new(otherGridItemsState._gridTabContainerRecordMap);
+
+        if(_gridTabContainerRecordMap.TryGetValue(gridItemRecordKey, out var previousGridTabContainerRecord))
+        {
+            var nextGridTabContainerRecord = new GridTabContainerRecord(previousGridTabContainerRecord,
+                gridTabRecordKey,
+                tabToSetAsActive,
+                constructorActionKind);
+
+            _gridTabContainerRecordMap[gridItemRecordKey] = nextGridTabContainerRecord;
+        }
     }
 
     public GridTabContainerRecord LookupGridTabContainer(GridItemRecordKey gridItemRecordKey) =>

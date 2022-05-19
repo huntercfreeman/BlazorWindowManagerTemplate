@@ -1,6 +1,9 @@
+using System.Text;
 using BlazorWindowManager.ClassLibrary.Grid;
 using BlazorWindowManager.ClassLibrary.Html;
 using BlazorWindowManager.ClassLibrary.Store.Grid;
+using BlazorWindowManager.ClassLibrary.Store.Theme;
+using BlazorWindowManager.ClassLibrary.Theme;
 using Fluxor;
 using Fluxor.Blazor.Web.Components;
 using Microsoft.AspNetCore.Components;
@@ -12,15 +15,17 @@ public partial class GridDisplay : FluxorComponent
     [Inject]
     private IState<GridRecordsState> GridRecordsState { get; set; } = null!;
     [Inject]
+    private IState<ThemeState> ThemeState { get; set; } = null!;
+    [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
-
-    public const string ON_CHOSE_GRID_TAB_RECORD_ACTION_PARAMETER_NAME = "OnChoseGridTabRecordAction";
     
     [Parameter, EditorRequired]
     public GridRecord GridRecord { get; set; } = null!;
     [Parameter, EditorRequired]
     public RenderFragment ChooseGridTabRecordRenderFragment { get; set; } = null!;
 
+    public const string ON_CHOSE_GRID_TAB_RECORD_ACTION_PARAMETER_NAME = "OnChoseGridTabRecordAction";
+    
     private GridBoard? _cachedGridBoard;
     private Guid? _previousGridBoardSequence;
 
@@ -71,5 +76,17 @@ public partial class GridDisplay : FluxorComponent
                                new HtmlElementRecordKey(Guid.NewGuid())));
 
         Dispatcher.Dispatch(addGridItemRecordAction);
+    }
+    
+    private string GetCssClasses()
+    {
+        var classBuilder = new StringBuilder();
+
+        classBuilder.Append(ThemeState.Value.BlazorWindowManagerThemeKind.ConvertToCssClass());
+
+        if (!string.IsNullOrWhiteSpace(ThemeState.Value.CssClassForOverridingColors))
+            classBuilder.Append(ThemeState.Value.CssClassForOverridingColors);
+
+        return classBuilder.ToString();
     }
 }

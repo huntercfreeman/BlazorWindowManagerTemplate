@@ -9,3 +9,4 @@ namespace BlazorWindowManager.ClassLibrary.Store.Grid;
 
 public record AddGridItemRecordAction(GridRecordKey GridRecordKey,
     GridItemRecord GridItemRecord);
+

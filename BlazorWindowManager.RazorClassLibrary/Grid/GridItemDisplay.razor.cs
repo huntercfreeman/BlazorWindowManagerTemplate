@@ -20,7 +20,7 @@ public partial class GridItemDisplay : FluxorComponent
     [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
     
-    [CascadingParameter, EditorRequired]
+    [CascadingParameter]
     public RenderFragment ChooseGridTabRecordRenderFragment { get; set; } = null!;
     
     [Parameter, EditorRequired]
@@ -74,7 +74,8 @@ public partial class GridItemDisplay : FluxorComponent
         var addGridTabRecordAction = new AddGridTabRecordAction(GridItemRecord.GridItemRecordKey,
             new GridTabRecord(new GridTabRecordKey(Guid.NewGuid()),
                               typeof(HtmlElementExampleWrapperDisplay),
-                              nameof(HtmlElementExampleWrapperDisplay)));
+                              nameof(HtmlElementExampleWrapperDisplay)),
+            0);
 
         Dispatcher.Dispatch(addGridTabRecordAction);
     }
@@ -83,7 +84,8 @@ public partial class GridItemDisplay : FluxorComponent
     {
         var addGridTabRecordAction = new AddGridTabRecordAction(GridItemRecord.GridItemRecordKey,
             new GridTabRecord(new GridTabRecordKey(Guid.NewGuid()), argumentTuple.renderedContentType,
-                argumentTuple.renderedContentTabDisplayName));
+                argumentTuple.renderedContentTabDisplayName),
+            0);
 
         Dispatcher.Dispatch(addGridTabRecordAction);
     }

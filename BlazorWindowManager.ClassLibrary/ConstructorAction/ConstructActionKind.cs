@@ -9,5 +9,6 @@ namespace BlazorWindowManager.ClassLibrary.ConstructorAction;
 public enum ConstructorActionKind
 {
     Add,
+    Remove,
     Replace
 }

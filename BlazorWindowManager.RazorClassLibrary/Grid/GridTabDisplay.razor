@@ -1,4 +1,13 @@
-<div class="bwmt_grid-tab-display">
-    <h4>@GridTabRecord.RenderedContentTitleText</h4>
-    <DynamicComponent Type="GridTabRecord.RenderedContentType" />
+<div class="bwmt_grid-tab-display @IsActiveCssClass"
+     @onclick="DispatchSetActiveGridTabActionOnClick">
+
+    <span class="bwmt_grid-tab-display-display-name">
+        @GridTabRecord.GridTabDisplayName
+    </span>
+
+    <span class="bwmt_grid-tab-display-close-button"
+          @onclick="DispatchCloseGridTabActionOnClick"
+          @onclick:stopPropagation="true">
+        <IconChromeClose />
+    </span>
 </div>

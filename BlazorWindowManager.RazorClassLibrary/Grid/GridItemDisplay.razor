@@ -12,9 +12,23 @@
             </CascadingValue>
         }
 
-        @foreach (var gridTabContainerRecord in _cachedGridTabContainer.GridTabRecords)
-        {
-            <GridTabDisplay GridTabRecord="gridTabContainerRecord"/>
-        }
+        <div class="bwmt_grid-display-tabs">
+            @if (_cachedGridTabContainer.ActiveTabIndex is not null)
+            {
+                <div class="bwmt_grid-display-change-active-tab-section">
+                    @for (int i = 0; i < _cachedGridTabContainer.GridTabRecords.Length; i++)
+                    {
+                        var tabIndex = i;
+                        var gridTabRecord = _cachedGridTabContainer.GridTabRecords[tabIndex];
+
+                        <GridTabDisplay GridTabRecord="gridTabRecord"
+                                        ActiveTabIndex="_cachedGridTabContainer.ActiveTabIndex.Value"
+                                        MyTabIndex="tabIndex"/>
+                    }
+                </div>
+            }
+
+            <GridAddTabDisplay NextAvailableTabIndex="_cachedGridTabContainerRecord.GridTabRecords.Length"/>
+        </div>
     </div>
 }

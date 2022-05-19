@@ -4,41 +4,43 @@
 
 @inherits FluxorComponent
 
-@if(_cachedGridBoard is not null)
+@if (_cachedGridBoard is not null)
 {
-    <div class="bwmt_grid-display">
-        <div style="cursor: pointer;"
-                 @onclick="StateHasChanged">
-                 StateHasChanged
-            </div>
-        
-        @if(_cachedGridBoard.GridItemRecords.Any())
-        {
-            ImmutableArray<GridItemRecord>? previousRow = null;
-
-            for (int i = 0; i < _cachedGridBoard.GridItemRecords.Length; i++)
-            {
-                var rowIndex = i;
-                var row = _cachedGridBoard.GridItemRecords[rowIndex];
-
-                if(previousRow is not null)
-                {
-                        <GridRowDivider />
-                }
-                
-                <CascadingValue Value="ChooseGridTabRecordRenderFragment">
-                    <GridRowDisplay Row="row" />
-                </CascadingValue>
-                
-                previousRow = row;
-            }
-        }
-        else
-        {
+    <div class="bwmt_grid-display-theme-wrapping @GetCssClasses()">
+        <div class="bwmt_grid-display">
             <div style="cursor: pointer;"
-                 @onclick="AddGridItemRecordOnClick">
-                 GridRecord is empty click here to add a GridItem
+                 @onclick="StateHasChanged">
+                StateHasChanged
             </div>
-        }
-    </div>   
+
+            @if (_cachedGridBoard.GridItemRecords.Any())
+            {
+                ImmutableArray<GridItemRecord>? previousRow = null;
+
+                for (int i = 0; i < _cachedGridBoard.GridItemRecords.Length; i++)
+                {
+                    var rowIndex = i;
+                    var row = _cachedGridBoard.GridItemRecords[rowIndex];
+
+                    if (previousRow is not null)
+                    {
+                        <GridRowDivider/>
+                    }
+
+                    <CascadingValue Value="ChooseGridTabRecordRenderFragment">
+                        <GridRowDisplay Row="row"/>
+                    </CascadingValue>
+
+                    previousRow = row;
+                }
+            }
+            else
+            {
+                <div style="cursor: pointer;"
+                     @onclick="AddGridItemRecordOnClick">
+                    GridRecord is empty click here to add a GridItem
+                </div>
+            }
+        </div>
+    </div>
 }
