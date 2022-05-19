@@ -1,41 +1,14 @@
 ﻿@page "/grid"
+
 @using BlazorWindowManager.ClassLibrary.Grid
 @using BlazorWindowManager.ClassLibrary.Html
-@using System.Collections.Immutable
-@using BlazorWindowManagerTemplate.Components
+@using BlazorWindowManager.RazorClassLibrary.Grid
 
-<div class="grid-example">
-    <h3>Example of Grid Component</h3>
+<h3>Grid Example</h3>
 
-    <BlazorWindowManager.RazorClassLibrary.Grid.GridDisplay GridRecord="_gridRecord"
-                                                            GridTabContainerRecord="_initialGridTabContainerRecord">
-        <EmptyGridTabContainerRenderFragment>
-            <AddWindowToGridSelector />
-        </EmptyGridTabContainerRenderFragment>
-    </BlazorWindowManager.RazorClassLibrary.Grid.GridDisplay>
-</div>
+<GridDisplay GridRecord="_gridRecord" />
 
 @code {
-    public Grid()
-    {
-        _gridRecordKey = new GridRecordKey(Guid.NewGuid());
-
-        _gridRecord = new GridRecord(_gridRecordKey, new HtmlElementRecordKey(Guid.NewGuid()));
-
-        var initialGridTabRecords = new GridTabRecord[]
-        {
-            new GridTabRecord(Guid.NewGuid(), typeof(Counter), nameof(Counter)),
-            new GridTabRecord(Guid.NewGuid(), typeof(FetchData), nameof(FetchData)),
-            new GridTabRecord(Guid.NewGuid(), typeof(Counter), nameof(Counter))
-        };
-
-        _initialGridTabContainerRecord = new GridTabContainerRecord(_gridRecordKey,
-            0,
-            Guid.NewGuid(),
-            initialGridTabRecords.ToArray());
-    }
-
-    private GridRecordKey _gridRecordKey;
-    private GridRecord _gridRecord;
-    private GridTabContainerRecord _initialGridTabContainerRecord;
+    private GridRecord _gridRecord = new GridRecord(new GridRecordKey(Guid.NewGuid()), 
+                                                    new HtmlElementRecordKey(Guid.NewGuid()));
 }
