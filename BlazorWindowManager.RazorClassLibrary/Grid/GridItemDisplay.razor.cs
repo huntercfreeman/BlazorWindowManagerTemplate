@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlazorWindowManager.ClassLibrary.Dimension;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using BlazorWindowManager.RazorClassLibrary.Icons.Codicon;
 using BlazorWindowManager.ClassLibrary.Grid;
+using BlazorWindowManager.ClassLibrary.Html;
 using BlazorWindowManager.ClassLibrary.Store.Grid;
+using BlazorWindowManager.ClassLibrary.Store.Html;
+using BlazorWindowManager.ClassLibrary.Store.Theme;
 using Fluxor;
 using Fluxor.Blazor.Web.Components;
 using BlazorWindowManager.RazorClassLibrary.Html;
@@ -18,6 +22,10 @@ public partial class GridItemDisplay : FluxorComponent
     [Inject]
     private IState<GridItemRecordsState> GridItemRecordsState { get; set; } = null!;
     [Inject]
+    private IState<HtmlElementRecordsState> HtmlElementRecordsState { get; set; } = null!;
+    [Inject]
+    private IState<ThemeState> ThemeState { get; set; } = null!;
+    [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
     
     [CascadingParameter]
@@ -25,10 +33,12 @@ public partial class GridItemDisplay : FluxorComponent
     
     [Parameter, EditorRequired]
     public GridItemRecord GridItemRecord { get; set; } = null!;
+    [Parameter]
+    public DimensionsRecord? InitialDimensionsRecord { get; set; }
     
     private GridTabContainerRecord? _cachedGridTabContainer;
     private Guid? _previousGridTabContainerSequence;
-
+    
     protected override void OnInitialized()
     {
         var registerGridTabContainerRecordAction = new RegisterGridTabContainerRecordAction(GridItemRecord.GridItemRecordKey);

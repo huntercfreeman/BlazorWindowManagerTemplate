@@ -2,4 +2,4 @@
 
 namespace BlazorWindowManager.ClassLibrary.Store.Html;
 
-public record UnregisterHtmlElemementAction(HtmlElementRecordKey HtmlElementRecordKey);
+public record UnregisterHtmlElementAction(HtmlElementRecordKey HtmlElementRecordKey);

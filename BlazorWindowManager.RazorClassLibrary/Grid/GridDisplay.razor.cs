@@ -1,4 +1,5 @@
 using System.Text;
+using BlazorWindowManager.ClassLibrary.Dimension;
 using BlazorWindowManager.ClassLibrary.Grid;
 using BlazorWindowManager.ClassLibrary.Html;
 using BlazorWindowManager.ClassLibrary.Store.Grid;
@@ -26,14 +27,25 @@ public partial class GridDisplay : FluxorComponent
     public GridRecord GridRecord { get; set; } = null!;
     [Parameter, EditorRequired]
     public RenderFragment ChooseGridTabRecordRenderFragment { get; set; } = null!;
+    [Parameter]
+    public DimensionsRecord? InitialDimensionsRecord { get; set; }
 
     public const string ON_CHOSE_GRID_TAB_RECORD_ACTION_PARAMETER_NAME = "OnChoseGridTabRecordAction";
     
     private GridBoard? _cachedGridBoard;
     private Guid? _previousGridBoardSequence;
+    
+    private Guid? _previousHtmlElementSequence;
+    private HtmlElementRecord? _cachedHtmlElementRecord;
 
     protected override void OnInitialized()
     {
+        var registerHtmlElementAction = new RegisterHtmlElementAction(GridRecord.HtmlElementRecordKey,
+            InitialDimensionsRecord ?? DimensionsRecord.FromPixelUnits(400, 400, 0, 0),
+            new ZIndexRecord(1));
+
+        Dispatcher.Dispatch(registerHtmlElementAction);
+        
         var registerGridRecordAction = new RegisterGridRecordAction(GridRecord.GridRecordKey);
 
         Dispatcher.Dispatch(registerGridRecordAction);
@@ -49,20 +61,35 @@ public partial class GridDisplay : FluxorComponent
 
         try
         {
+            // Get HtmlElementRecord
+            var htmlElementRecordStepNeedsRerender = false;
+
+            _cachedHtmlElementRecord = HtmlElementRecordsState.Value
+                .LookupHtmlElementRecord(GridRecord.HtmlElementRecordKey);
+
+            if (_previousHtmlElementSequence is null ||
+                _previousHtmlElementSequence.Value != _cachedHtmlElementRecord.HtmlElementSequence)
+            {
+                htmlElementRecordStepNeedsRerender = true;
+            }
+
+            _previousHtmlElementSequence = _cachedHtmlElementRecord.HtmlElementSequence;
+
+            // Get GridBoardRecord
+            var gridBoardRecordStepNeedsRerender = false;
+
             _cachedGridBoard = GridRecordsState.Value
                 .LookupGridBoard(GridRecord.GridRecordKey);
 
             if (_previousGridBoardSequence is null ||
                 _previousGridBoardSequence.Value != _cachedGridBoard.GridBoardSequence)
             {
-                shouldRender = true;
-            }
-            else
-            {
-                shouldRender = false;
+                gridBoardRecordStepNeedsRerender = true;
             }
 
             _previousGridBoardSequence = _cachedGridBoard.GridBoardSequence;
+
+            shouldRender = htmlElementRecordStepNeedsRerender || gridBoardRecordStepNeedsRerender;
         }
         catch (KeyNotFoundException)
         {
@@ -91,5 +118,14 @@ public partial class GridDisplay : FluxorComponent
             classBuilder.Append(ThemeState.Value.CssClassForOverridingColors);
 
         return classBuilder.ToString();
+    }
+    
+    protected override void Dispose(bool disposing)
+    {
+        var unregisterHtmlElementAction = new UnregisterHtmlElementAction(GridRecord.HtmlElementRecordKey);
+
+        Dispatcher.Dispatch(unregisterHtmlElementAction);
+
+        base.Dispose(disposing);
     }
 }

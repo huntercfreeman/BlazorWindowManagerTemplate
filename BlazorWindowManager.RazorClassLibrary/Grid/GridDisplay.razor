@@ -1,6 +1,7 @@
 ﻿@using BlazorWindowManager.ClassLibrary.Grid
 @using Fluxor.Blazor.Web.Components
 @using System.Collections.Immutable
+@using BlazorWindowManager.RazorClassLibrary.Transformative
 
 @inherits FluxorComponent
 
@@ -8,11 +9,8 @@
 {
     <div class="bwmt_grid-display-theme-wrapping @GetCssClasses()">
         <div class="bwmt_grid-display">
-            <div style="cursor: pointer;"
-                 @onclick="StateHasChanged">
-                StateHasChanged
-            </div>
-
+            <TransformativeDisplay HtmlElementRecord="_cachedHtmlElementRecord" />
+            
             @if (_cachedGridBoard.GridItemRecords.Any())
             {
                 ImmutableArray<GridItemRecord>? previousRow = null;
@@ -24,7 +22,7 @@
 
                     if (previousRow is not null)
                     {
-                        <GridRowDivider/>
+                        <GridRowDivider />
                     }
 
                     <CascadingValue Value="ChooseGridTabRecordRenderFragment">

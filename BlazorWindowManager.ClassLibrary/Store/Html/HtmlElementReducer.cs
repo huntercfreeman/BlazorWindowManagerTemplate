@@ -40,12 +40,12 @@ public class HtmlElementReducer
     }
     
     [ReducerMethod]
-    public static HtmlElementRecordsState ReduceRegisterHtmlElemementAction(HtmlElementRecordsState previousHtmlElementRecordsState,
-        RegisterHtmlElementAction registerHtmlElemementAction)
+    public static HtmlElementRecordsState ReduceRegisterHtmlElementAction(HtmlElementRecordsState previousHtmlElementRecordsState,
+        RegisterHtmlElementAction registerHtmlElementAction)
     {
-        var htmlElementRecord = new HtmlElementRecord(registerHtmlElemementAction.HtmlElementRecordKey,
-            registerHtmlElemementAction.DimensionsRecord,
-            registerHtmlElemementAction.ZIndexRecord,
+        var htmlElementRecord = new HtmlElementRecord(registerHtmlElementAction.HtmlElementRecordKey,
+            registerHtmlElementAction.DimensionsRecord,
+            registerHtmlElementAction.ZIndexRecord,
             Guid.NewGuid());
 
         return new HtmlElementRecordsState(previousHtmlElementRecordsState,
@@ -54,10 +54,10 @@ public class HtmlElementReducer
     }
     
     [ReducerMethod]
-    public static HtmlElementRecordsState ReduceUnregisterHtmlElemementAction(HtmlElementRecordsState previousHtmlElementRecordsState,
-        UnregisterHtmlElemementAction unregisterHtmlElemementAction)
+    public static HtmlElementRecordsState ReduceUnregisterHtmlElementAction(HtmlElementRecordsState previousHtmlElementRecordsState,
+        UnregisterHtmlElementAction unregisterHtmlElementAction)
     {
         return new HtmlElementRecordsState(previousHtmlElementRecordsState,
-            unregisterHtmlElemementAction.HtmlElementRecordKey);
+            unregisterHtmlElementAction.HtmlElementRecordKey);
     }
 }
