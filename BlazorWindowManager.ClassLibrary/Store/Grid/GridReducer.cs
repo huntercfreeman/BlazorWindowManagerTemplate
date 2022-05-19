@@ -12,6 +12,7 @@ public class GridReducer
         return new GridRecordsState(previousGridRecordsState,
             registerGridRecordAction.GridRecordKey,
             registerGridRecordAction.GridItemRecord,
+            ConstructorActionKind.Add,
             registerGridRecordAction.CardinalDirectionKind,
             registerGridRecordAction.RowIndexRelativeTo,
             registerGridRecordAction.ColumnIndexRelativeTo);

@@ -25,6 +25,11 @@ public record GridBoard
     {
         _gridItemRecords = new(otherGridBoard._gridItemRecords);
 
+        if(!_gridItemRecords.Any())
+        {
+            _gridItemRecords.Add(new List<GridItemRecord>());
+        }
+
         _gridItemRecords.First().Add(gridItemRecord);
     }
 
