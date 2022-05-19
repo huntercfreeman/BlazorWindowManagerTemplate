@@ -32,7 +32,7 @@ public record GridTabContainerRecord
             _gridTabRecordMap.Add(gridTabRecord.GridTabRecordKey, gridTabRecord);
         }
         
-        ActiveTabIndex = tabToSetAsActive ?? _gridTabRecordMap.Values.ToList().IndexOf(gridTabRecord);
+        ActiveGridTabIndex = tabToSetAsActive ?? _gridTabRecordMap.Values.ToList().IndexOf(gridTabRecord);
     }
     
     public GridTabContainerRecord(GridTabContainerRecord previousGridTabContainerRecord, 
@@ -49,28 +49,28 @@ public record GridTabContainerRecord
             case ConstructorActionKind.Remove:
                 _gridTabRecordMap.Remove(gridTabRecordKey);
 
-                ActiveTabIndex = tabToSetAsActive ?? previousGridTabContainerRecord.ActiveTabIndex - 1;
+                ActiveGridTabIndex = tabToSetAsActive ?? previousGridTabContainerRecord.ActiveGridTabIndex - 1;
 
-                if (ActiveTabIndex < 0)
+                if (ActiveGridTabIndex < 0)
                 {
                     if (_gridTabRecordMap.Any())
                     {
-                        ActiveTabIndex = 0;
+                        ActiveGridTabIndex = 0;
                     }
                     else
                     {
-                        ActiveTabIndex = null;
+                        ActiveGridTabIndex = null;
                     }
                 }
 
                 break;
             case ConstructorActionKind.Replace:
-                ActiveTabIndex = tabToSetAsActive ?? 0;
+                ActiveGridTabIndex = tabToSetAsActive ?? 0;
                 break;
         }
     }
 
-    public int? ActiveTabIndex { get; }
+    public int? ActiveGridTabIndex { get; }
     public Guid GridTabContainerRecordSequence { get; }
     public ImmutableArray<GridTabRecord> GridTabRecords => _gridTabRecordMap.Values
         .ToImmutableArray();

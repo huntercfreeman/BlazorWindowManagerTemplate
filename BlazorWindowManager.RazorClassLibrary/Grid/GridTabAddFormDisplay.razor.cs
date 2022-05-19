@@ -15,8 +15,8 @@ public partial class GridTabAddFormDisplay : ComponentBase
     public RenderFragment EmptyGridTabContainerRenderFragment { get; set; } = null!;
     [CascadingParameter]
     public Guid? ActiveGridTabId { get; set; } = null!;
-    [CascadingParameter]
-    public int? ActiveGridTabIndex { get; set; } = null!;
+    [CascadingParameter(Name="ActiveGridTabIndex")]
+    public int? ActiveGridTabIndex { get; set; }
     [CascadingParameter]
     public GridItemRecordKey GridItemRecordKey { get; set; } = null!;
 

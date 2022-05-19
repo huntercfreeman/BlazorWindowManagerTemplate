@@ -29,9 +29,7 @@ public record GridItemRecordsState
     {
         _gridTabContainerRecordMap = new(otherGridItemsState._gridTabContainerRecordMap);
 
-        GridTabContainerRecord previousGridTabContainerRecord;
-
-        if(!_gridTabContainerRecordMap.TryGetValue(gridItemRecordKey, out previousGridTabContainerRecord!))
+        if(!_gridTabContainerRecordMap.TryGetValue(gridItemRecordKey, out var previousGridTabContainerRecord))
         {
             previousGridTabContainerRecord = new();
             _gridTabContainerRecordMap.Add(gridItemRecordKey, previousGridTabContainerRecord);
@@ -39,7 +37,7 @@ public record GridItemRecordsState
 
         var nextGridTabContainerRecord = new GridTabContainerRecord(previousGridTabContainerRecord,
             gridTabRecord,
-            previousGridTabContainerRecord.ActiveTabIndex,
+            tabToSetAsActive ?? previousGridTabContainerRecord.ActiveGridTabIndex + 1,
             constructorActionKind);
 
         _gridTabContainerRecordMap[gridItemRecordKey] = nextGridTabContainerRecord;

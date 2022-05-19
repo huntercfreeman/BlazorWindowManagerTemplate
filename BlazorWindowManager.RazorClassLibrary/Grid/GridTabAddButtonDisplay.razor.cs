@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace BlazorWindowManager.RazorClassLibrary.Grid;
 
-public partial class GridTabAddDisplay : ComponentBase
+public partial class GridTabAddButtonDisplay : ComponentBase
 {
     [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;

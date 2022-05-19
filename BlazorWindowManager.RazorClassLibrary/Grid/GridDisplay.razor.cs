@@ -2,6 +2,7 @@ using System.Text;
 using BlazorWindowManager.ClassLibrary.Grid;
 using BlazorWindowManager.ClassLibrary.Html;
 using BlazorWindowManager.ClassLibrary.Store.Grid;
+using BlazorWindowManager.ClassLibrary.Store.Html;
 using BlazorWindowManager.ClassLibrary.Store.Theme;
 using BlazorWindowManager.ClassLibrary.Theme;
 using Fluxor;
@@ -12,6 +13,8 @@ namespace BlazorWindowManager.RazorClassLibrary.Grid;
 
 public partial class GridDisplay : FluxorComponent
 {
+    [Inject]
+    private IState<HtmlElementRecordsState> HtmlElementRecordsState { get; set; } = null!;
     [Inject]
     private IState<GridRecordsState> GridRecordsState { get; set; } = null!;
     [Inject]

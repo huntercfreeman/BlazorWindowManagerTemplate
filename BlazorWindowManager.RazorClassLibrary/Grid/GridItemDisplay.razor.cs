@@ -93,9 +93,9 @@ public partial class GridItemDisplay : FluxorComponent
     private Type? GetGridBodyRenderedContentType()
     {
         if(_cachedGridTabContainer is not null &&
-           _cachedGridTabContainer.ActiveTabIndex is not null)
+           _cachedGridTabContainer.ActiveGridTabIndex is not null)
         {
-            return _cachedGridTabContainer.GridTabRecords[_cachedGridTabContainer.ActiveTabIndex.Value].RenderedContentType;
+            return _cachedGridTabContainer.GridTabRecords[_cachedGridTabContainer.ActiveGridTabIndex.Value].RenderedContentType;
         }
 
         return null;
@@ -104,10 +104,10 @@ public partial class GridItemDisplay : FluxorComponent
     private Guid? GetActiveGridTabId()
     {
         if(_cachedGridTabContainer is not null &&
-           _cachedGridTabContainer.ActiveTabIndex is not null)
+           _cachedGridTabContainer.ActiveGridTabIndex is not null)
         {
             return _cachedGridTabContainer
-                .GridTabRecords[_cachedGridTabContainer.ActiveTabIndex.Value]
+                .GridTabRecords[_cachedGridTabContainer.ActiveGridTabIndex.Value]
                 .GridTabRecordKey.Id;
         }
 

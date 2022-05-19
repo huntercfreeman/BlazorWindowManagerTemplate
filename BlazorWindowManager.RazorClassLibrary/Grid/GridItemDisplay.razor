@@ -7,32 +7,31 @@
     <div class="bwmt_grid-item-display">
         <CascadingValue IsFixed="true" Value="GridItemRecord.GridItemRecordKey">
             <CascadingValue Name="@BlazorWindowManager.RazorClassLibrary.Grid.GridDisplay.ON_CHOSE_GRID_TAB_RECORD_ACTION_PARAMETER_NAME" IsFixed="true" Value="OnGridTabRecordChosenAction">
-                <div class="bwmt_grid-display-tabs">
-                    @if (_cachedGridTabContainer.ActiveTabIndex is not null)
-                    {
-                        <div class="bwmt_grid-display-change-active-tab-section">
-                            @for (int i = 0; i < _cachedGridTabContainer.GridTabRecords.Length; i++)
-                            {
-                                var tabIndex = i;
-                                var gridTabRecord = _cachedGridTabContainer.GridTabRecords[tabIndex];
+                <CascadingValue Name="ActiveGridTabIndex" Value="_cachedGridTabContainer.ActiveGridTabIndex">
+                    <div class="bwmt_grid-display-tabs">
+                        @if (_cachedGridTabContainer.ActiveGridTabIndex is not null)
+                        {
+                            <div class="bwmt_grid-display-change-active-tab-section">
+                                @for (int i = 0; i < _cachedGridTabContainer.GridTabRecords.Length; i++)
+                                {
+                                    var tabIndex = i;
+                                    var gridTabRecord = _cachedGridTabContainer.GridTabRecords[tabIndex];
 
-                                <GridTabDisplay GridTabRecord="gridTabRecord"
-                                                ActiveTabIndex="_cachedGridTabContainer.ActiveTabIndex.Value"
-                                                MyTabIndex="tabIndex"/>
-                            }
-                        </div>
+                                    <GridTabDisplay GridTabRecord="gridTabRecord"
+                                                    MyGridTabIndex="tabIndex"/>
+                                }
+                            </div>
 
-                        <GridTabAddDisplay NextAvailableTabIndex="_cachedGridTabContainer.GridTabRecords.Length"/>
-                    }
-                </div>
-                
-                <div class="grid-body-display-wrapping">
-                    <CascadingValue Value="GetActiveGridTabId()">
-                        <CascadingValue Value="_cachedGridTabContainer.ActiveTabIndex">
-                            <GridBodyDisplay RenderedContentType="GetGridBodyRenderedContentType()" />
+                            <GridTabAddButtonDisplay NextAvailableTabIndex="_cachedGridTabContainer.GridTabRecords.Length"/>
+                        }
+                    </div>
+
+                    <div class="grid-body-display-wrapping">
+                        <CascadingValue Value="GetActiveGridTabId()">
+                            <GridBodyDisplay RenderedContentType="GetGridBodyRenderedContentType()"/>
                         </CascadingValue>
-                    </CascadingValue>
-                </div>
+                    </div>
+                </CascadingValue>
             </CascadingValue>
         </CascadingValue>
     </div>

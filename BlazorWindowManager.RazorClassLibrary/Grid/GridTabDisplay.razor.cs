@@ -19,13 +19,13 @@ public partial class GridTabDisplay : ComponentBase
 
     [CascadingParameter]
     public GridItemRecordKey GridItemRecordKey { get; set; } = null!;
+    [CascadingParameter(Name="ActiveGridTabIndex")]
+    public int? ActiveGridTabIndex { get; set; }
     
     [Parameter, EditorRequired]
     public GridTabRecord GridTabRecord { get; set; } = null!;
     [Parameter, EditorRequired]
-    public int MyTabIndex { get; set; }
-    [Parameter, EditorRequired]
-    public int ActiveTabIndex { get; set; }
+    public int MyGridTabIndex { get; set; }
     
     private void OnGridTabRecordChosenAction((Type renderedContentType, string renderedContentTabDisplayName) argumentTuple)
     {
@@ -37,7 +37,7 @@ public partial class GridTabDisplay : ComponentBase
         Dispatcher.Dispatch(addGridTabRecordAction);
     }
     
-    private string IsActiveCssClass => ActiveTabIndex == MyTabIndex
+    private string IsActiveCssClass => ActiveGridTabIndex == MyGridTabIndex
         ? "bwmt_active"
         : string.Empty;
 
@@ -54,7 +54,7 @@ public partial class GridTabDisplay : ComponentBase
     {
         var setActiveGridTabAction = new SetActiveGridTabRecordAction(GridItemRecordKey, 
             GridTabRecord.GridTabRecordKey,
-            MyTabIndex);
+            MyGridTabIndex);
 
         Dispatcher.Dispatch(setActiveGridTabAction);
     }
