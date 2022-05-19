@@ -12,7 +12,7 @@ public partial class GridDisplay : FluxorComponent
     [Inject]
     private IState<GridRecordsState> GridRecordsState { get; set; } = null!;
     [Inject]
-    private IDispatcher Dispatcher { get; set; } = null;
+    private IDispatcher Dispatcher { get; set; } = null!;
 
     [Parameter, EditorRequired]
     public GridRecord GridRecord { get; set; } = null!;

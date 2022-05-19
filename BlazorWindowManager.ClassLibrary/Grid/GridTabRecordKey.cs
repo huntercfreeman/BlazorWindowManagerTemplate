@@ -1,3 +1,3 @@
 ﻿namespace BlazorWindowManager.ClassLibrary.Grid;
 
-public record GridItemRecordKey(Guid Id);
+public record GridTabRecordKey(Guid Id);

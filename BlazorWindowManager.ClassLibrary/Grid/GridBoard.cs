@@ -1,4 +1,5 @@
 ﻿using BlazorWindowManager.ClassLibrary.Direction;
+using BlazorWindowManager.ClassLibrary.ImmutableArrayExtensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -48,26 +49,7 @@ public record GridBoard
         GridBoardSequence = Guid.NewGuid();
     }
 
-    public ImmutableArray<ImmutableArray<GridItemRecord>> GridItemRecords => GetGridItemRecords();
+    public ImmutableArray<ImmutableArray<GridItemRecord>> GridItemRecords => BlazorWindowManagerImmutableArrayExtensions.ConvertToImmutable(_gridItemRecords);
 
     public Guid GridBoardSequence { get; }
-
-    private ImmutableArray<ImmutableArray<GridItemRecord>> GetGridItemRecords()
-    {
-        List<ImmutableArray<GridItemRecord>> temporaryRows = new();
-
-        foreach(var row in _gridItemRecords)
-        {
-            List<GridItemRecord> temporaryRow = new();
-
-            foreach(var gridItemRecord in row)
-            {
-                temporaryRow.Add(gridItemRecord);
-            }
-
-            temporaryRows.Add(temporaryRow.ToImmutableArray());
-        }
-
-        return temporaryRows.ToImmutableArray();
-    }
 }
