@@ -46,7 +46,7 @@ public partial class GridTabAddFormDisplay : ComponentBase
             var addGridItemRecordAction = new AddGridItemRecordAction(GridRecordKey,
                 new GridItemRecord(new GridItemRecordKey(Guid.NewGuid()),
                     new HtmlElementRecordKey(Guid.NewGuid())),
-                CardinalDirectionKind.CurrentPosition,
+                _selectedCardinalDirectionKind,
                 ActiveRowIndex,
                 ActiveGridItemRecordIndex);
 
