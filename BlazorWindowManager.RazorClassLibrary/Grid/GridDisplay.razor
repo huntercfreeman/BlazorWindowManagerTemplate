@@ -8,9 +8,10 @@
 @if (_cachedGridBoard is not null &&
      _cachedHtmlElementRecord is not null)
 {
-    <div class="bwmt_grid-display-theme-wrapping @GetCssClasses()">
+    <div class="bwmt_grid-display-theme-wrapping @GetCssClasses()"
+         style="@_cachedHtmlElementRecord.DimensionsRecord.BuildCssStyleString()">
         <div class="bwmt_grid-display"
-             style="@_cachedHtmlElementRecord.DimensionsRecord.BuildCssStyleString()">
+             style="width: 100%; height: 100%;">
             <TransformativeDisplay HtmlElementRecord="_cachedHtmlElementRecord" />
             
             @if (_cachedGridBoard.GridItemRecords.Any())
@@ -29,7 +30,8 @@
 
                     <CascadingValue Value="ChooseGridTabRecordRenderFragment">
                         <CascadingValue Name="GridDisplayCachedHtmlElementRecord" Value="_cachedHtmlElementRecord">
-                            <GridRowDisplay Row="row"/>
+                            <GridRowDisplay Row="row"
+                                            TotalRowCount="row.Length" />
                         </CascadingValue>
                     </CascadingValue>
 

@@ -1,22 +1,28 @@
-﻿@using BlazorWindowManager.ClassLibrary.Grid
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<div class="bwmt_grid-row-display">
-    @{
-        GridItemRecord? previousGridItemRecord = null;
+@using BlazorWindowManager.ClassLibrary.Grid
 
-        for (int j = 0; j < Row.Length; j++)
-        {
-            var gridItemRecordIndex = j;
-            var gridItemRecord = Row[gridItemRecordIndex];
+@if (_cachedHtmlElementRecord is not null)
+{
+    <div class="bwmt_grid-row-display"
+         style="@_cachedHtmlElementRecord.DimensionsRecord.BuildCssStyleString()">
+        @{
+            GridItemRecord? previousGridItemRecord = null;
 
-            if (previousGridItemRecord is not null)
+            for (int j = 0; j < Row.Length; j++)
             {
-                <GridItemDividerDisplay />
+                var gridItemRecordIndex = j;
+                var gridItemRecord = Row[gridItemRecordIndex];
+
+                if (previousGridItemRecord is not null)
+                {
+                    <GridItemDividerDisplay/>
+                }
+
+                <GridItemDisplay GridItemRecord="gridItemRecord"/>
+
+                previousGridItemRecord = gridItemRecord;
             }
-
-            <GridItemDisplay GridItemRecord="gridItemRecord" />
-
-            previousGridItemRecord = gridItemRecord;
         }
-    }
-</div>
+    </div>
+}

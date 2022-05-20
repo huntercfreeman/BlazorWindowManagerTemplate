@@ -24,8 +24,6 @@ public partial class GridItemDisplay : FluxorComponent
     [Inject]
     private IState<HtmlElementRecordsState> HtmlElementRecordsState { get; set; } = null!;
     [Inject]
-    private IState<ThemeState> ThemeState { get; set; } = null!;
-    [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
     
     [CascadingParameter]
@@ -33,14 +31,32 @@ public partial class GridItemDisplay : FluxorComponent
     
     [Parameter, EditorRequired]
     public GridItemRecord GridItemRecord { get; set; } = null!;
-    [Parameter]
-    public DimensionsRecord? InitialDimensionsRecord { get; set; }
+    [Parameter, EditorRequired]
+    public int TotalGridItemCountInRow { get; set; }
     
     private GridTabContainerRecord? _cachedGridTabContainer;
     private Guid? _previousGridTabContainerSequence;
     
+    private HtmlElementRecord? _cachedHtmlElementRecord;
+    private Guid? _previousHtmlElementSequence;
+
+    private DimensionValuedUnit _heightOfGridTabDimensionValuedUnit = new DimensionValuedUnit(2, DimensionUnitKind.Rem);
+    
     protected override void OnInitialized()
     {
+        var initialWidth = 
+            new DimensionValuedUnit(100.0 / (TotalGridItemCountInRow == 0 ? 1 : TotalGridItemCountInRow),
+                DimensionUnitKind.PercentageOfParent);
+        var initialHeight = new DimensionValuedUnit(100.0, DimensionUnitKind.PercentageOfParent);
+        var initialLeft = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
+        var initialTop = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
+        
+        var registerHtmlElementAction = new RegisterHtmlElementAction(GridItemRecord.HtmlElementRecordKey,
+            new DimensionsRecord(initialWidth, initialHeight, initialLeft, initialTop),
+            new ZIndexRecord(0));
+
+        Dispatcher.Dispatch(registerHtmlElementAction);
+        
         var registerGridTabContainerRecordAction = new RegisterGridTabContainerRecordAction(GridItemRecord.GridItemRecordKey);
 
         Dispatcher.Dispatch(registerGridTabContainerRecordAction);
@@ -56,20 +72,33 @@ public partial class GridItemDisplay : FluxorComponent
 
         try
         {
+            // Get HtmlElementRecord
+            var htmlElementRecordStepNeedsRerender = false;
+            
+            _cachedHtmlElementRecord = HtmlElementRecordsState.Value
+                .LookupHtmlElementRecord(GridItemRecord.HtmlElementRecordKey);
+
+            if (_previousHtmlElementSequence is null ||
+                _previousHtmlElementSequence.Value != _cachedHtmlElementRecord.HtmlElementSequence)
+            {
+                htmlElementRecordStepNeedsRerender = true;
+            }
+
+            _previousHtmlElementSequence = _cachedHtmlElementRecord.HtmlElementSequence;
+            
+            // Get GridTabContainerRecord
+            var gridTabContainerRecordStepNeedsRerender = false;
+            
             _cachedGridTabContainer = GridItemRecordsState.Value
                 .LookupGridTabContainer(GridItemRecord.GridItemRecordKey);
 
             if (_previousGridTabContainerSequence is null ||
                 _previousGridTabContainerSequence.Value != _cachedGridTabContainer.GridTabContainerRecordSequence)
             {
-                shouldRender = true;
-            }
-            else
-            {
-                shouldRender = false;
+                gridTabContainerRecordStepNeedsRerender = true;
             }
 
-            _previousGridTabContainerSequence = _cachedGridTabContainer.GridTabContainerRecordSequence;
+            shouldRender = htmlElementRecordStepNeedsRerender || gridTabContainerRecordStepNeedsRerender;
         }
         catch (KeyNotFoundException)
         {
@@ -122,5 +151,14 @@ public partial class GridItemDisplay : FluxorComponent
         }
 
         return null;
+    }
+    
+    protected override void Dispose(bool disposing)
+    {
+        var unregisterHtmlElementAction = new UnregisterHtmlElementAction(GridItemRecord.HtmlElementRecordKey);
+
+        Dispatcher.Dispatch(unregisterHtmlElementAction);
+
+        base.Dispose(disposing);
     }
 }

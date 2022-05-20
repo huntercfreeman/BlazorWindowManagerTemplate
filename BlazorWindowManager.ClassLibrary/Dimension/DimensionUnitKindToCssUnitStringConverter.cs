@@ -6,6 +6,9 @@ public static class DimensionUnitKindToCssUnitStringConverter
     {
         DimensionUnitKind.Pixels => "px",
         DimensionUnitKind.PercentageOfParent => "%",
+        DimensionUnitKind.CharacterWidth or DimensionUnitKind.Ch  => "ch",
+        DimensionUnitKind.RootCharacterHeight or DimensionUnitKind.Rem => "rem",
+        DimensionUnitKind.CharacterHeight or DimensionUnitKind.Em => "em",
         _ => throw new ApplicationException($"The {nameof(DimensionUnitKind)} is not currently supported.")
     };
 }
