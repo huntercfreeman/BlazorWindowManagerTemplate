@@ -1,5 +1,6 @@
 ﻿using BlazorWindowManager.ClassLibrary.Direction;
 using BlazorWindowManager.ClassLibrary.Grid;
+using BlazorWindowManager.ClassLibrary.Html;
 using BlazorWindowManager.ClassLibrary.Store.Grid;
 using Fluxor;
 using Microsoft.AspNetCore.Components;
@@ -17,20 +18,40 @@ public partial class GridTabAddFormDisplay : ComponentBase
     public Guid? ActiveGridTabId { get; set; } = null!;
     [CascadingParameter(Name="ActiveGridTabIndex")]
     public int? ActiveGridTabIndex { get; set; }
+    [CascadingParameter(Name="ActiveRowIndex")]
+    public int? ActiveRowIndex { get; set; }
+    [CascadingParameter(Name="ActiveRowIndex")]
+    public int? ActiveGridItemRecordIndex { get; set; }
     [CascadingParameter]
     public GridItemRecordKey GridItemRecordKey { get; set; } = null!;
+    [CascadingParameter]
+    public GridRecordKey GridRecordKey { get; set; } = null!;
 
     private CardinalDirectionKind _selectedCardinalDirectionKind = CardinalDirectionKind.CurrentPosition;
 
     private void OnTypeToRenderSelectedAction((Type renderedContentType, string renderedContentTabDisplayName) argumentTuple)
     {
-        var guidId = ActiveGridTabId ?? Guid.NewGuid();
+        if (_selectedCardinalDirectionKind == CardinalDirectionKind.CurrentPosition)
+        {
+            var guidId = ActiveGridTabId ?? Guid.NewGuid();
+            
+            var replaceGridTabAction = new ReplaceGridTabRecordAction(GridItemRecordKey,
+                new GridTabRecord(new GridTabRecordKey(guidId), argumentTuple.renderedContentType, argumentTuple.renderedContentTabDisplayName),
+                ActiveGridTabIndex ?? 0);
 
-        var replaceGridTabAction = new ReplaceGridTabRecordAction(GridItemRecordKey,
-            new GridTabRecord(new GridTabRecordKey(guidId), argumentTuple.renderedContentType, argumentTuple.renderedContentTabDisplayName),
-            ActiveGridTabIndex ?? 0);
+            Dispatcher.Dispatch(replaceGridTabAction);
+        }
+        else
+        {
+            var addGridItemRecordAction = new AddGridItemRecordAction(GridRecordKey,
+                new GridItemRecord(new GridItemRecordKey(Guid.NewGuid()),
+                    new HtmlElementRecordKey(Guid.NewGuid())),
+                CardinalDirectionKind.CurrentPosition,
+                ActiveRowIndex,
+                ActiveGridItemRecordIndex);
 
-        Dispatcher.Dispatch(replaceGridTabAction);
+            Dispatcher.Dispatch(addGridItemRecordAction);
+        }
     }
 
     private void OnCardinalDirectionKindSelectedEventCallback(CardinalDirectionKind cardinalDirectionKind)

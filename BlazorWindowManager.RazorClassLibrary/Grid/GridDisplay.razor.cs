@@ -1,5 +1,6 @@
 using System.Text;
 using BlazorWindowManager.ClassLibrary.Dimension;
+using BlazorWindowManager.ClassLibrary.Direction;
 using BlazorWindowManager.ClassLibrary.Grid;
 using BlazorWindowManager.ClassLibrary.Html;
 using BlazorWindowManager.ClassLibrary.Store.Grid;
@@ -103,7 +104,10 @@ public partial class GridDisplay : FluxorComponent
     {
         var addGridItemRecordAction = new AddGridItemRecordAction(GridRecord.GridRecordKey,
             new GridItemRecord(new GridItemRecordKey(Guid.NewGuid()),
-                               new HtmlElementRecordKey(Guid.NewGuid())));
+                               new HtmlElementRecordKey(Guid.NewGuid())),
+            CardinalDirectionKind.CurrentPosition,
+            null,
+            null);
 
         Dispatcher.Dispatch(addGridItemRecordAction);
     }

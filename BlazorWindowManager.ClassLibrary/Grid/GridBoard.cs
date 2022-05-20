@@ -42,12 +42,37 @@ public record GridBoard
 
         _gridItemRecords = new(otherGridBoard._gridItemRecords);
 
-        if (!_gridItemRecords.Any())
+        // No GridItemRecords are on the board yet so cardinalDirectionKind is not relevant
+        if (rowIndexRelativeTo is null && 
+            columnIndexRelativeTo is null)
         {
-            _gridItemRecords.Add(new List<GridItemRecord>());
-        }
+            if (!_gridItemRecords.Any())
+            {
+                _gridItemRecords.Add(new List<GridItemRecord>());
+            }
 
-        _gridItemRecords.First().Add(gridItemRecord);
+            _gridItemRecords.First().Add(gridItemRecord);
+        }
+        else
+        {
+            switch (cardinalDirectionKind)
+            {
+                case CardinalDirectionKind.North:
+                    _gridItemRecords.Insert(rowIndexRelativeTo ?? 0, new());
+                    _gridItemRecords[rowIndexRelativeTo ?? 0].Add(gridItemRecord);
+                    break;
+                case CardinalDirectionKind.East:
+                    _gridItemRecords[rowIndexRelativeTo ?? 0].Insert((columnIndexRelativeTo ?? 0) + 1, gridItemRecord);
+                    break;
+                case CardinalDirectionKind.South:
+                    _gridItemRecords.Insert((rowIndexRelativeTo ?? 0) + 1, new());
+                    _gridItemRecords[(rowIndexRelativeTo ?? 0) + 1].Add(gridItemRecord);
+                    break;
+                case CardinalDirectionKind.West:
+                    _gridItemRecords[rowIndexRelativeTo ?? 0].Insert(columnIndexRelativeTo ?? 0, gridItemRecord);
+                    break;
+            }
+        }
     }
 
     public ImmutableArray<ImmutableArray<GridItemRecord>> GridItemRecords => BlazorWindowManagerImmutableArrayExtensions.ConvertToImmutable(_gridItemRecords);

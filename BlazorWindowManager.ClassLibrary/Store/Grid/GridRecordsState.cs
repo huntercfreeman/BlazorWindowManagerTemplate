@@ -73,13 +73,20 @@ public record GridRecordsState
 
     public GridRecordsState(GridRecordsState otherGridRecordsState, 
         GridRecordKey gridRecordKey, 
-        GridItemRecord gridItemRecord) 
+        GridItemRecord gridItemRecord,
+        CardinalDirectionKind cardinalDirectionKind,
+        int? rowIndex,
+        int? activeGridItemRecordIndex) 
     {
         _gridRecordItemContainerMap = new(otherGridRecordsState._gridRecordItemContainerMap);
 
         var previousGridBoard = _gridRecordItemContainerMap[gridRecordKey];
 
-        var nextGridBoard = new GridBoard(previousGridBoard, gridItemRecord);
+        var nextGridBoard = new GridBoard(previousGridBoard, 
+            gridItemRecord, 
+            cardinalDirectionKind, 
+            rowIndex,
+            activeGridItemRecordIndex);
 
         _gridRecordItemContainerMap[gridRecordKey] = nextGridBoard;
     }

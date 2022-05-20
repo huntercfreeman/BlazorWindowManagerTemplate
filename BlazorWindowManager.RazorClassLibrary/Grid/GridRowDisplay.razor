@@ -19,7 +19,12 @@
                     <GridItemDividerDisplay/>
                 }
 
-                <GridItemDisplay GridItemRecord="gridItemRecord"/>
+                <CascadingValue Name="ActiveRowIndex" Value="RowIndex">
+                    <CascadingValue Name="ActiveGridItemRecordIndex" Value="gridItemRecordIndex">
+                        <GridItemDisplay GridItemRecord="gridItemRecord"
+                                         TotalGridItemCountInRow="Row.Length"/>
+                    </CascadingValue>
+                </CascadingValue>
 
                 previousGridItemRecord = gridItemRecord;
             }

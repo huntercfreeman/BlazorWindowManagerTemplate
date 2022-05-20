@@ -18,6 +18,9 @@ public class GridReducer
     {
         return new GridRecordsState(previousGridRecordsState,
             addGridItemRecordAction.GridRecordKey,
-            addGridItemRecordAction.GridItemRecord);
+            addGridItemRecordAction.GridItemRecord,
+            addGridItemRecordAction.CardinalDirectionKind,
+            addGridItemRecordAction.RowIndex,
+            addGridItemRecordAction.ActiveGridItemRecordIndex);
     }
 }

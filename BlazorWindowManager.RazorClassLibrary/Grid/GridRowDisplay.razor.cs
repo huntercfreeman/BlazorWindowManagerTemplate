@@ -26,6 +26,8 @@ public partial class GridRowDisplay : FluxorComponent
     [Parameter, EditorRequired]
     public ImmutableArray<GridItemRecord> Row { get; set; }
     [Parameter, EditorRequired]
+    public int RowIndex { get; set; }
+    [Parameter, EditorRequired]
     public int TotalRowCount { get; set; }
 
     private HtmlElementRecordKey _rowHtmlElementRecordKey = new(Guid.NewGuid());
