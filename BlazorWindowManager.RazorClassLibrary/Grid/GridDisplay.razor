@@ -14,14 +14,14 @@
              style="width: 100%; height: 100%;">
             <TransformativeDisplay HtmlElementRecord="_cachedHtmlElementRecord" />
             
-            @if (_cachedGridBoard.GridItemRecords.Any())
+            @if (_cachedGridBoard.GridRowRecords.Any())
             {
-                ImmutableArray<GridItemRecord>? previousRow = null;
+                GridRowRecord? previousRow = null;
 
-                for (int i = 0; i < _cachedGridBoard.GridItemRecords.Length; i++)
+                for (int i = 0; i < _cachedGridBoard.GridRowRecords.Length; i++)
                 {
                     var rowIndex = i;
-                    var row = _cachedGridBoard.GridItemRecords[rowIndex];
+                    var row = _cachedGridBoard.GridRowRecords[rowIndex];
 
                     if (previousRow is not null)
                     {
@@ -31,8 +31,9 @@
                     <CascadingValue Value="ChooseGridTabRecordRenderFragment">
                         <CascadingValue Name="GridDisplayCachedHtmlElementRecord" Value="_cachedHtmlElementRecord">
                             <CascadingValue Value="GridRecord.GridRecordKey">
-                                <GridRowDisplay Row="row"
-                                                TotalRowCount="row.Length" />
+                                <GridRowDisplay GridRowRecord="row"
+                                                TotalRowCount="row.GridItemRecords.Length"
+                                                RowIndex="rowIndex" />
                             </CascadingValue>
                         </CascadingValue>
                     </CascadingValue>

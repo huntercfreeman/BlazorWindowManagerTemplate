@@ -33,7 +33,7 @@ public partial class GridDisplay : FluxorComponent
 
     public const string ON_CHOSE_GRID_TAB_RECORD_ACTION_PARAMETER_NAME = "OnChoseGridTabRecordAction";
     
-    private GridBoard? _cachedGridBoard;
+    private GridBoardRecord? _cachedGridBoard;
     private Guid? _previousGridBoardSequence;
     
     private Guid? _previousHtmlElementSequence;

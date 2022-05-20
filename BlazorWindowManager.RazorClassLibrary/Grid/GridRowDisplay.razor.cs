@@ -22,9 +22,9 @@ public partial class GridRowDisplay : FluxorComponent
     private IState<HtmlElementRecordsState> HtmlElementRecordsState { get; set; } = null!;
     [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
-    
+
     [Parameter, EditorRequired]
-    public ImmutableArray<GridItemRecord> Row { get; set; }
+    public GridRowRecord GridRowRecord { get; set; } = null!;
     [Parameter, EditorRequired]
     public int RowIndex { get; set; }
     [Parameter, EditorRequired]
@@ -33,6 +33,8 @@ public partial class GridRowDisplay : FluxorComponent
     private HtmlElementRecordKey _rowHtmlElementRecordKey = new(Guid.NewGuid());
     private HtmlElementRecord? _cachedHtmlElementRecord;
     private Guid? _previousHtmlElementSequence;
+    
+    private Guid? _previousGridRowSequence;
     
     protected override async Task OnInitializedAsync()
     {
@@ -59,20 +61,26 @@ public partial class GridRowDisplay : FluxorComponent
         try
         {
             // Get HtmlElementRecord
+            bool htmlElementRecordStepNeedsRerender = false;
+            
             _cachedHtmlElementRecord = HtmlElementRecordsState.Value
                 .LookupHtmlElementRecord(_rowHtmlElementRecordKey);
 
             if (_previousHtmlElementSequence is null ||
                 _previousHtmlElementSequence.Value != _cachedHtmlElementRecord.HtmlElementSequence)
             {
-                shouldRender = true;
-            }
-            else
-            {
-                shouldRender = false;
+                htmlElementRecordStepNeedsRerender = true;
             }
 
             _previousHtmlElementSequence = _cachedHtmlElementRecord.HtmlElementSequence;
+            
+            // Check if GridRowRecord changed
+            bool gridRowRecordStepNeedsRerender = _previousGridRowSequence is null ||
+                                                  _previousGridRowSequence.Value != GridRowRecord.GridRowSequence;
+
+            _previousGridRowSequence = GridRowRecord.GridRowSequence;
+
+            shouldRender = htmlElementRecordStepNeedsRerender || gridRowRecordStepNeedsRerender;
         }
         catch (KeyNotFoundException)
         {

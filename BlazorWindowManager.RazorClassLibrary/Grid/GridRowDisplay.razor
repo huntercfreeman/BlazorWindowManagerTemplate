@@ -9,10 +9,10 @@
         @{
             GridItemRecord? previousGridItemRecord = null;
 
-            for (int j = 0; j < Row.Length; j++)
+            for (int j = 0; j < GridRowRecord.GridItemRecords.Length; j++)
             {
                 var gridItemRecordIndex = j;
-                var gridItemRecord = Row[gridItemRecordIndex];
+                var gridItemRecord = GridRowRecord.GridItemRecords[gridItemRecordIndex];
 
                 if (previousGridItemRecord is not null)
                 {
@@ -22,7 +22,7 @@
                 <CascadingValue Name="ActiveRowIndex" Value="RowIndex">
                     <CascadingValue Name="ActiveGridItemRecordIndex" Value="gridItemRecordIndex">
                         <GridItemDisplay GridItemRecord="gridItemRecord"
-                                         TotalGridItemCountInRow="Row.Length"/>
+                                         TotalGridItemCountInRow="GridRowRecord.GridItemRecords.Length"/>
                     </CascadingValue>
                 </CascadingValue>
 

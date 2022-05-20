@@ -14,7 +14,7 @@ namespace BlazorWindowManager.ClassLibrary.Store.Grid;
 [FeatureState]
 public record GridRecordsState
 {
-    private Dictionary<GridRecordKey, GridBoard> _gridRecordItemContainerMap;
+    private Dictionary<GridRecordKey, GridBoardRecord> _gridRecordItemContainerMap;
 
     public GridRecordsState()
     {
@@ -62,7 +62,7 @@ public record GridRecordsState
                 break;
         }
 
-        var nextGridBoard = new GridBoard(_gridRecordItemContainerMap[gridRecordKey],
+        var nextGridBoard = new GridBoardRecord(_gridRecordItemContainerMap[gridRecordKey],
             gridItemRecord,
             cardinalDirectionKind,
             rowIndexRelativeTo,
@@ -82,7 +82,7 @@ public record GridRecordsState
 
         var previousGridBoard = _gridRecordItemContainerMap[gridRecordKey];
 
-        var nextGridBoard = new GridBoard(previousGridBoard, 
+        var nextGridBoard = new GridBoardRecord(previousGridBoard, 
             gridItemRecord, 
             cardinalDirectionKind, 
             rowIndex,
@@ -98,7 +98,7 @@ public record GridRecordsState
         int? rowIndexRelativeTo,
         int? columnIndexRelativeTo)
     {
-        var gridBoard = new GridBoard();
+        var gridBoard = new GridBoardRecord();
 
         _gridRecordItemContainerMap.Add(gridRecordKey, gridBoard);
     }
@@ -113,6 +113,6 @@ public record GridRecordsState
         throw new NotImplementedException();
     }
 
-    public GridBoard LookupGridBoard(GridRecordKey gridRecordKey) =>
+    public GridBoardRecord LookupGridBoard(GridRecordKey gridRecordKey) =>
         _gridRecordItemContainerMap[gridRecordKey];
 }
