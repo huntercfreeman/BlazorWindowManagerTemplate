@@ -44,23 +44,41 @@ public partial class GridItemDisplay : FluxorComponent
     
     protected override void OnInitialized()
     {
-        var initialWidth = 
-            new DimensionValuedUnit(100.0 / (TotalGridItemCountInRow == 0 ? 1 : TotalGridItemCountInRow),
-                DimensionUnitKind.PercentageOfParent);
-        var initialHeight = new DimensionValuedUnit(100.0, DimensionUnitKind.PercentageOfParent);
-        var initialLeft = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
-        var initialTop = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
+        try
+        {
+            _cachedHtmlElementRecord = HtmlElementRecordsState.Value
+                .LookupHtmlElementRecord(GridItemRecord.HtmlElementRecordKey);
+        }
+        catch (KeyNotFoundException)
+        {
+            // Not yet initialized
+            var initialWidth = 
+                new DimensionValuedUnit(100.0 / (TotalGridItemCountInRow == 0 ? 1 : TotalGridItemCountInRow),
+                    DimensionUnitKind.PercentageOfParent);
+            var initialHeight = new DimensionValuedUnit(100.0, DimensionUnitKind.PercentageOfParent);
+            var initialLeft = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
+            var initialTop = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
         
-        var registerHtmlElementAction = new RegisterHtmlElementAction(GridItemRecord.HtmlElementRecordKey,
-            new DimensionsRecord(initialWidth, initialHeight, initialLeft, initialTop),
-            new ZIndexRecord(0));
+            var registerHtmlElementAction = new RegisterHtmlElementAction(GridItemRecord.HtmlElementRecordKey,
+                new DimensionsRecord(initialWidth, initialHeight, initialLeft, initialTop),
+                new ZIndexRecord(0));
 
-        Dispatcher.Dispatch(registerHtmlElementAction);
+            Dispatcher.Dispatch(registerHtmlElementAction);
+        }
         
-        var registerGridTabContainerRecordAction = new RegisterGridTabContainerRecordAction(GridItemRecord.GridItemRecordKey);
+        try
+        {
+            _cachedGridTabContainer = GridItemRecordsState.Value
+                .LookupGridTabContainer(GridItemRecord.GridItemRecordKey);
+        }
+        catch (KeyNotFoundException)
+        {
+            // Not yet initialized
+            var registerGridTabContainerRecordAction = new RegisterGridTabContainerRecordAction(GridItemRecord.GridItemRecordKey);
 
-        Dispatcher.Dispatch(registerGridTabContainerRecordAction);
-
+            Dispatcher.Dispatch(registerGridTabContainerRecordAction);
+        }
+        
         ShouldRender();
         
         base.OnInitialized();

@@ -43,14 +43,41 @@ public partial class GridTabAddFormDisplay : ComponentBase
         }
         else
         {
+            // TODO: The contents of this else seem unsafe as you cannot await an event. Maybe Effects would help?
+            
+            var gridItemRecord = new GridItemRecord(new GridItemRecordKey(Guid.NewGuid()),
+                new HtmlElementRecordKey(Guid.NewGuid()));
+
+            var registerGridTabContainerRecordAction = 
+                new RegisterGridTabContainerRecordAction(gridItemRecord.GridItemRecordKey);
+            
+            Dispatcher.Dispatch(registerGridTabContainerRecordAction);
+            
+            var addGridTabRecordAction = new AddGridTabRecordAction(gridItemRecord.GridItemRecordKey,
+                new GridTabRecord(new GridTabRecordKey(Guid.NewGuid()), 
+                    argumentTuple.renderedContentType, 
+                    argumentTuple.renderedContentTabDisplayName),
+                0);
+            
+            Dispatcher.Dispatch(addGridTabRecordAction);
+            
             var addGridItemRecordAction = new AddGridItemRecordAction(GridRecordKey,
-                new GridItemRecord(new GridItemRecordKey(Guid.NewGuid()),
-                    new HtmlElementRecordKey(Guid.NewGuid())),
+                gridItemRecord,
                 _selectedCardinalDirectionKind,
                 ActiveRowIndex,
                 ActiveGridItemRecordIndex);
 
             Dispatcher.Dispatch(addGridItemRecordAction);
+            
+            if (ActiveGridTabId is not null)
+            {
+                var closeGridTabRecordAction = new CloseGridTabRecordAction(GridItemRecordKey,
+                    new GridTabRecordKey(ActiveGridTabId.Value),
+                    null
+                );
+
+                Dispatcher.Dispatch(closeGridTabRecordAction);
+            }
         }
     }
 

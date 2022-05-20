@@ -13,4 +13,3 @@ public record AddGridItemRecordAction(GridRecordKey GridRecordKey,
     CardinalDirectionKind CardinalDirectionKind,
     int? RowIndex,
     int? ActiveGridItemRecordIndex);
-
