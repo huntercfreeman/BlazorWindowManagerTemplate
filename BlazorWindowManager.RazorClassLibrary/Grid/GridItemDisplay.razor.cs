@@ -37,17 +37,16 @@ public partial class GridItemDisplay : FluxorComponent
     public GridItemRecord GridItemRecord { get; set; } = null!;
     
     private GridTabContainerRecord? _cachedGridTabContainer;
-    private Guid? _previousGridTabContainerSequence;
-    
     private HtmlElementRecord? _cachedHtmlElementRecord;
-    private Guid? _previousHtmlElementSequence;
-
     private int _previousTotalGridItemCountInRow;
 
     private DimensionValuedUnit _heightOfGridTabDimensionValuedUnit = new DimensionValuedUnit(2, DimensionUnitKind.Rem);
     
     protected override void OnInitialized()
     {
+        GridItemRecordsState.StateChanged += OnStateChanged;
+        HtmlElementRecordsState.StateChanged += OnStateChanged;
+        
         try
         {
             _cachedHtmlElementRecord = HtmlElementRecordsState.Value
@@ -56,15 +55,8 @@ public partial class GridItemDisplay : FluxorComponent
         catch (KeyNotFoundException)
         {
             // Not yet initialized
-            var initialWidth = 
-                new DimensionValuedUnit(100.0 / (TotalGridItemCountInRow == 0 ? 1 : TotalGridItemCountInRow),
-                    DimensionUnitKind.PercentageOfParent);
-            var initialHeight = new DimensionValuedUnit(100.0, DimensionUnitKind.PercentageOfParent);
-            var initialLeft = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
-            var initialTop = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
-        
             var registerHtmlElementAction = new RegisterHtmlElementAction(GridItemRecord.HtmlElementRecordKey,
-                new DimensionsRecord(initialWidth, initialHeight, initialLeft, initialTop),
+                GetDimensionsRecord(),
                 new ZIndexRecord(0));
 
             Dispatcher.Dispatch(registerHtmlElementAction);
@@ -83,68 +75,51 @@ public partial class GridItemDisplay : FluxorComponent
             Dispatcher.Dispatch(registerGridTabContainerRecordAction);
         }
         
-        ShouldRender();
-        
         base.OnInitialized();
     }
 
-    protected override bool ShouldRender()
+    private void OnStateChanged(object? sender, EventArgs e)
     {
-        bool shouldRender;
-
         try
         {
             if (_previousTotalGridItemCountInRow != TotalGridItemCountInRow)
             {
                 _previousTotalGridItemCountInRow = TotalGridItemCountInRow;
                 
-                var initialWidth = 
-                    new DimensionValuedUnit(100.0 / (TotalGridItemCountInRow == 0 ? 1 : TotalGridItemCountInRow),
-                        DimensionUnitKind.PercentageOfParent);
-                var initialHeight = new DimensionValuedUnit(100.0, DimensionUnitKind.PercentageOfParent);
-                var initialLeft = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
-                var initialTop = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
-                
                 var replaceHtmlElementDimensionsRecordAction = new ReplaceHtmlElementDimensionsRecordAction(GridItemRecord.HtmlElementRecordKey,
-                    new DimensionsRecord(initialWidth, initialHeight, initialLeft, initialTop));
+                    GetDimensionsRecord());
                 
                 Dispatcher.Dispatch(replaceHtmlElementDimensionsRecordAction);
             }
             
-            // Get HtmlElementRecord
-            var htmlElementRecordStepNeedsRerender = false;
-            
             _cachedHtmlElementRecord = HtmlElementRecordsState.Value
                 .LookupHtmlElementRecord(GridItemRecord.HtmlElementRecordKey);
-
-            if (_previousHtmlElementSequence is null ||
-                _previousHtmlElementSequence.Value != _cachedHtmlElementRecord.HtmlElementSequence)
-            {
-                htmlElementRecordStepNeedsRerender = true;
-            }
-
-            _previousHtmlElementSequence = _cachedHtmlElementRecord.HtmlElementSequence;
-            
-            // Get GridTabContainerRecord
-            var gridTabContainerRecordStepNeedsRerender = false;
             
             _cachedGridTabContainer = GridItemRecordsState.Value
                 .LookupGridTabContainer(GridItemRecord.GridItemRecordKey);
-
-            if (_previousGridTabContainerSequence is null ||
-                _previousGridTabContainerSequence.Value != _cachedGridTabContainer.GridTabContainerRecordSequence)
-            {
-                gridTabContainerRecordStepNeedsRerender = true;
-            }
-            
-            shouldRender = htmlElementRecordStepNeedsRerender || gridTabContainerRecordStepNeedsRerender;
         }
         catch (KeyNotFoundException)
         {
-            shouldRender = false;
         }
+    }
 
-        return shouldRender;
+    private DimensionsRecord GetDimensionsRecord()
+    {
+        var initialWidth = 
+            new DimensionValuedUnit(100.0 / (TotalGridItemCountInRow == 0 ? 1 : TotalGridItemCountInRow),
+                DimensionUnitKind.PercentageOfParent);
+        var initialHeight = new DimensionValuedUnit(100.0, DimensionUnitKind.PercentageOfParent);
+        var initialLeft = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
+        var initialTop = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
+
+        return new DimensionsRecord(initialWidth, initialHeight, initialLeft, initialTop);
+    }
+
+    private string GetKey()
+    {
+        return $"{TotalGridItemCountInRow}" +
+               $"{_cachedGridTabContainer.GridTabContainerRecordSequence}" +
+               $"{_cachedHtmlElementRecord}";
     }
 
     private void AddGridTabRecordOnClick()
@@ -194,6 +169,9 @@ public partial class GridItemDisplay : FluxorComponent
     
     protected override void Dispose(bool disposing)
     {
+        GridItemRecordsState.StateChanged -= OnStateChanged;
+        HtmlElementRecordsState.StateChanged -= OnStateChanged;
+        
         var unregisterHtmlElementAction = new UnregisterHtmlElementAction(GridItemRecord.HtmlElementRecordKey);
 
         Dispatcher.Dispatch(unregisterHtmlElementAction);

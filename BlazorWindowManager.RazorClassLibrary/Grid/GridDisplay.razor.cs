@@ -34,13 +34,13 @@ public partial class GridDisplay : FluxorComponent
     public const string ON_CHOSE_GRID_TAB_RECORD_ACTION_PARAMETER_NAME = "OnChoseGridTabRecordAction";
     
     private GridBoardRecord? _cachedGridBoard;
-    private Guid? _previousGridBoardSequence;
-    
-    private Guid? _previousHtmlElementSequence;
     private HtmlElementRecord? _cachedHtmlElementRecord;
 
     protected override void OnInitialized()
     {
+        GridRecordsState.StateChanged += OnStateChanged;
+        HtmlElementRecordsState.StateChanged += OnStateChanged;
+        
         var registerHtmlElementAction = new RegisterHtmlElementAction(GridRecord.HtmlElementRecordKey,
             InitialDimensionsRecord ?? DimensionsRecord.FromPixelUnits(400, 400, 0, 0),
             new ZIndexRecord(1));
@@ -51,53 +51,30 @@ public partial class GridDisplay : FluxorComponent
 
         Dispatcher.Dispatch(registerGridRecordAction);
 
-        ShouldRender();
-
         base.OnInitialized();
     }
 
-    protected override bool ShouldRender()
+    private async void OnStateChanged(object? sender, EventArgs e)
     {
-        bool shouldRender;
-
         try
         {
-            // Get HtmlElementRecord
-            var htmlElementRecordStepNeedsRerender = false;
-
             _cachedHtmlElementRecord = HtmlElementRecordsState.Value
                 .LookupHtmlElementRecord(GridRecord.HtmlElementRecordKey);
 
-            if (_previousHtmlElementSequence is null ||
-                _previousHtmlElementSequence.Value != _cachedHtmlElementRecord.HtmlElementSequence)
-            {
-                htmlElementRecordStepNeedsRerender = true;
-            }
-
-            _previousHtmlElementSequence = _cachedHtmlElementRecord.HtmlElementSequence;
-
-            // Get GridBoardRecord
-            var gridBoardRecordStepNeedsRerender = false;
-
             _cachedGridBoard = GridRecordsState.Value
                 .LookupGridBoard(GridRecord.GridRecordKey);
-
-            if (_previousGridBoardSequence is null ||
-                _previousGridBoardSequence.Value != _cachedGridBoard.GridBoardSequence)
-            {
-                gridBoardRecordStepNeedsRerender = true;
-            }
-
-            _previousGridBoardSequence = _cachedGridBoard.GridBoardSequence;
-
-            shouldRender = htmlElementRecordStepNeedsRerender || gridBoardRecordStepNeedsRerender;
         }
         catch (KeyNotFoundException)
         {
-            shouldRender = false;
         }
+        
+        await InvokeAsync(StateHasChanged);
+    }
 
-        return shouldRender;
+    private string GetKey()
+    {
+        return $"{_cachedGridBoard.GridBoardSequence}" +
+               $"{_cachedHtmlElementRecord.HtmlElementSequence}";
     }
 
     private void AddGridItemRecordOnClick()
@@ -126,6 +103,9 @@ public partial class GridDisplay : FluxorComponent
     
     protected override void Dispose(bool disposing)
     {
+        GridRecordsState.StateChanged -= OnStateChanged;
+        HtmlElementRecordsState.StateChanged -= OnStateChanged;
+        
         var unregisterHtmlElementAction = new UnregisterHtmlElementAction(GridRecord.HtmlElementRecordKey);
 
         Dispatcher.Dispatch(unregisterHtmlElementAction);

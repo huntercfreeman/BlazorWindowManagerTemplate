@@ -33,78 +33,65 @@ public partial class GridRowDisplay : FluxorComponent
 
     private HtmlElementRecordKey _rowHtmlElementRecordKey = new(Guid.NewGuid());
     private HtmlElementRecord? _cachedHtmlElementRecord;
-    private Guid? _previousHtmlElementSequence;
     
-    private Guid? _previousGridRowSequence;
-
     private int _previousTotalRowCount;
     
     protected override async Task OnInitializedAsync()
     {
-        var initialWidth = new DimensionValuedUnit(100.0, DimensionUnitKind.PercentageOfParent);
-        var initialHeight = new DimensionValuedUnit(100.0 / TotalRowCount, DimensionUnitKind.PercentageOfParent);
-        var initialLeft = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
-        var initialTop = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
+        HtmlElementRecordsState.StateChanged += OnStateChanged;
         
         var registerHtmlElementAction = new RegisterHtmlElementAction(_rowHtmlElementRecordKey,
-            new DimensionsRecord(initialWidth, initialHeight, initialLeft, initialTop),
+            GetDimensionsRecord(),
             new ZIndexRecord(0));
 
         Dispatcher.Dispatch(registerHtmlElementAction);
 
-        ShouldRender();
-
         await base.OnInitializedAsync();
     }
-    
-    protected override bool ShouldRender()
-    {
-        bool shouldRender;
 
+    private void OnStateChanged(object? sender, EventArgs e)
+    {
         try
         {
             if (_previousTotalRowCount != TotalRowCount)
             {
                 _previousTotalRowCount = TotalRowCount;
                 
-                var initialWidth = new DimensionValuedUnit(100.0, DimensionUnitKind.PercentageOfParent);
-                var initialHeight = new DimensionValuedUnit(100.0 / TotalRowCount, DimensionUnitKind.PercentageOfParent);
-                var initialLeft = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
-                var initialTop = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
-                
                 var replaceHtmlElementDimensionsRecordAction = new ReplaceHtmlElementDimensionsRecordAction(_rowHtmlElementRecordKey,
-                    new DimensionsRecord(initialWidth, initialHeight, initialLeft, initialTop));
+                    GetDimensionsRecord());
                 
                 Dispatcher.Dispatch(replaceHtmlElementDimensionsRecordAction);
             }
             
-            // Get HtmlElementRecord
-            bool htmlElementRecordStepNeedsRerender = false;
-            
             _cachedHtmlElementRecord = HtmlElementRecordsState.Value
                 .LookupHtmlElementRecord(_rowHtmlElementRecordKey);
-
-            if (_previousHtmlElementSequence is null ||
-                _previousHtmlElementSequence.Value != _cachedHtmlElementRecord.HtmlElementSequence)
-            {
-                htmlElementRecordStepNeedsRerender = true;
-            }
-
-            _previousHtmlElementSequence = _cachedHtmlElementRecord.HtmlElementSequence;
-            
-            // Check if GridRowRecord changed
-            bool gridRowRecordStepNeedsRerender = _previousGridRowSequence is null ||
-                                                  _previousGridRowSequence.Value != GridRowRecord.GridRowSequence;
-
-            _previousGridRowSequence = GridRowRecord.GridRowSequence;
-
-            shouldRender = htmlElementRecordStepNeedsRerender || gridRowRecordStepNeedsRerender;
         }
         catch (KeyNotFoundException)
         {
-            shouldRender = false;
         }
+    }
 
-        return shouldRender;
+    private DimensionsRecord GetDimensionsRecord()
+    {
+        var initialWidth = new DimensionValuedUnit(100.0, DimensionUnitKind.PercentageOfParent);
+        var initialHeight = new DimensionValuedUnit(100.0 / TotalRowCount, DimensionUnitKind.PercentageOfParent);
+        var initialLeft = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
+        var initialTop = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
+
+        return new DimensionsRecord(initialWidth, initialHeight, initialLeft, initialTop);
+    }
+
+    private string GetKey()
+    {
+        return $"{_previousTotalRowCount}" +
+               $"{_cachedHtmlElementRecord.HtmlElementSequence}" +
+               $"{GridRowRecord.GridRowSequence}";
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        HtmlElementRecordsState.StateChanged -= OnStateChanged;
+        
+        base.Dispose(disposing);
     }
 }
