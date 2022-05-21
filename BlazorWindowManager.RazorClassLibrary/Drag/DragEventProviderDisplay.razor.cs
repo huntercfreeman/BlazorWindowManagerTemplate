@@ -33,7 +33,7 @@ public partial class DragEventProviderDisplay : FluxorComponent
     {
         try
         {
-            await _dragStateChangedSemaphoreSlim.WaitAsync();
+            await _dragStateChangedSemaphoreSlim.WaitAsync(_dragStateChangedCancellationTokenSource?.Token ?? default);
 
             _dragStateChangedStack.Push(mouseEventArgs);
         }
@@ -52,7 +52,7 @@ public partial class DragEventProviderDisplay : FluxorComponent
 
         try
         {
-            await _dragStateChangedSemaphoreSlim.WaitAsync();
+            await _dragStateChangedSemaphoreSlim.WaitAsync(_dragStateChangedCancellationTokenSource?.Token ?? default);
 
             if (_dragStateChangedStack.Any())
             {
