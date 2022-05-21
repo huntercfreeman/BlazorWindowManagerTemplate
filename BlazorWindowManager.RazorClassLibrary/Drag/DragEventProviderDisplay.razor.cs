@@ -82,7 +82,7 @@ public partial class DragEventProviderDisplay : FluxorComponent
         }
     }
     
-    private async void DispatchUnsubscribeActionOnMouseUp(MouseEventArgs mouseEventArgs)
+    private async Task DispatchUnsubscribeActionOnMouseUp(MouseEventArgs mouseEventArgs)
     {
         _dragStateChangedCancellationTokenSource?.Cancel();
         _dragStateChangedCancellationTokenSource = null;
