@@ -18,8 +18,8 @@ public partial class GridTabAddFormDisplay : ComponentBase
     public Guid? ActiveGridTabId { get; set; } = null!;
     [CascadingParameter(Name="ActiveGridTabIndex")]
     public int? ActiveGridTabIndex { get; set; }
-    [CascadingParameter(Name="ActiveRowIndex")]
-    public int? ActiveRowIndex { get; set; }
+    [CascadingParameter(Name="RowIndex")]
+    public int? RowIndex { get; set; }
     [CascadingParameter(Name="ActiveGridItemRecordIndex")]
     public int? ActiveGridItemRecordIndex { get; set; }
     [CascadingParameter]
@@ -64,7 +64,7 @@ public partial class GridTabAddFormDisplay : ComponentBase
             var addGridItemRecordAction = new AddGridItemRecordAction(GridRecordKey,
                 gridItemRecord,
                 _selectedCardinalDirectionKind,
-                ActiveRowIndex,
+                RowIndex,
                 ActiveGridItemRecordIndex);
 
             Dispatcher.Dispatch(addGridItemRecordAction);
