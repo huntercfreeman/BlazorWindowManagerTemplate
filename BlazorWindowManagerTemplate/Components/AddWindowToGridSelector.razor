@@ -4,23 +4,26 @@
      <h3>Select a Blazor component Type to render</h3> 
  
      <div @onclick="() => _selectionTuple = (typeof(Counter), nameof(Counter))" 
-         style="@GetSelectedStyling(typeof(Counter))"> 
+         style="cursor: pointer; @GetSelectedStyling(typeof(Counter))"> 
          (@nameof(Counter)) 
      </div> 
       
      <div @onclick="() => _selectionTuple = (typeof(FetchData), nameof(FetchData))" 
-         style="@GetSelectedStyling(typeof(FetchData))"> 
+         style="cursor: pointer; @GetSelectedStyling(typeof(FetchData))"> 
          (@nameof(FetchData)) 
      </div> 
       
      <div @onclick="() => _selectionTuple = (typeof(BlazorWindowManagerTemplate.Pages.Index), nameof(BlazorWindowManagerTemplate.Pages.Index))" 
-         style="@GetSelectedStyling(typeof(BlazorWindowManagerTemplate.Pages.Index))"> 
+         style="cursor: pointer; @GetSelectedStyling(typeof(BlazorWindowManagerTemplate.Pages.Index))"> 
          (@nameof(BlazorWindowManagerTemplate.Pages.Index)) 
      </div> 
  
      <hr/> 
  
-     <div @onclick="FireOnChoseGridTabRecordAction">Return selection: (@_selectionTuple.renderedContentType.Name, @_selectionTuple.renderedContentTabDisplayName)</div> 
+     <div @onclick="FireOnChoseGridTabRecordAction"
+          style="cursor: pointer;">
+         Return selection: (@_selectionTuple.renderedContentType.Name, @_selectionTuple.renderedContentTabDisplayName)
+     </div> 
  </div> 
  
  @code {
