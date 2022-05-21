@@ -49,23 +49,26 @@ public record GridTabContainerRecord
             case ConstructorActionKind.Remove:
                 _gridTabRecordMap.Remove(gridTabRecordKey);
 
-                ActiveGridTabIndex = tabToSetAsActive ?? previousGridTabContainerRecord.ActiveGridTabIndex - 1;
-
-                if (ActiveGridTabIndex < 0)
+                if (tabToSetAsActive is not null)
                 {
-                    if (_gridTabRecordMap.Any())
+                    ActiveGridTabIndex = tabToSetAsActive;
+                }
+                else
+                {
+                    ActiveGridTabIndex = previousGridTabContainerRecord.ActiveGridTabIndex;
+
+                    if (ActiveGridTabIndex >= _gridTabRecordMap.Values.Count)
                     {
-                        ActiveGridTabIndex = 0;
-                    }
-                    else
-                    {
-                        ActiveGridTabIndex = null;
+                        if (_gridTabRecordMap.Values.Any())
+                            ActiveGridTabIndex = _gridTabRecordMap.Values.Count - 1;
+                        else
+                            ActiveGridTabIndex = null;
                     }
                 }
 
                 break;
             case ConstructorActionKind.Replace:
-                ActiveGridTabIndex = tabToSetAsActive ?? 0;
+                ActiveGridTabIndex = tabToSetAsActive ?? previousGridTabContainerRecord.ActiveGridTabIndex;
                 break;
         }
     }
