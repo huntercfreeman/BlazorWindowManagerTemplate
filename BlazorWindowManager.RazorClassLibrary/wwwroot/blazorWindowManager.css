@@ -291,7 +291,7 @@
     background-color: var(--bwmt_primary-border-color);
 }
 
-.bwmt_grid-column-divider-display {
+.bwmt_grid-item-divider-display {
     width: var(--bwmt_grid-column-divider-display-width);
     background-color: var(--bwmt_primary-border-color);
 }
