@@ -1,0 +1,44 @@
+﻿ @using BlazorWindowManagerWebAssemblyShowcase.Pages 
+ 
+ <div class="add-window-to-grid-selector"> 
+     <h3>Select a Blazor component Type to render</h3> 
+ 
+     <div @onclick="() => _selectionTuple = (typeof(Counter), nameof(Counter))" 
+         style="cursor: pointer; @GetSelectedStyling(typeof(Counter))"> 
+         (@nameof(Counter)) 
+     </div> 
+      
+     <div @onclick="() => _selectionTuple = (typeof(FetchData), nameof(FetchData))" 
+         style="cursor: pointer; @GetSelectedStyling(typeof(FetchData))"> 
+         (@nameof(FetchData)) 
+     </div> 
+      
+     <div @onclick="() => _selectionTuple = (typeof(BlazorWindowManagerWebAssemblyShowcase.Pages.Index), nameof(BlazorWindowManagerWebAssemblyShowcase.Pages.Index))" 
+         style="cursor: pointer; @GetSelectedStyling(typeof(BlazorWindowManagerWebAssemblyShowcase.Pages.Index))"> 
+         (@nameof(BlazorWindowManagerWebAssemblyShowcase.Pages.Index)) 
+     </div> 
+ 
+     <hr/> 
+ 
+     <div @onclick="FireOnChoseGridTabRecordAction"
+          style="cursor: pointer;">
+         Return selection: (@_selectionTuple.renderedContentType.Name, @_selectionTuple.renderedContentTabDisplayName)
+     </div> 
+ </div> 
+ 
+ @code {
+     [CascadingParameter(Name = $"{BlazorWindowManager.RazorClassLibrary.Grid.GridDisplay.ON_CHOSE_GRID_TAB_RECORD_ACTION_PARAMETER_NAME}")]
+     public Action<(Type renderedContentType, string renderedContentTabDisplayName)> OnChoseGridTabRecordAction { get; set; } = null!;
+ 
+     private (Type renderedContentType, string renderedContentTabDisplayName) _selectionTuple = (typeof(Counter), nameof(Counter)); 
+ 
+     private string GetSelectedStyling(Type type) => _selectionTuple.renderedContentType == type 
+         ? "background-color: #a2c5fd" 
+         : string.Empty; 
+ 
+     private void FireOnChoseGridTabRecordAction() 
+     { 
+         OnChoseGridTabRecordAction(_selectionTuple); 
+     } 
+ } 
+  

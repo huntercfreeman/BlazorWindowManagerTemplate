@@ -1,0 +1,40 @@
+﻿@page "/index"
+
+@using BlazorWindowManager.ClassLibrary.Dimension
+@using BlazorWindowManager.ClassLibrary.Html
+@using BlazorWindowManager.ClassLibrary.WindowManagerDialog
+@using BlazorWindowManagerWebAssemblyShowcase.Components
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+<BlazorWindowManager.RazorClassLibrary.WindowManagerDialog.WindowManagerDialogTaskBarDisplay />
+
+<button class="btn btn-primary" @onclick="RenderBlazorWindowManagerDialogAsync">Click me to create a BlazorWindowManager dialog that renders the Counter.razor blazor component</button>
+
+@code {
+    [Inject]
+    private IWindowManagerDialogService WindowManagerDialogService { get; set; } = null!;
+    [Inject]
+    private IViewportDimensionsService ViewportDimensionsService { get; set; } = null!;
+
+    private async Task RenderBlazorWindowManagerDialogAsync()
+    {
+        var initialDialogDimensionsRecord = await WindowManagerDialogRecord.ConstructDefaultDimensionsRecord(ViewportDimensionsService);
+
+        var windowManagerDialogRecord = new WindowManagerDialogRecord(Guid.NewGuid(),
+            $"{nameof(Counter)} Dialog",
+            typeof(Counter),
+            null,
+            new HtmlElementRecordKey(Guid.NewGuid()),
+            IsMinimized: false
+        );
+
+        WindowManagerDialogService.AddWindowManagerDialogRecord(windowManagerDialogRecord);
+    }
+}

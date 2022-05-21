@@ -251,6 +251,7 @@
 
 .bwmt_grid-body-display {
     height: 100%;
+    overflow: auto;
 }
 
 .bwmt_grid-row-display {

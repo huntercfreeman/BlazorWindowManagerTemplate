@@ -1,0 +1,20 @@
+﻿@page "/"
+@page "/grid"
+
+@using BlazorWindowManager.ClassLibrary.Grid
+@using BlazorWindowManager.ClassLibrary.Html
+@using BlazorWindowManager.RazorClassLibrary.Grid
+@using BlazorWindowManagerWebAssemblyShowcase.Components
+
+<h3>Grid Example</h3>
+
+<GridDisplay GridRecord="_gridRecord">
+    <ChooseGridTabRecordRenderFragment>
+        <AddWindowToGridSelector/>
+    </ChooseGridTabRecordRenderFragment>
+</GridDisplay>
+
+@code {
+    private GridRecord _gridRecord = new GridRecord(new GridRecordKey(Guid.NewGuid()), 
+                                                    new HtmlElementRecordKey(Guid.NewGuid()));
+}
