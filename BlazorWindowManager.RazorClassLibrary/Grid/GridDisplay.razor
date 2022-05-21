@@ -11,7 +11,8 @@
     <div class="bwmt_grid-display-theme-wrapping @GetCssClasses()"
          style="@_cachedHtmlElementRecord.DimensionsRecord.BuildCssStyleString()">
         <div class="bwmt_grid-display"
-             style="width: 100%; height: 100%;">
+             style="width: 100%; height: 100%;"
+             @key="_cachedGridBoard.GridBoardSequence">
             <TransformativeDisplay HtmlElementRecord="_cachedHtmlElementRecord" />
             
             @if (_cachedGridBoard.GridRowRecords.Any())
@@ -33,7 +34,8 @@
                             <CascadingValue Value="GridRecord.GridRecordKey">
                                 <CascadingValue Name="RowIndex" Value="rowIndex">
                                     <GridRowDisplay GridRowRecord="row"
-                                                    TotalRowCount="_cachedGridBoard.GridRowRecords.Length" />
+                                                    TotalRowCount="_cachedGridBoard.GridRowRecords.Length"
+                                                     @key="row.GridRowSequence" />
                                 </CascadingValue>
                             </CascadingValue>
                         </CascadingValue>

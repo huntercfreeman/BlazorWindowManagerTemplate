@@ -21,6 +21,8 @@ public partial class GridRowDisplay : FluxorComponent
     [Inject]
     private IState<HtmlElementRecordsState> HtmlElementRecordsState { get; set; } = null!;
     [Inject]
+    private IState<GridItemRecordsState> GridItemRecordsState { get; set; } = null!;
+    [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
     
     [CascadingParameter]
