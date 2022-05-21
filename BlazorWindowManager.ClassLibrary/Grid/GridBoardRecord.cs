@@ -11,7 +11,7 @@ namespace BlazorWindowManager.ClassLibrary.Grid;
 
 public record GridBoardRecord
 {
-    private List<GridRowRecord> _gridRows;
+    private readonly List<GridRowRecord> _gridRows;
 
     public GridBoardRecord()
     {
@@ -28,6 +28,29 @@ public record GridBoardRecord
 
         if (!_gridRows.Any())
             _gridRows.Add(new(gridItemRecord));
+    }
+    
+    public GridBoardRecord(GridBoardRecord previousGridBoardRecord,
+        int rowIndex)
+    {
+        GridBoardSequence = Guid.NewGuid();
+
+        _gridRows = new(previousGridBoardRecord._gridRows);
+
+        _gridRows.RemoveAt(rowIndex);
+    }
+    
+    public GridBoardRecord(GridBoardRecord previousGridBoardRecord,
+        int rowIndex,
+        int gridItemIndex)
+    {
+        GridBoardSequence = Guid.NewGuid();
+
+        _gridRows = new(previousGridBoardRecord._gridRows);
+
+        var previousRow = _gridRows[rowIndex];
+            
+        _gridRows[rowIndex] = new GridRowRecord(previousRow, gridItemIndex);
     }
 
     public GridBoardRecord(GridBoardRecord otherGridBoardRecord, 

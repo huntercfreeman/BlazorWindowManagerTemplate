@@ -31,9 +31,10 @@
                     <CascadingValue Value="ChooseGridTabRecordRenderFragment">
                         <CascadingValue Name="GridDisplayCachedHtmlElementRecord" Value="_cachedHtmlElementRecord">
                             <CascadingValue Value="GridRecord.GridRecordKey">
-                                <GridRowDisplay GridRowRecord="row"
-                                                TotalRowCount="_cachedGridBoard.GridRowRecords.Length"
-                                                RowIndex="rowIndex" />
+                                <CascadingValue Name="RowIndex" Value="rowIndex">
+                                    <GridRowDisplay GridRowRecord="row"
+                                                    TotalRowCount="_cachedGridBoard.GridRowRecords.Length" />
+                                </CascadingValue>
                             </CascadingValue>
                         </CascadingValue>
                     </CascadingValue>

@@ -21,8 +21,9 @@
 
                 <CascadingValue Name="ActiveRowIndex" Value="RowIndex">
                     <CascadingValue Name="ActiveGridItemRecordIndex" Value="gridItemRecordIndex">
-                        <GridItemDisplay GridItemRecord="gridItemRecord"
-                                         TotalGridItemCountInRow="GridRowRecord.GridItemRecords.Length"/>
+                        <CascadingValue Name="TotalGridItemCountInRow" Value="GridRowRecord.GridItemRecords.Length">
+                            <GridItemDisplay GridItemRecord="gridItemRecord" />
+                        </CascadingValue>
                     </CascadingValue>
                 </CascadingValue>
 

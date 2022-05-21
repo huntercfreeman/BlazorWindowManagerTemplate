@@ -18,14 +18,24 @@ public partial class GridTabDisplay : ComponentBase
     private IDispatcher Dispatcher { get; set; } = null!;
 
     [CascadingParameter]
+    public GridRecordKey GridRecordKey { get; set; } = null!;
+    [CascadingParameter]
     public GridItemRecordKey GridItemRecordKey { get; set; } = null!;
     [CascadingParameter(Name="ActiveGridTabIndex")]
     public int? ActiveGridTabIndex { get; set; }
+    [CascadingParameter(Name="RowIndex")]
+    public int RowIndex { get; set; }
+    [CascadingParameter(Name="ActiveGridItemRecordIndex")]
+    public int ActiveGridItemRecordIndex { get; set; }
+    [CascadingParameter(Name="TotalGridItemCountInRow")]
+    public int TotalGridItemCountInRow { get; set; }
     
     [Parameter, EditorRequired]
     public GridTabRecord GridTabRecord { get; set; } = null!;
     [Parameter, EditorRequired]
     public int MyGridTabIndex { get; set; }
+    [Parameter, EditorRequired]
+    public int TotalCountOfGridTabs { get; set; }
     
     private void OnGridTabRecordChosenAction((Type renderedContentType, string renderedContentTabDisplayName) argumentTuple)
     {
@@ -48,6 +58,25 @@ public partial class GridTabDisplay : ComponentBase
             null);
 
         Dispatcher.Dispatch(closeGridTabAction);
+        
+        // Ensure the GridItem has active tabs
+        if (TotalCountOfGridTabs == 1)
+        {
+            var removeGridItemRecordAction = new RemoveGridItemRecordAction(GridRecordKey,
+                RowIndex,
+                ActiveGridItemRecordIndex);
+
+            Dispatcher.Dispatch(removeGridItemRecordAction);
+
+            // Ensure the GridRow has GridItems remaining.
+            if (TotalGridItemCountInRow == 1)
+            {
+                var removeGridRowRecordAction = new RemoveGridRowRecordAction(GridRecordKey,
+                    RowIndex);
+
+                Dispatcher.Dispatch(removeGridRowRecordAction);
+            }
+        }
     }
     
     private void DispatchSetActiveGridTabActionOnClick()

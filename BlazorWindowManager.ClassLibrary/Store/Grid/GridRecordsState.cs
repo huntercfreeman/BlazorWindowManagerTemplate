@@ -31,6 +31,32 @@ public record GridRecordsState
     
     public GridRecordsState(GridRecordsState otherGridRecordsState,
         GridRecordKey gridRecordKey,
+        int rowIndex)
+    {
+        _gridRecordItemContainerMap = new(otherGridRecordsState._gridRecordItemContainerMap);
+        
+        var previousGridRecordItemContainerMap = _gridRecordItemContainerMap[gridRecordKey];
+
+        _gridRecordItemContainerMap[gridRecordKey] = new GridBoardRecord(previousGridRecordItemContainerMap,
+            rowIndex);
+    }
+    
+    public GridRecordsState(GridRecordsState otherGridRecordsState,
+        GridRecordKey gridRecordKey,
+        int rowIndex,
+        int gridItemIndex)
+    {
+        _gridRecordItemContainerMap = new(otherGridRecordsState._gridRecordItemContainerMap);
+        
+        var previousGridRecordItemContainerMap = _gridRecordItemContainerMap[gridRecordKey];
+
+        _gridRecordItemContainerMap[gridRecordKey] = new GridBoardRecord(previousGridRecordItemContainerMap,
+            rowIndex,
+            gridItemIndex);
+    }
+    
+    public GridRecordsState(GridRecordsState otherGridRecordsState,
+        GridRecordKey gridRecordKey,
         GridItemRecord? gridItemRecord,
         ConstructorActionKind constructorActionKind,
         CardinalDirectionKind? cardinalDirectionKind,

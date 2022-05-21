@@ -22,11 +22,12 @@ public partial class GridRowDisplay : FluxorComponent
     private IState<HtmlElementRecordsState> HtmlElementRecordsState { get; set; } = null!;
     [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
-
+    
+    [CascadingParameter]
+    public int RowIndex { get; set; }
+    
     [Parameter, EditorRequired]
     public GridRowRecord GridRowRecord { get; set; } = null!;
-    [Parameter, EditorRequired]
-    public int RowIndex { get; set; }
     [Parameter, EditorRequired]
     public int TotalRowCount { get; set; }
 

@@ -32,6 +32,27 @@ public record GridRowRecord
         _gridItemRecords.Add(gridItemRecord);
     }
     
+    public GridRowRecord(GridRowRecord previousGridRowRecord, GridItemRecordKey gridItemRecordKey)
+    {
+        GridRowSequence = Guid.NewGuid();
+
+        _gridItemRecords = new(previousGridRowRecord._gridItemRecords);
+
+        _gridItemRecords = _gridItemRecords
+            .Where(x => x.GridItemRecordKey != gridItemRecordKey)
+            .ToList();
+    }
+    
+    public GridRowRecord(GridRowRecord previousGridRowRecord,
+        int gridItemIndex)
+    {
+        GridRowSequence = Guid.NewGuid();
+
+        _gridItemRecords = new(previousGridRowRecord._gridItemRecords);
+
+        _gridItemRecords.RemoveAt(gridItemIndex);
+    }
+    
     public GridRowRecord(GridRowRecord previousGridRowRecord, 
         GridItemRecord gridItemRecord,
         int indexOfInsertion)

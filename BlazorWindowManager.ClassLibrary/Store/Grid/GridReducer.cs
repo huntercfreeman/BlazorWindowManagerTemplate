@@ -23,4 +23,23 @@ public class GridReducer
             addGridItemRecordAction.RowIndex,
             addGridItemRecordAction.ActiveGridItemRecordIndex);
     }
+    
+    [ReducerMethod]
+    public static GridRecordsState ReduceRemoveGridItemRecordAction(GridRecordsState previousGridRecordsState,
+        RemoveGridItemRecordAction removeGridItemRecordAction)
+    {
+        return new GridRecordsState(previousGridRecordsState,
+            removeGridItemRecordAction.GridRecordKey,
+            removeGridItemRecordAction.RowIndex,
+            removeGridItemRecordAction.GridItemIndex);
+    }
+    
+    [ReducerMethod]
+    public static GridRecordsState ReduceRemoveGridRowRecordAction(GridRecordsState previousGridRecordsState,
+        RemoveGridRowRecordAction removeGridRowRecordAction)
+    {
+        return new GridRecordsState(previousGridRecordsState,
+            removeGridRowRecordAction.GridRecordKey,
+            removeGridRowRecordAction.RowIndex);
+    }
 }

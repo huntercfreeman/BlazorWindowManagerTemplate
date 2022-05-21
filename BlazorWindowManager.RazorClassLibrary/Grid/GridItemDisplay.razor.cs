@@ -27,12 +27,14 @@ public partial class GridItemDisplay : FluxorComponent
     private IDispatcher Dispatcher { get; set; } = null!;
     
     [CascadingParameter]
+    public GridRecordKey GridRecordKey { get; set; } = null!;
+    [CascadingParameter]
     public RenderFragment ChooseGridTabRecordRenderFragment { get; set; } = null!;
+    [CascadingParameter]
+    public int TotalGridItemCountInRow { get; set; }
     
     [Parameter, EditorRequired]
     public GridItemRecord GridItemRecord { get; set; } = null!;
-    [Parameter, EditorRequired]
-    public int TotalGridItemCountInRow { get; set; }
     
     private GridTabContainerRecord? _cachedGridTabContainer;
     private Guid? _previousGridTabContainerSequence;
@@ -134,7 +136,7 @@ public partial class GridItemDisplay : FluxorComponent
             {
                 gridTabContainerRecordStepNeedsRerender = true;
             }
-
+            
             shouldRender = htmlElementRecordStepNeedsRerender || gridTabContainerRecordStepNeedsRerender;
         }
         catch (KeyNotFoundException)
