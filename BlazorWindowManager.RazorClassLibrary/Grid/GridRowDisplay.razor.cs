@@ -35,6 +35,8 @@ public partial class GridRowDisplay : FluxorComponent
     private Guid? _previousHtmlElementSequence;
     
     private Guid? _previousGridRowSequence;
+
+    private int _previousTotalRowCount;
     
     protected override async Task OnInitializedAsync()
     {
@@ -60,6 +62,21 @@ public partial class GridRowDisplay : FluxorComponent
 
         try
         {
+            if (_previousTotalRowCount != TotalRowCount)
+            {
+                _previousTotalRowCount = TotalRowCount;
+                
+                var initialWidth = new DimensionValuedUnit(100.0, DimensionUnitKind.PercentageOfParent);
+                var initialHeight = new DimensionValuedUnit(100.0 / TotalRowCount, DimensionUnitKind.PercentageOfParent);
+                var initialLeft = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
+                var initialTop = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
+                
+                var replaceHtmlElementDimensionsRecordAction = new ReplaceHtmlElementDimensionsRecordAction(_rowHtmlElementRecordKey,
+                    new DimensionsRecord(initialWidth, initialHeight, initialLeft, initialTop));
+                
+                Dispatcher.Dispatch(replaceHtmlElementDimensionsRecordAction);
+            }
+            
             // Get HtmlElementRecord
             bool htmlElementRecordStepNeedsRerender = false;
             

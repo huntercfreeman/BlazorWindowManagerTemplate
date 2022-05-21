@@ -40,6 +40,8 @@ public partial class GridItemDisplay : FluxorComponent
     private HtmlElementRecord? _cachedHtmlElementRecord;
     private Guid? _previousHtmlElementSequence;
 
+    private int _previousTotalGridItemCountInRow;
+
     private DimensionValuedUnit _heightOfGridTabDimensionValuedUnit = new DimensionValuedUnit(2, DimensionUnitKind.Rem);
     
     protected override void OnInitialized()
@@ -90,6 +92,23 @@ public partial class GridItemDisplay : FluxorComponent
 
         try
         {
+            if (_previousTotalGridItemCountInRow != TotalGridItemCountInRow)
+            {
+                _previousTotalGridItemCountInRow = TotalGridItemCountInRow;
+                
+                var initialWidth = 
+                    new DimensionValuedUnit(100.0 / (TotalGridItemCountInRow == 0 ? 1 : TotalGridItemCountInRow),
+                        DimensionUnitKind.PercentageOfParent);
+                var initialHeight = new DimensionValuedUnit(100.0, DimensionUnitKind.PercentageOfParent);
+                var initialLeft = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
+                var initialTop = new DimensionValuedUnit(0, DimensionUnitKind.Pixels);
+                
+                var replaceHtmlElementDimensionsRecordAction = new ReplaceHtmlElementDimensionsRecordAction(GridItemRecord.HtmlElementRecordKey,
+                    new DimensionsRecord(initialWidth, initialHeight, initialLeft, initialTop));
+                
+                Dispatcher.Dispatch(replaceHtmlElementDimensionsRecordAction);
+            }
+            
             // Get HtmlElementRecord
             var htmlElementRecordStepNeedsRerender = false;
             

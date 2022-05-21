@@ -20,7 +20,7 @@ public partial class GridTabAddFormDisplay : ComponentBase
     public int? ActiveGridTabIndex { get; set; }
     [CascadingParameter(Name="ActiveRowIndex")]
     public int? ActiveRowIndex { get; set; }
-    [CascadingParameter(Name="ActiveRowIndex")]
+    [CascadingParameter(Name="ActiveGridItemRecordIndex")]
     public int? ActiveGridItemRecordIndex { get; set; }
     [CascadingParameter]
     public GridItemRecordKey GridItemRecordKey { get; set; } = null!;
