@@ -5,6 +5,6 @@
 <div class="bwmt_task-manager-display">
     @foreach(var enqueuedTaskRecord in TaskManagerState.Value.ActiveTasks)
     {
-        
+        <EnqueuedTaskDisplay EnqueuedTaskRecord="enqueuedTaskRecord" />
     }
 </div>

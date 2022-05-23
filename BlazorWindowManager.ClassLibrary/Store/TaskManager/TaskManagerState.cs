@@ -14,12 +14,17 @@ public record TaskManagerState
 {
     private readonly Dictionary<Guid, EnqueuedTaskRecord> _activeTasksDictionary;
 
+    public TaskManagerState()
+    {
+        _activeTasksDictionary = new();
+    }
+
     public TaskManagerState(TaskManagerState previousTaskManagerState, TaskRecord taskRecord)
     {
         _activeTasksDictionary = new Dictionary<Guid, EnqueuedTaskRecord>(
             previousTaskManagerState._activeTasksDictionary);
 
-        var task = taskRecord.TaskFunc(taskRecord.CancellationTokenSource.Token);
+        var task = taskRecord.TaskFunc(taskRecord.CancellationToken);
 
         _activeTasksDictionary.Add(taskRecord.TaskRecordId,
             new EnqueuedTaskRecord(taskRecord, task));

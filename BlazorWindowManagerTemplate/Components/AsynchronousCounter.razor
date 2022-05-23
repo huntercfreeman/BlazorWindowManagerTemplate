@@ -4,11 +4,13 @@
 
 <h3>AsynchronousCounter: @_count</h3>
 
-<input type="number" @bind="_delayInMiliseconds" />
+<div>
+    _delayInMiliseconds:&nbsp;<input type="number" @bind="_delayInMiliseconds" />
+</div>
 
 <button class="btn btn-primary"
         @onclick="EnqueueAsynchronousCounterIncrementor">
-
+        EnqueueAsynchronousCounterIncrementor
 </button>
 
 @code {
@@ -16,7 +18,7 @@
     private ITaskManagerService TaskManagerService { get; set; } = null!;
 
     private int _count;
-    private int _delayInMiliseconds;
+    private int _delayInMiliseconds = 1000;
 
     private SemaphoreSlim _countSemaphoreSlim = new(1, 1);
 
@@ -60,6 +62,7 @@
                 _countSemaphoreSlim.Release();
             }
 
+            await InvokeAsync(StateHasChanged);
             await Task.Delay(delayTimeSpan, cancellationToken);
         }
     }
