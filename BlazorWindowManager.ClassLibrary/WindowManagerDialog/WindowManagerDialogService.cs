@@ -40,11 +40,3 @@ public class WindowManagerDialogService : IWindowManagerDialogService
         _dispatcher.Dispatch(action);
     }
 }
-
-public interface IWindowManagerDialogService
-{
-    public void AddWindowManagerDialogRecord(WindowManagerDialogRecord windowManagerDialogRecord);
-    public void ClearWindowManagerDialogRecord();
-    public void PersistWindowManagerDialogRecord(WindowManagerDialogRecord windowManagerDialogRecord);
-    public void RemoveWindowManagerDialogRecord(Guid windowManagerDialogRecordId);
-}

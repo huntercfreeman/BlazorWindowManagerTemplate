@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWindowManager.ClassLi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWindowManager.RazorClassLibrary", "BlazorWindowManager.RazorClassLibrary\BlazorWindowManager.RazorClassLibrary.csproj", "{EA88F9F9-CE70-433D-A93F-E6BFC6C3AF7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWindowManagerWebAssemblyShowcase", "BlazorWindowManagerWebAssemblyShowcase\BlazorWindowManagerWebAssemblyShowcase.csproj", "{3D98B267-8E3F-4225-8808-212F840FFCA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWindowManagerWebAssemblyShowcase", "BlazorWindowManagerWebAssemblyShowcase\BlazorWindowManagerWebAssemblyShowcase.csproj", "{3D98B267-8E3F-4225-8808-212F840FFCA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

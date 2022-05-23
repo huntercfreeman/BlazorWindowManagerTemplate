@@ -1,4 +1,5 @@
-﻿using BlazorWindowManager.ClassLibrary.WindowManagerDialog;
+﻿using BlazorWindowManager.ClassLibrary.TaskManager;
+using BlazorWindowManager.ClassLibrary.WindowManagerDialog;
 using Fluxor;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,7 +11,8 @@ public static class BlazorWindowManagerClassLibraryServiceProvider
     {
         return services
             .AddBlazorWindowManagerClassLibraryFluxorServices()
-            .AddWindowManagerDialogService();
+            .AddWindowManagerDialogService()
+            .AddTaskManagerService();
     }
     
     private static IServiceCollection AddBlazorWindowManagerClassLibraryFluxorServices(this IServiceCollection services)
@@ -24,5 +26,11 @@ public static class BlazorWindowManagerClassLibraryServiceProvider
     {
         return services
             .AddScoped<IWindowManagerDialogService, WindowManagerDialogService>();
+    }
+    
+    private static IServiceCollection AddTaskManagerService(this IServiceCollection services)
+    {
+        return services
+            .AddScoped<ITaskManagerService, TaskManagerService>();
     }
 }

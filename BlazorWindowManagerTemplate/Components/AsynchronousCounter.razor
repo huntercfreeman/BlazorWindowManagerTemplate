@@ -1,0 +1,74 @@
+﻿@using BlazorWindowManager.ClassLibrary.TaskManager
+@using System.Collections.Concurrent
+@implements IDisposable
+
+<h3>AsynchronousCounter: @_count</h3>
+
+<input type="number" @bind="_delayInMiliseconds" />
+
+<button class="btn btn-primary"
+        @onclick="EnqueueAsynchronousCounterIncrementor">
+
+</button>
+
+@code {
+    [Inject]
+    private ITaskManagerService TaskManagerService { get; set; } = null!;
+
+    private int _count;
+    private int _delayInMiliseconds;
+
+    private SemaphoreSlim _countSemaphoreSlim = new(1, 1);
+
+    CancellationTokenSource AsynchronousCounterCancellationTokenSource = new();
+
+    private ConcurrentBag<CancellationTokenSource> _cancellationTokenSourceBag = new();
+
+    private void EnqueueAsynchronousCounterIncrementor()
+    {
+        var currentDelayInMiliseconds = _delayInMiliseconds;
+
+        var cancellationTokenSource = new CancellationTokenSource();
+
+        _cancellationTokenSourceBag.Add(cancellationTokenSource);
+
+        var cancellationToken = cancellationTokenSource.Token;
+
+        var taskRecord = new TaskRecord(Guid.NewGuid(),
+            (cancellationToken) => IncrementCountAsync(cancellationToken,
+                currentDelayInMiliseconds),
+            cancellationToken);
+
+        TaskManagerService.EnqueueTaskRecord(taskRecord);
+    }
+
+    private async Task IncrementCountAsync(CancellationToken cancellationToken,
+        int delayInMiliseconds)
+    {
+        var delayTimeSpan = TimeSpan.FromMilliseconds(delayInMiliseconds);
+
+        while(!cancellationToken.IsCancellationRequested)
+        {
+            try
+            {
+                await _countSemaphoreSlim.WaitAsync(cancellationToken);
+
+                _count++;
+            }
+            finally
+            {
+                _countSemaphoreSlim.Release();
+            }
+
+            await Task.Delay(delayTimeSpan, cancellationToken);
+        }
+    }
+
+    public void Dispose()
+    {
+        foreach(var cancellationTokenSource in _cancellationTokenSourceBag)
+        {
+            cancellationTokenSource.Cancel();
+        }
+    }
+}
