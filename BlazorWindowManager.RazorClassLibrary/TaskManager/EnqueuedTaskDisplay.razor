@@ -1,4 +1,12 @@
 ﻿<div class="bwmt_enqueued-task-display">
-    @EnqueuedTaskRecord.TaskRecord.TaskRecordId
-</div>
+    @EnqueuedTaskRecord.TaskRecord.TaskName&nbsp;
+    (@EnqueuedTaskRecord.TaskRecord.TaskRecordId)
 
+    @if(!EnqueuedTaskRecord.TaskRecord.CancellationToken.IsCancellationRequested)
+    {
+        <div class="bwmt_cancel-task-button"
+             @onclick="EnqueuedTaskRecord.TaskRecord.CancelCancellationTokenSourceAction">
+            Cancel Task
+        </div>
+    }
+</div>

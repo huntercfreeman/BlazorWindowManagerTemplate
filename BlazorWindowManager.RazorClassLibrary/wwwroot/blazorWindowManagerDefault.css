@@ -402,3 +402,19 @@
 .bwmt_debug-css-classes-dialog-entry-point-display:hover {
     background-color: var(--bwmt_primary-hover-background-color);
 }
+
+.bwmt_cancel-task-button {
+    background-color: var(--bwmt_danger-color);
+}
+
+.bwmt_task-manager-list-display.bwmt_primary {
+    background-color: var(--bwmt_primary-color);
+}
+
+.bwmt_task-manager-list-display.bwmt_success {
+    background-color: var(--bwmt_success-color);
+}
+
+.bwmt_task-manager-list-display.bwmt_danger {
+    background-color: var(--bwmt_danger-color);
+}

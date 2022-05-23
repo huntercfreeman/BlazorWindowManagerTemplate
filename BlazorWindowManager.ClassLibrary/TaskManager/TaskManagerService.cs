@@ -18,4 +18,11 @@ public class TaskManagerService : ITaskManagerService
 
         _dispatcher.Dispatch(action);
     }
+
+    public void NotifyStateHasChanged()
+    {
+        var action = new TaskManagerServiceStateHasChangedAction();
+
+        _dispatcher.Dispatch(action);
+    }
 }

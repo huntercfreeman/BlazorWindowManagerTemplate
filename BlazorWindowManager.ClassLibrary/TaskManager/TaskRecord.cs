@@ -7,5 +7,7 @@ using System.Threading.Tasks;
 namespace BlazorWindowManager.ClassLibrary.TaskManager;
 
 public record TaskRecord(Guid TaskRecordId, 
+    string TaskName,
     Func<CancellationToken, Task> TaskFunc,
-    CancellationToken CancellationToken);
+    CancellationToken CancellationToken,
+    Action CancelCancellationTokenSourceAction);
