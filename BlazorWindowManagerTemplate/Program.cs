@@ -12,7 +12,8 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
 builder.Services.AddBlazorWindowManagerRazorClassLibraryServices(
-    BlazorWindowManagerThemeKind.LightTheme);
+    BlazorWindowManagerThemeKind.LightTheme,
+    true);
 
 var app = builder.Build();
 

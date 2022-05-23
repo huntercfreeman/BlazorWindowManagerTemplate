@@ -2,7 +2,7 @@
 
 @inherits FluxorComponent
 
-<div class="bwmt_drag-event-provider-display @IsActiveCssClass"
+<div class="bwmt_drag-event-provider-display @IsActiveCssClass @GetDebugCssClasses()"
      @onmousemove="DispatchOnDragEventActionOnMouseMove"
      @onmouseup="DispatchUnsubscribeActionOnMouseUp">
 

@@ -1,0 +1,16 @@
+﻿<div class="bwmt_debug-css-class-display bwmt_unselectable @IsActiveCssClass"
+     @onclick="FireDispatchToggleDebugCssClassAction">
+    <div>@DebugCssClass.DisplayName:&nbsp;</div>
+    
+    <div class="bwmt_debug-css-class-display-body">
+        <div>Css Class Name:@DebugCssClass.CssClassName</div>
+        @if (DebugCssClass.IsActive)
+        {
+            <span>Is Active</span>
+        }
+        else
+        {
+            <span>Not Active</span>
+        }
+    </div>
+</div>

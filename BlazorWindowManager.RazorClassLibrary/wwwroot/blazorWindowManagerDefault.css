@@ -380,3 +380,25 @@
 .bwmt_grid-display-add-button-item-diagonal {
     visibility: hidden;
 }
+
+.bwmt_debug-css-class-display {
+    background-color: #ef9e9e;
+    cursor: pointer;
+}
+
+.bwmt_debug-css-class-display.bwmt_active {
+    background-color: #a0e18d;
+}
+
+.bwmt_debug-css-class-display-body {
+    margin-left: 30px;
+}
+
+.bwmt_debug-css-classes-dialog-entry-point-display {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.bwmt_debug-css-classes-dialog-entry-point-display:hover {
+    background-color: var(--bwmt_primary-hover-background-color);
+}

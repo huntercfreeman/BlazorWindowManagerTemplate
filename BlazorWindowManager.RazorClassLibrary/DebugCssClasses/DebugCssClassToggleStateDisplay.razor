@@ -1,0 +1,14 @@
+﻿@using BlazorWindowManager.ClassLibrary.DebugCssClasses
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<div class="bwmt_debug-css-classes-display">
+    <CascadingValue Value="DispatchToggleDebugCssClassAction">
+        @foreach (var sectionInitialState in DebugCssClassInitialStates.DebugCssClassSectionInitalStates)
+        {
+            var currentState = DebugCssClassesState.Value
+                .LookUpDebugCssClassSection(sectionInitialState.DebugCssClassSectionId);
+
+            <DebugCssClassSectionDisplay DebugCssClassSection="currentState"/>
+        }
+    </CascadingValue>
+</div>

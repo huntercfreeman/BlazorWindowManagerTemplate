@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using BlazorWindowManager.ClassLibrary.DebugCssClasses;
+using BlazorWindowManager.ClassLibrary.Store.DebugCssClasses;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Fluxor.Blazor.Web.Components;
@@ -17,17 +20,19 @@ public partial class DragEventProviderDisplay : FluxorComponent
     [Inject]
     private IState<DragState> DragState { get; set; } = null!;
     [Inject]
+    private IState<DebugCssClassesState> DebugCssClassesState { get; set; } = null!;
+    [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
-
-    private string IsActiveCssClass => DragEventProviderState.Value.OnDragEventSubscriptions.Any()
-        ? "bwmt_active"
-        : string.Empty;
 
     private SemaphoreSlim _dragStateChangedSemaphoreSlim = new(1, 1);
     private Stack<MouseEventArgs> _dragStateChangedStack = new();
     private CancellationTokenSource? _dragStateChangedCancellationTokenSource;
     private readonly TimeSpan _dragStateThrottlingDelay = TimeSpan.FromMilliseconds(25);
     private Task? _dragStateThrottlingTask;
+    
+    private string IsActiveCssClass => DragEventProviderState.Value.OnDragEventSubscriptions.Any()
+        ? "bwmt_active"
+        : string.Empty;
 
     private async Task DispatchOnDragEventActionOnMouseMove(MouseEventArgs mouseEventArgs)
     {
@@ -103,5 +108,23 @@ public partial class DragEventProviderDisplay : FluxorComponent
         // but in reality the drag event was remnants and should have been null.
         await Task.Delay(_dragStateThrottlingDelay * 2);
         Dispatcher.Dispatch(onDragEventAction);
+    }
+    
+    private string GetDebugCssClasses()
+    {
+        var dragDebugCssClassSection = DebugCssClassesState.Value.LookUpDebugCssClassSection(
+            DebugCssClassInitialStates.DragDebugCssClassSectionInitialState.DebugCssClassSectionId);
+
+        var debugCssClassesBuilder = new StringBuilder();
+
+        foreach (var debugCssClass in dragDebugCssClassSection.DebugCssClasses)
+        {
+            if (debugCssClass.IsActive)
+            {
+                debugCssClassesBuilder.Append($"{debugCssClass.CssClassName} ");
+            }
+        }
+
+        return debugCssClassesBuilder.ToString();
     }
 }

@@ -21,6 +21,7 @@ public static class BlazorWindowManagerRazorClassLibraryServiceProvider
     /// </summary>
     public static IServiceCollection AddBlazorWindowManagerRazorClassLibraryServices(this IServiceCollection services,
         BlazorWindowManagerThemeKind blazorWindowManagerThemeKind,
+        bool useDebugCssClasses,
         string? themeCssClass = null)
     {
         return services

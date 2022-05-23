@@ -1,0 +1,12 @@
+﻿.bwmt_window-manager-theme-light {
+    --debug-drag-event-provider-display-background-color: #e069cb;
+}
+
+.bwmt_window-manager-theme-dark {
+    --debug-drag-event-provider-display-background-color: #e069cb;
+}
+
+.bwmt_debug-drag-event-provider-display.bwmt_drag-event-provider-display {
+    background-color: var(--debug-drag-event-provider-display-background-color);
+    opacity: 0.3;
+}
